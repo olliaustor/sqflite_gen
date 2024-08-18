@@ -1,0 +1,14 @@
+targets:
+  sqflite_gen:sqflite_gen:
+    builders:
+      sqflite_gen:
+        enabled: True
+builders:
+  sqflite_gen:
+    import: "package:sqflite_gen/sqflite_gen.dart"
+    builder_factories: ["sqflitegenCodeBuilder"]
+    build_extensions:
+      "$lib$": [".swagger.dart", ".models.dart", ".converter.dart"]
+    build_to: source
+    auto_apply: dependents
+    runs_before: ["chopper_generator", "json_serializable"]
