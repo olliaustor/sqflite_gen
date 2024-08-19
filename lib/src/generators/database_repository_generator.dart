@@ -1,6 +1,6 @@
-import 'package:sqflite_gen/src/generators/generator_base.dart';
+import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 
-class DatabaseRepositoryGenerator extends Generator {
+class DatabaseRepositoryGenerator extends FileGenerator {
   final String databaseNamePlaceholder = '%databaseName%';
   final String databaseName = 'database.db';
   final String targetFileName = 'database_repository.dart';
@@ -35,13 +35,13 @@ class DatabaseRepository {
     ''';
 
   @override
-  Future<GeneratorResult> generate() async {
+  Future<FileGeneratorResult> generate() async {
     final targetContent = content.replaceAll(
       databaseNamePlaceholder,
       databaseName,
     );
 
-    return GeneratorResult(
+    return FileGeneratorResult(
       targetFileName: targetFileName,
       content: targetContent,
     );

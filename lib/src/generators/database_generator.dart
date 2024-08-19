@@ -1,6 +1,6 @@
-import 'package:sqflite_gen/src/generators/generator_base.dart';
+import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 
-class DatabaseGenerator extends Generator {
+class DatabaseGenerator extends FileGenerator {
   final String targetFileName = 'database.dart';
 
   final content = '''
@@ -38,8 +38,8 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
     ''';
 
   @override
-  Future<GeneratorResult> generate() async {
-    return GeneratorResult(
+  Future<FileGeneratorResult> generate() async {
+    return FileGeneratorResult(
       targetFileName: targetFileName,
       content: content,
     );

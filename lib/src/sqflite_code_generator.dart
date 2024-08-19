@@ -7,7 +7,7 @@ import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/generators/database_generator.dart';
 import 'package:sqflite_gen/src/generators/database_repository_generator.dart';
 import 'package:sqflite_gen/src/generators/db_generator.dart';
-import 'package:sqflite_gen/src/generators/generator_base.dart';
+import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/generic_provider_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_values_generator.dart';
 import 'package:sqflite_gen/src/generators/utils_generator.dart';
@@ -34,7 +34,7 @@ class SqfliteCodeGenerator {
     await _writeFiles(targetFilePath, generatorResults);
   }
 
-  List<Generator> _getStaticGenerators() {
+  List<FileGenerator> _getStaticGenerators() {
     return [
       DbGenerator(),
       GenericProviderGenerator(),
@@ -44,7 +44,7 @@ class SqfliteCodeGenerator {
     ];
   }
 
-  List<Generator> _getTableGenerators(
+  List<FileGenerator> _getTableGenerators(
       List<Either<CreateTableStatement, String>> statements) {
 
     return statements.map((stmt) => [
@@ -54,7 +54,7 @@ class SqfliteCodeGenerator {
 
   Future<void> _writeFiles(
     String targetPath,
-    List<GeneratorResult> generatorResults,
+    List<FileGeneratorResult> generatorResults,
   ) async {
     await Future.forEach(
         generatorResults,
@@ -66,7 +66,7 @@ class SqfliteCodeGenerator {
 
   Future<void> _writeFile(
     String targetPath,
-    GeneratorResult generatorResult,
+    FileGeneratorResult generatorResult,
   ) async {
     final targetFileName = Path.join(
       targetPath,

@@ -2,37 +2,33 @@ import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' as Path;
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
+import 'package:sqflite_gen/src/formatters/camel_case_formatter.dart';
+import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
+import 'package:sqflite_gen/src/generators/source_generators/source_column_const_names_generator.dart';
+import 'package:sqflite_gen/src/generators/source_generators/source_column_creates_generator.dart';
+import 'package:sqflite_gen/src/mappers/table_name_mapper.dart';
 
-import 'package:sqflite_gen/src/generators/generator_base.dart';
 import 'package:sqlparser/sqlparser.dart';
 
-class TableValuesGenerator extends Generator {
+class TableValuesGenerator extends FileGenerator {
   TableValuesGenerator(this.statement) {}
 
   final Either<CreateTableStatement, String> statement;
 
-  final String targetDirectory = 'tables/%sqlTableName%';
+  final String targetDirectory = 'tables/%lowerCaseSqlTableName%';
   final String targetFileName = '%sqlTableName%_values.dart';
 
-  final String constTableName = '%sqlTableName%TableName';
-  final String columnName = '%sqlTableName%Column%sqlColumnName%';
-  final String constTable =
-      'const String %constTableName% = \'%sqlTableName%\'';
-  final String constColumn =
-      'const String %constColumnName% = \'%sqlColumnName%\';';
-
+  final String placeholderLowerCaseSqlTableName = '%lowerCaseSqlTableName%';
   final String placeholderSqlTableName = '%sqlTableName%';
-  final String placeholderSqlColumnName = '%sqlColumnName%';
-  final String placeholderConstTableName = '%constTableName%';
-  final String placeholderConstColumnName = '%constColumnName%';
   final String placeholderConstColumns = '%const_columns%';
   final String placeholderColumnDefinitions = '%column_definitions%';
+  final String placeholderConstTableName = '%constTableName%';
 
   final String createStatement = '''
 const String %constTableName% = \'%sqlTableName%\';
 %const_columns%
 
-const String %sqlTableName%Create = \'\'\'
+const String %lowerCaseSqlTableName%Create = \'\'\'
 CREATE TABLE \$%constTableName% (
 %column_definitions%
 )
@@ -40,12 +36,13 @@ CREATE TABLE \$%constTableName% (
   ''';
 
   @override
-  Future<GeneratorResult> generate() async {
+  Future<FileGeneratorResult> generate() async {
     final CreateTableStatement createTableStatement = statement.asLeft();
     final String sqlTableName = createTableStatement.tableName;
 
     final mapReplacements = [
       MapEntry(placeholderSqlTableName, sqlTableName),
+      _getConstLowerCaseTableNameReplacementValue(sqlTableName),
       _getConstTableNameReplacementValue(sqlTableName),
       _getConstColumnsReplacementValue(
         createTableStatement.tableName,
@@ -64,82 +61,51 @@ CREATE TABLE \$%constTableName% (
 
     final fullFileName = _getFullFileName(mapReplacements);
 
-    return GeneratorResult(
+    return FileGeneratorResult(
       targetFileName: fullFileName,
       content: content,
     );
   }
 
-  MapEntry<String, String> _getSqlTableNameReplacementValue(
+  MapEntry<String, String> _getConstLowerCaseTableNameReplacementValue(
       String sqlTableName) {
-    return MapEntry(placeholderSqlTableName, sqlTableName);
+    return MapEntry(
+      placeholderLowerCaseSqlTableName,
+      CamelCaseFomatter()
+          .format(
+            sqlTableName,
+            startsWithUpperCase: false,
+          )
+          .toStartWithLowerCase(),
+    );
   }
 
   MapEntry<String, String> _getConstTableNameReplacementValue(
       String sqlTableName) {
     return MapEntry(
-        placeholderConstTableName,
-        constTableName.replaceAll(
-          placeholderSqlTableName,
-          sqlTableName,
-        ));
+      placeholderConstTableName,
+      TableNameMapper(sqlTableName).map().value,
+    );
   }
 
   MapEntry<String, String> _getConstColumnsReplacementValue(
       String tableName, List<ColumnDefinition> columnDefinitions) {
-    final sb = StringBuffer();
-    for (final columnDefinition in columnDefinitions) {
-      sb.writeln(_getConstColumnReplacement(tableName, columnDefinition).value);
-    }
+    var generator = SourceColumnConstNamesGenerator(
+      tableName,
+      columnDefinitions,
+    );
 
-    return MapEntry(placeholderConstColumns, sb.toString().trimRight());
-  }
-
-  MapEntry<String, String> _getConstColumnName(
-      String tableName, ColumnDefinition columnDefinition) {
-    final readableColumnName = columnDefinition.columnName
-      .replaceAll('_', ' ')
-      .toTitleCase()
-      .replaceAll(' ', '');
-    final value = columnName
-        .replaceAll(placeholderSqlTableName, tableName)
-        .replaceAll(placeholderSqlColumnName, readableColumnName);
-
-    return MapEntry(columnDefinition.columnName, value);
-  }
-
-  MapEntry<String, String> _getConstColumnReplacement(
-      String tableName, ColumnDefinition columnDefinition) {
-    final value = constColumn
-        .replaceAll(placeholderSqlColumnName, columnDefinition.columnName)
-        .replaceAll(placeholderConstColumnName,
-            _getConstColumnName(tableName, columnDefinition).value);
-
-    return MapEntry(columnDefinition.columnName, value);
+    return MapEntry(placeholderConstColumns, generator.generate());
   }
 
   MapEntry<String, String> _getColumnsDefinitionReplacementValue(
-      String tableName,
-      List<ColumnDefinition> columnDefinitions) {
-    final sb = StringBuffer();
-    for (final columnDefinition in columnDefinitions) {
-      sb.writeln(_getColumnReplacement(tableName, columnDefinition).value);
-    }
+      String tableName, List<ColumnDefinition> columnDefinitions) {
+    var generator = SourceColumnCreatesGenerator(
+      tableName,
+      columnDefinitions,
+    );
 
-    return MapEntry(placeholderColumnDefinitions, sb.toString().trimRight());
-  }
-
-  MapEntry<String, String> _getColumnReplacement(
-      String tableName,
-      ColumnDefinition columnDefinition) {
-    final value = columnDefinition
-        .toString()
-        .replaceAll('ColumnDefinition: ', '')
-        .replaceAll(columnDefinition.columnName, '')
-        .toUpperCase();
-
-    return MapEntry(columnDefinition.columnName,
-        ' ' + '\$' + _getConstColumnName(tableName, columnDefinition).value + value + ',');
+    return MapEntry(placeholderColumnDefinitions, generator.generate());
   }
 
   String _getFullFileName(List<MapEntry<String, String>> mapReplaceValues) {
@@ -147,10 +113,10 @@ CREATE TABLE \$%constTableName% (
       targetDirectory,
       mapReplaceValues,
     );
-    final String fileName = _replaceAll(
+    final fileName = _replaceAll(
       targetFileName,
       mapReplaceValues,
-    );
+    ).toStartWithLowerCase();
     final fullFileName = Path.join(
       filePath,
       fileName,
@@ -163,7 +129,7 @@ CREATE TABLE \$%constTableName% (
     String source,
     List<MapEntry<String, String>> mapReplaceValues,
   ) {
-    String text = source;
+    var text = source;
 
     for (final mapEntry in mapReplaceValues) {
       final key = mapEntry.key;

@@ -1,6 +1,6 @@
-import 'package:sqflite_gen/src/generators/generator_base.dart';
+import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 
-class GenericProviderGenerator extends Generator {
+class GenericProviderGenerator extends FileGenerator {
   final String targetFileName = 'generic_provider.dart';
 
   final content = '''
@@ -15,8 +15,8 @@ abstract class GenericProvider<T> {
     ''';
 
   @override
-  Future<GeneratorResult> generate() async {
-    return GeneratorResult(
+  Future<FileGeneratorResult> generate() async {
+    return FileGeneratorResult(
       targetFileName: targetFileName,
       content: content,
     );
