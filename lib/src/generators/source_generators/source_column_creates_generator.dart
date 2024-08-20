@@ -1,5 +1,5 @@
+import 'package:sqflite_gen/src/converters/column_name_to_const_name_converter.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_generator_base.dart';
-import 'package:sqflite_gen/src/mappers/column_name_mapper.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 class SourceColumnCreatesGenerator extends SourceGenerator {
@@ -34,11 +34,9 @@ class SourceColumnCreatesGenerator extends SourceGenerator {
   }
 
   String _getConstColumnName(String sqlTableName, String sqlColumnName) {
-    final columnNameMapper = ColumnNameMapper(
-      sqlTableName,
-      sqlColumnName,
-    );
-    final result = columnNameMapper.map().value;
+    final columnNameConverter =
+      ColumnNameToConstNameConverter(sqlTableName);
+    final result = columnNameConverter.convert(sqlColumnName);
 
     return result;
   }
