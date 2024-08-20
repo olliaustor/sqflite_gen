@@ -1,13 +1,13 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' as Path;
 import 'package:sqflite_gen/src/converters/camel_case_to_underscore_converter.dart';
-import 'package:sqflite_gen/src/converters/table_name_to_const_definition_converter.dart';
 import 'package:sqflite_gen/src/converters/table_name_to_const_name_converter.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_column_const_names_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_column_creates_generator.dart';
+import 'package:sqflite_gen/src/generators/source_generators/source_table_name_to_const_definition_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
 
@@ -56,7 +56,7 @@ CREATE TABLE \$%lowerCaseSqlTableName% (
       ),
       MapEntry(
         placeholderConstTable,
-        TableNameToConstDefinitionConverter().convert(sqlTableName),
+        SourceTableNameToConstDefinitionGenerator(sqlTableName).generate(),
       ),
       MapEntry(
         placeholderConstColumns,
