@@ -16,7 +16,7 @@ void main() {
       () => {
             test('includes const for table name', () async {
               final String expectedValue =
-                  'const String frameworksTableName = \'frameworks\';\n';
+                  'const String frameworksTable = \'frameworks\';\n';
 
               final parser = CreateScriptParser();
               final createTableStmt = parser.parse(
@@ -33,7 +33,7 @@ void main() {
             }),
             test('includes const for table creation', () async {
               final String expectedValue =
-                  'const String frameworksCreate = \'\'\'\n';
+                  'const String frameworksTableCreate = \'\'\'\n';
 
               final parser = CreateScriptParser();
               final createTableStmt = parser.parse(
@@ -50,7 +50,7 @@ void main() {
             }),
             test('includes create table statement', () async {
               final String expectedValue =
-                  'CREATE TABLE \$frameworksTableName (\n';
+                  'CREATE TABLE \$frameworksTable (\n';
 
               final parser = CreateScriptParser();
               final createTableStmt = parser.parse(

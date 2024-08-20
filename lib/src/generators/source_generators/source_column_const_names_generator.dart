@@ -1,16 +1,10 @@
+import 'package:sqflite_gen/src/converters/column_name_to_const_definition_converter.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_generator_base.dart';
-import 'package:sqflite_gen/src/mappers/column_name_mapper.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 class SourceColumnConstNamesGenerator extends SourceGenerator {
   SourceColumnConstNamesGenerator(
       String this.tableName, List<ColumnDefinition> this.columnDefinitions) {}
-
-  final String placeholderSqlColumnName = '%sqlColumnName%';
-  final String placeholderConstColumnName = '%constColumnName%';
-
-  final String constColumn =
-      'const String %constColumnName% = \'%sqlColumnName%\';';
 
   final String tableName;
   final List<ColumnDefinition> columnDefinitions;
@@ -18,35 +12,11 @@ class SourceColumnConstNamesGenerator extends SourceGenerator {
   @override
   String generate() {
     final sb = StringBuffer();
+    final converter = ColumnNameToConstDefinitionConverter(tableName);
     for (final columnDefinition in columnDefinitions) {
-      sb.writeln(_getConstColumnReplacement(tableName, columnDefinition).value);
+      sb.writeln(converter.convert(columnDefinition.columnName));
     }
 
     return sb.toString().trimRight();
-  }
-
-  MapEntry<String, String> _getConstColumnReplacement(
-      String sqlTableName, ColumnDefinition columnDefinition) {
-    final sqlColumnName = columnDefinition.columnName;
-    final constColumnName = _getConstColumnName(
-      sqlTableName,
-      sqlColumnName,
-    );
-
-    final value = constColumn
-        .replaceAll(placeholderSqlColumnName, sqlColumnName)
-        .replaceAll(placeholderConstColumnName, constColumnName);
-
-    return MapEntry(columnDefinition.columnName, value);
-  }
-
-  String _getConstColumnName(String sqlTableName, String sqlColumnName) {
-    final columnNameMapper = ColumnNameMapper(
-      sqlTableName,
-      sqlColumnName,
-    );
-    final result = columnNameMapper.map().value;
-
-    return result;
   }
 }

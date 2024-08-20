@@ -4,7 +4,7 @@ import 'package:sqflite_gen/src/mappers/mapper_base.dart';
 class TableNameMapper extends Mapper {
   TableNameMapper(this.sqlTableName) {}
 
-  final CamelCaseFomatter camelCaseFormatter = CamelCaseFomatter();
+  final CamelCaseFormatter camelCaseFormatter = CamelCaseFormatter();
 
   final String placeholderSqlTableName = '%sqlTableName%';
   final String constTableName = '%sqlTableName%TableName';

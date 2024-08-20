@@ -1,35 +1,38 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' as Path;
+import 'package:sqflite_gen/src/converters/camel_case_to_underscore_converter.dart';
+import 'package:sqflite_gen/src/converters/table_name_to_const_definition_converter.dart';
+import 'package:sqflite_gen/src/converters/table_name_to_const_name_converter.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
-import 'package:sqflite_gen/src/formatters/camel_case_formatter.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_column_const_names_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_column_creates_generator.dart';
-import 'package:sqflite_gen/src/mappers/table_name_mapper.dart';
 
 import 'package:sqlparser/sqlparser.dart';
 
 class TableValuesGenerator extends FileGenerator {
-  TableValuesGenerator(this.statement) {}
+  TableValuesGenerator(this.statement);
 
   final Either<CreateTableStatement, String> statement;
 
-  final String targetDirectory = 'tables/%lowerCaseSqlTableName%';
-  final String targetFileName = '%sqlTableName%_values.dart';
-
+  final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
+  final String placeholderLowerCaseWithUnderscoreSqlTableName =
+      '%lowerCaseWithUnderscoreSqlTableName%';
   final String placeholderLowerCaseSqlTableName = '%lowerCaseSqlTableName%';
-  final String placeholderSqlTableName = '%sqlTableName%';
-  final String placeholderConstColumns = '%const_columns%';
+  final String placeholderConstTable = '%const_definition_table%';
+  final String placeholderConstColumns = '%const_definition_columns%';
   final String placeholderColumnDefinitions = '%column_definitions%';
-  final String placeholderConstTableName = '%constTableName%';
+
+  final String targetFileName =
+      'tables/%underscoreSqlTableName%/%underscoreSqlTableName%_values.dart';
 
   final String createStatement = '''
-const String %constTableName% = \'%sqlTableName%\';
-%const_columns%
+%const_definition_table%
+%const_definition_columns%
 
 const String %lowerCaseSqlTableName%Create = \'\'\'
-CREATE TABLE \$%constTableName% (
+CREATE TABLE \$%lowerCaseSqlTableName% (
 %column_definitions%
 )
 \'\'\';
@@ -37,21 +40,40 @@ CREATE TABLE \$%constTableName% (
 
   @override
   Future<FileGeneratorResult> generate() async {
-    final CreateTableStatement createTableStatement = statement.asLeft();
-    final String sqlTableName = createTableStatement.tableName;
+    final createTableStatement = statement.asLeft();
+    final sqlTableName = createTableStatement.tableName;
 
     final mapReplacements = [
-      MapEntry(placeholderSqlTableName, sqlTableName),
-      _getConstLowerCaseTableNameReplacementValue(sqlTableName),
-      _getConstTableNameReplacementValue(sqlTableName),
-      _getConstColumnsReplacementValue(
-        createTableStatement.tableName,
-        createTableStatement.columns,
+      MapEntry(
+        placeholderLowerCaseWithUnderscoreSqlTableName,
+        CamelCaseToUnderscoreConverter().convert(sqlTableName),
       ),
-      _getColumnsDefinitionReplacementValue(
-        createTableStatement.tableName,
-        createTableStatement.columns,
+      MapEntry(
+        placeholderLowerCaseSqlTableName,
+        TableNameToConstNameConverter()
+            .convert(sqlTableName)
+            .toStartWithLowerCase(),
       ),
+      MapEntry(
+        placeholderConstTable,
+        TableNameToConstDefinitionConverter().convert(sqlTableName),
+      ),
+      MapEntry(
+        placeholderConstColumns,
+        _getConstColumnsReplacementValue(
+          createTableStatement.tableName,
+          createTableStatement.columns,
+        ),
+      ),
+      MapEntry(
+        placeholderColumnDefinitions,
+        _getColumnsDefinitionReplacementValue(
+          createTableStatement.tableName,
+          createTableStatement.columns,
+        ),
+      ),
+      MapEntry(placeholderUnderscoreSqlTableName,
+          CamelCaseToUnderscoreConverter().convert(sqlTableName)),
     ];
 
     final content = _replaceAll(
@@ -67,60 +89,28 @@ CREATE TABLE \$%constTableName% (
     );
   }
 
-  MapEntry<String, String> _getConstLowerCaseTableNameReplacementValue(
-      String sqlTableName) {
-    return MapEntry(
-      placeholderLowerCaseSqlTableName,
-      CamelCaseFomatter()
-          .format(
-            sqlTableName,
-            startsWithUpperCase: false,
-          )
-          .toStartWithLowerCase(),
-    );
-  }
-
-  MapEntry<String, String> _getConstTableNameReplacementValue(
-      String sqlTableName) {
-    return MapEntry(
-      placeholderConstTableName,
-      TableNameMapper(sqlTableName).map().value,
-    );
-  }
-
-  MapEntry<String, String> _getConstColumnsReplacementValue(
+  String _getConstColumnsReplacementValue(
       String tableName, List<ColumnDefinition> columnDefinitions) {
     var generator = SourceColumnConstNamesGenerator(
       tableName,
       columnDefinitions,
     );
 
-    return MapEntry(placeholderConstColumns, generator.generate());
+    return generator.generate();
   }
 
-  MapEntry<String, String> _getColumnsDefinitionReplacementValue(
+  String _getColumnsDefinitionReplacementValue(
       String tableName, List<ColumnDefinition> columnDefinitions) {
     var generator = SourceColumnCreatesGenerator(
       tableName,
       columnDefinitions,
     );
 
-    return MapEntry(placeholderColumnDefinitions, generator.generate());
+    return generator.generate();
   }
 
   String _getFullFileName(List<MapEntry<String, String>> mapReplaceValues) {
-    final filePath = _replaceAll(
-      targetDirectory,
-      mapReplaceValues,
-    );
-    final fileName = _replaceAll(
-      targetFileName,
-      mapReplaceValues,
-    ).toStartWithLowerCase();
-    final fullFileName = Path.join(
-      filePath,
-      fileName,
-    );
+    final fullFileName = _replaceAll(targetFileName, mapReplaceValues);
 
     return fullFileName;
   }
