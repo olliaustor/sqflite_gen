@@ -1,0 +1,10 @@
+export 'customers/customers.dart';
+export 'car_vins/car_vins.dart';
+export 'car_options/car_options.dart';
+export 'car_parts/car_parts.dart';
+export 'brands/brands.dart';
+export 'models/models.dart';
+export 'customer_ownership/customer_ownership.dart';
+export 'manufacture_plant/manufacture_plant.dart';
+export 'dealers/dealers.dart';
+export 'dealer_brand/dealer_brand.dart';

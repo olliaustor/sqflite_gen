@@ -1,4 +1,5 @@
 import 'car_parts_values.dart';
+import '../../utils.dart';
 
 class CarParts {
   CarParts({
@@ -48,6 +49,24 @@ class CarParts {
       manufactureStartDate: manufactureStartDate, 
       manufactureEndDate: manufactureEndDate, 
       partRecall: partRecall,
+    );
+  }  
+
+  CarParts copyWith({
+       Wrapped<int?>? partId,
+       String? partName,
+       int? manufacturePlantId,
+       DateTime? manufactureStartDate,
+       Wrapped<DateTime?>? manufactureEndDate,
+       Wrapped<int?>? partRecall,
+  }) {
+    return CarParts(
+      partId: isNull(partId) ? this.partId : (partId!.value),
+      partName: isNull(partName) ? this.partName : partName!,
+      manufacturePlantId: isNull(manufacturePlantId) ? this.manufacturePlantId : manufacturePlantId!,
+      manufactureStartDate: isNull(manufactureStartDate) ? this.manufactureStartDate : manufactureStartDate!,
+      manufactureEndDate: isNull(manufactureEndDate) ? this.manufactureEndDate : (manufactureEndDate!.value),
+      partRecall: isNull(partRecall) ? this.partRecall : (partRecall!.value),    
     );
   }  
 

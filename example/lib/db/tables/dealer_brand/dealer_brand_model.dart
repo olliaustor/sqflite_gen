@@ -1,4 +1,5 @@
 import 'dealer_brand_values.dart';
+import '../../utils.dart';
 
 class DealerBrand {
   DealerBrand({
@@ -25,6 +26,16 @@ class DealerBrand {
     return DealerBrand(
       dealerId: dealerId, 
       brandId: brandId,
+    );
+  }  
+
+  DealerBrand copyWith({
+       int? dealerId,
+       int? brandId,
+  }) {
+    return DealerBrand(
+      dealerId: isNull(dealerId) ? this.dealerId : dealerId!,
+      brandId: isNull(brandId) ? this.brandId : brandId!,    
     );
   }  
 

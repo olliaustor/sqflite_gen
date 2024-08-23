@@ -1,4 +1,5 @@
 import 'car_vins_values.dart';
+import '../../utils.dart';
 
 class CarVins {
   CarVins({
@@ -43,6 +44,22 @@ class CarVins {
       optionSetId: optionSetId, 
       manufacturedDate: manufacturedDate, 
       manufacturedPlantId: manufacturedPlantId,
+    );
+  }  
+
+  CarVins copyWith({
+       Wrapped<int?>? vin,
+       int? modelId,
+       int? optionSetId,
+       DateTime? manufacturedDate,
+       int? manufacturedPlantId,
+  }) {
+    return CarVins(
+      vin: isNull(vin) ? this.vin : (vin!.value),
+      modelId: isNull(modelId) ? this.modelId : modelId!,
+      optionSetId: isNull(optionSetId) ? this.optionSetId : optionSetId!,
+      manufacturedDate: isNull(manufacturedDate) ? this.manufacturedDate : manufacturedDate!,
+      manufacturedPlantId: isNull(manufacturedPlantId) ? this.manufacturedPlantId : manufacturedPlantId!,    
     );
   }  
 

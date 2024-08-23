@@ -1,4 +1,5 @@
 import 'dealers_values.dart';
+import '../../utils.dart';
 
 class Dealers {
   Dealers({
@@ -33,6 +34,18 @@ class Dealers {
       dealerId: dealerId, 
       dealerName: dealerName, 
       dealerAddress: dealerAddress,
+    );
+  }  
+
+  Dealers copyWith({
+       Wrapped<int?>? dealerId,
+       String? dealerName,
+       Wrapped<String?>? dealerAddress,
+  }) {
+    return Dealers(
+      dealerId: isNull(dealerId) ? this.dealerId : (dealerId!.value),
+      dealerName: isNull(dealerName) ? this.dealerName : dealerName!,
+      dealerAddress: isNull(dealerAddress) ? this.dealerAddress : (dealerAddress!.value),    
     );
   }  
 

@@ -1,4 +1,5 @@
 import 'brands_values.dart';
+import '../../utils.dart';
 
 class Brands {
   Brands({
@@ -28,6 +29,16 @@ class Brands {
     return Brands(
       brandId: brandId, 
       brandName: brandName,
+    );
+  }  
+
+  Brands copyWith({
+       Wrapped<int?>? brandId,
+       String? brandName,
+  }) {
+    return Brands(
+      brandId: isNull(brandId) ? this.brandId : (brandId!.value),
+      brandName: isNull(brandName) ? this.brandName : brandName!,    
     );
   }  
 

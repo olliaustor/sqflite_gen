@@ -4,6 +4,7 @@ import 'package:sqflite_gen/src/converters/underscore_to_camel_case_converter.da
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
+import 'package:sqflite_gen/src/generators/source_generators/source_field_copy_with_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_definitions_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_from_map_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_parameters_generator.dart';
@@ -22,12 +23,14 @@ class TableModelGenerator extends FileGenerator {
   final String placeholderConstructorParameters = '%constructorParameters%';
   final String placeholderToMap = '%toMap%';
   final String placeholderFromMap = '%fromMap%';
+  final String placeholderCopyWith = '%copyWith%';
 
   final String targetFileName =
       'tables/%underscoreSqlTableName%/%underscoreSqlTableName%_model.dart';
 
   final content = '''
 import '%underscoreSqlTableName%_values.dart';
+import '../../utils.dart';
 
 class %tableName% {
   %tableName%({
@@ -38,6 +41,7 @@ class %tableName% {
 
 %toMap%
 %fromMap%
+%copyWith%
 }
 ''';
 
@@ -74,6 +78,13 @@ class %tableName% {
       MapEntry(
         placeholderFromMap,
         SourceFieldFromMapGenerator(
+          createTableStatement.tableName,
+          createTableStatement.columns,
+        ).generate(),
+      ),
+      MapEntry(
+        placeholderCopyWith,
+        SourceFieldCopyWithGenerator(
           createTableStatement.tableName,
           createTableStatement.columns,
         ).generate(),

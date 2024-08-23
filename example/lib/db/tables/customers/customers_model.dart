@@ -1,4 +1,5 @@
 import 'customers_values.dart';
+import '../../utils.dart';
 
 class Customers {
   Customers({
@@ -68,6 +69,32 @@ class Customers {
       email: email, 
       isActive: isActive, 
       nullableIsActive: nullableIsActive,
+    );
+  }  
+
+  Customers copyWith({
+       Wrapped<int?>? customerId,
+       String? firstName,
+       String? lastName,
+       Wrapped<String?>? gender,
+       Wrapped<int?>? householdIncome,
+       DateTime? birthdate,
+       int? phoneNumber,
+       Wrapped<String?>? email,
+       bool? isActive,
+       Wrapped<bool?>? nullableIsActive,
+  }) {
+    return Customers(
+      customerId: isNull(customerId) ? this.customerId : (customerId!.value),
+      firstName: isNull(firstName) ? this.firstName : firstName!,
+      lastName: isNull(lastName) ? this.lastName : lastName!,
+      gender: isNull(gender) ? this.gender : (gender!.value),
+      householdIncome: isNull(householdIncome) ? this.householdIncome : (householdIncome!.value),
+      birthdate: isNull(birthdate) ? this.birthdate : birthdate!,
+      phoneNumber: isNull(phoneNumber) ? this.phoneNumber : phoneNumber!,
+      email: isNull(email) ? this.email : (email!.value),
+      isActive: isNull(isActive) ? this.isActive : isActive!,
+      nullableIsActive: isNull(nullableIsActive) ? this.nullableIsActive : (nullableIsActive!.value),    
     );
   }  
 

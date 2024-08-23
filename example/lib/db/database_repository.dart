@@ -19,7 +19,7 @@ class DatabaseRepository {
 
   Future<Database> _open() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, database.db);
+    final path = join(databasesPath, 'database.db');
 
     return openDatabaseWithMigration(path);
   }

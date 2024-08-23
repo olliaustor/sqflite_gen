@@ -1,4 +1,5 @@
 import 'customer_ownership_values.dart';
+import '../../utils.dart';
 
 class CustomerOwnership {
   CustomerOwnership({
@@ -45,6 +46,24 @@ class CustomerOwnership {
       purchasePrice: purchasePrice, 
       waranteeExpireDate: waranteeExpireDate, 
       dealerId: dealerId,
+    );
+  }  
+
+  CustomerOwnership copyWith({
+       int? customerId,
+       int? vin,
+       DateTime? purchaseDate,
+       int? purchasePrice,
+       Wrapped<DateTime?>? waranteeExpireDate,
+       int? dealerId,
+  }) {
+    return CustomerOwnership(
+      customerId: isNull(customerId) ? this.customerId : customerId!,
+      vin: isNull(vin) ? this.vin : vin!,
+      purchaseDate: isNull(purchaseDate) ? this.purchaseDate : purchaseDate!,
+      purchasePrice: isNull(purchasePrice) ? this.purchasePrice : purchasePrice!,
+      waranteeExpireDate: isNull(waranteeExpireDate) ? this.waranteeExpireDate : (waranteeExpireDate!.value),
+      dealerId: isNull(dealerId) ? this.dealerId : dealerId!,    
     );
   }  
 

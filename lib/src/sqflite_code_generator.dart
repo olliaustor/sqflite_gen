@@ -7,7 +7,9 @@ import 'package:sqflite_gen/src/generators/file_generators/database_repository_g
 import 'package:sqflite_gen/src/generators/file_generators/db_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/generic_provider_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/tables_barrel_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/utils_generator.dart';
+import 'package:sqflite_gen/src/generators/table/table_barrel_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_model_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_values_generator.dart';
 import 'package:sqflite_gen/src/parser/create_script_parser.dart';
@@ -22,7 +24,9 @@ class SqfliteCodeGenerator {
     final stmts = engine.parse(sqlContent);
 
     // Assemble all generators here -> but do not do anything
-    final generators = _getStaticGenerators() + _getTableGenerators(stmts);
+    final generators =
+        _getStaticGenerators(stmts) +
+        _getTableGenerators(stmts);
 
     // Now execute all generators resulting in filenames and file content
     final generatorResults = await Future.wait(generators.map(
@@ -33,13 +37,14 @@ class SqfliteCodeGenerator {
     await _writeFiles(targetFilePath, generatorResults);
   }
 
-  List<FileGenerator> _getStaticGenerators() {
+  List<FileGenerator> _getStaticGenerators(List<Either<CreateTableStatement, String>> statements) {
     return [
       DbGenerator(),
       GenericProviderGenerator(),
       UtilsGenerator(),
       DatabaseRepositoryGenerator(),
-      DatabaseGenerator()
+      DatabaseGenerator(statements),
+      TablesBarrelGenerator(statements),
     ];
   }
 
@@ -49,6 +54,7 @@ class SqfliteCodeGenerator {
     return statements.map((stmt) => [
       TableValuesGenerator(stmt),
       TableModelGenerator(stmt),
+      TableBarrelGenerator(stmt),
     ]).expand((i) => i).toList();
   }
 

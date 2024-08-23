@@ -1,7 +1,18 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:sqflite_gen/src/extensions/column_definition_extensions.dart';
+import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dart';
+import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
+import 'package:sqlparser/sqlparser.dart';
 
 class DatabaseGenerator extends FileGenerator {
+  DatabaseGenerator(this.statements);
+
+  final List<Either<CreateTableStatement, String>> statements;
+
   final String targetFileName = 'database.dart';
+
+  final placeholderProvider = '%provider%';
 
   final content = '''
 import 'generic_provider.dart';
@@ -32,6 +43,7 @@ Future<void> _onCreate(Database db, int version) async {
 
 List<GenericProvider<Object>> _getTableProviders(Database db) {
   return [
+%provider%  
   ];
 }
 
@@ -39,9 +51,27 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
 
   @override
   Future<FileGeneratorResult> generate() async {
+    final fileContent = content.replaceAll(
+      placeholderProvider,
+      _getProvider(),
+    );
+
     return FileGeneratorResult(
       targetFileName: targetFileName,
-      content: content,
+      content: fileContent,
     );
+  }
+
+  String _getProvider() {
+    final sb = StringBuffer();
+
+    for (final item in statements.where((stmt) => stmt.isLeft())) {
+      final statement = item.asLeft();
+      final className = statement.toClassName();
+
+      sb.writeln('    ${className}Provider(),');
+    }
+
+    return sb.toString().trimRight();
   }
 }

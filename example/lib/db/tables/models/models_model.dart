@@ -1,4 +1,5 @@
 import 'models_values.dart';
+import '../../utils.dart';
 
 class Models {
   Models({
@@ -38,6 +39,20 @@ class Models {
       modelName: modelName, 
       modelBasePrice: modelBasePrice, 
       brandId: brandId,
+    );
+  }  
+
+  Models copyWith({
+       Wrapped<int?>? modelId,
+       String? modelName,
+       int? modelBasePrice,
+       int? brandId,
+  }) {
+    return Models(
+      modelId: isNull(modelId) ? this.modelId : (modelId!.value),
+      modelName: isNull(modelName) ? this.modelName : modelName!,
+      modelBasePrice: isNull(modelBasePrice) ? this.modelBasePrice : modelBasePrice!,
+      brandId: isNull(brandId) ? this.brandId : brandId!,    
     );
   }  
 

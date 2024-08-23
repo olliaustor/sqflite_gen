@@ -1,4 +1,5 @@
 import 'manufacture_plant_values.dart';
+import '../../utils.dart';
 
 class ManufacturePlant {
   ManufacturePlant({
@@ -43,6 +44,22 @@ class ManufacturePlant {
       plantType: plantType, 
       plantLocation: plantLocation, 
       companyOwned: companyOwned,
+    );
+  }  
+
+  ManufacturePlant copyWith({
+       Wrapped<int?>? manufacturePlantId,
+       String? plantName,
+       Wrapped<String?>? plantType,
+       Wrapped<String?>? plantLocation,
+       Wrapped<int?>? companyOwned,
+  }) {
+    return ManufacturePlant(
+      manufacturePlantId: isNull(manufacturePlantId) ? this.manufacturePlantId : (manufacturePlantId!.value),
+      plantName: isNull(plantName) ? this.plantName : plantName!,
+      plantType: isNull(plantType) ? this.plantType : (plantType!.value),
+      plantLocation: isNull(plantLocation) ? this.plantLocation : (plantLocation!.value),
+      companyOwned: isNull(companyOwned) ? this.companyOwned : (companyOwned!.value),    
     );
   }  
 

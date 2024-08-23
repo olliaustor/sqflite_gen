@@ -1,4 +1,5 @@
 import 'car_options_values.dart';
+import '../../utils.dart';
 
 class CarOptions {
   CarOptions({
@@ -58,6 +59,28 @@ class CarOptions {
       premiumSoundId: premiumSoundId, 
       color: color, 
       optionSetPrice: optionSetPrice,
+    );
+  }  
+
+  CarOptions copyWith({
+       Wrapped<int?>? optionSetId,
+       Wrapped<int?>? modelId,
+       int? engineId,
+       int? transmissionId,
+       int? chassisId,
+       Wrapped<int?>? premiumSoundId,
+       String? color,
+       int? optionSetPrice,
+  }) {
+    return CarOptions(
+      optionSetId: isNull(optionSetId) ? this.optionSetId : (optionSetId!.value),
+      modelId: isNull(modelId) ? this.modelId : (modelId!.value),
+      engineId: isNull(engineId) ? this.engineId : engineId!,
+      transmissionId: isNull(transmissionId) ? this.transmissionId : transmissionId!,
+      chassisId: isNull(chassisId) ? this.chassisId : chassisId!,
+      premiumSoundId: isNull(premiumSoundId) ? this.premiumSoundId : (premiumSoundId!.value),
+      color: isNull(color) ? this.color : color!,
+      optionSetPrice: isNull(optionSetPrice) ? this.optionSetPrice : optionSetPrice!,    
     );
   }  
 
