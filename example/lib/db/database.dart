@@ -26,16 +26,16 @@ Future<void> _onCreate(Database db, int version) async {
 
 List<GenericProvider<Object>> _getTableProviders(Database db) {
   return [
-    CustomersProvider(),
-    CarVinsProvider(),
-    CarOptionsProvider(),
-    CarPartsProvider(),
-    BrandsProvider(),
-    ModelsProvider(),
-    CustomerOwnershipProvider(),
-    ManufacturePlantProvider(),
-    DealersProvider(),
-    DealerBrandProvider(),  
+    CustomersProvider(db),
+    CarVinsProvider(db),
+    CarOptionsProvider(db),
+    CarPartsProvider(db),
+    BrandsProvider(db),
+    ModelsProvider(db),
+    CustomerOwnershipProvider(db),
+    ManufacturePlantProvider(db),
+    DealersProvider(db),
+    DealerBrandProvider(db),  
   ];
 }
 

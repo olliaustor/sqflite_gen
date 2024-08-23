@@ -69,7 +69,7 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
       final statement = item.asLeft();
       final className = statement.toClassName();
 
-      sb.writeln('    ${className}Provider(),');
+      sb.writeln('    ${className}Provider(db),');
     }
 
     return sb.toString().trimRight();

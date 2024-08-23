@@ -11,6 +11,7 @@ import 'package:sqflite_gen/src/generators/file_generators/tables_barrel_generat
 import 'package:sqflite_gen/src/generators/file_generators/utils_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_barrel_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_model_generator.dart';
+import 'package:sqflite_gen/src/generators/table/table_provider_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_values_generator.dart';
 import 'package:sqflite_gen/src/parser/create_script_parser.dart';
 import 'package:sqlparser/sqlparser.dart';
@@ -54,6 +55,7 @@ class SqfliteCodeGenerator {
     return statements.map((stmt) => [
       TableValuesGenerator(stmt),
       TableModelGenerator(stmt),
+      TableProviderGenerator(stmt),
       TableBarrelGenerator(stmt),
     ]).expand((i) => i).toList();
   }
