@@ -6,7 +6,9 @@ Create Table Customers(
   household_income INTEGER,
   birthdate DATE NOT NULL,
   phone_number INTEGER NOT NULL,
-  email VARCHAR(128)
+  email VARCHAR(128),
+  is_active BOOL NOT NULL,
+  nullable_is_active BOOL
 );
 
 Create Table Car_Vins(

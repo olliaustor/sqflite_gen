@@ -7,6 +7,8 @@ const String customersColumnHouseholdIncome = 'household_income';
 const String customersColumnBirthdate = 'birthdate';
 const String customersColumnPhoneNumber = 'phone_number';
 const String customersColumnEmail = 'email';
+const String customersColumnIsActive = 'is_active';
+const String customersColumnNullableIsActive = 'nullable_is_active';
 
 const String customersTableCreate = '''
 CREATE TABLE $customersTable (
@@ -18,6 +20,8 @@ CREATE TABLE $customersTable (
  $customersColumnBirthdate DATE NOT NULL,
  $customersColumnPhoneNumber INTEGER NOT NULL,
  $customersColumnEmail VARCHAR(128),
+ $customersColumnIsActive BOOL NOT NULL,
+ $customersColumnNullableIsActive BOOL,
 )
 ''';
   

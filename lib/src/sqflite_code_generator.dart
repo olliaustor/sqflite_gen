@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' as Path;
-import 'package:sqflite_gen/src/extensions/either_extensions.dart';
-
 import 'package:sqflite_gen/src/generators/file_generators/database_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/database_repository_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/db_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/generic_provider_generator.dart';
-import 'package:sqflite_gen/src/generators/table/table_values_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/utils_generator.dart';
+import 'package:sqflite_gen/src/generators/table/table_model_generator.dart';
+import 'package:sqflite_gen/src/generators/table/table_values_generator.dart';
 import 'package:sqflite_gen/src/parser/create_script_parser.dart';
 import 'package:sqlparser/sqlparser.dart';
 
@@ -49,6 +48,7 @@ class SqfliteCodeGenerator {
 
     return statements.map((stmt) => [
       TableValuesGenerator(stmt),
+      TableModelGenerator(stmt),
     ]).expand((i) => i).toList();
   }
 
