@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' as Path;
-import 'package:sqflite_gen/src/generators/file_generators/database_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/database/database_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/database_repository_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/db_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';

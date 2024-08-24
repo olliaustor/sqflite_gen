@@ -38,5 +38,5 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
     DealerBrandProvider(db),  
   ];
 }
-
+    
     
