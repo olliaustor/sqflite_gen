@@ -4,15 +4,21 @@ import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.d
 import 'package:sqflite_gen/src/utils.dart';
 import 'package:sqlparser/sqlparser.dart';
 
+/// Generates a file which contains functions for initializing and accessing
+/// the database.
+/// This generates the entry point for the database usage in the target app.
 class DatabaseGenerator extends FileGenerator {
   DatabaseGenerator(this.statements);
 
   final List<Either<CreateTableStatement, String>> statements;
 
+  /// Output file name of generated file
   final String targetFileName = 'database.dart';
 
+  /// Placeholder for list of used table providers
   final placeholderGetTableProvider = '%getTableProviders%';
 
+  /// Content of output file (including dynamic parts)
   final content = '''
 import 'generic_provider.dart';
 import 'tables/tables.dart';
