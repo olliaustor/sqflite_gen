@@ -5,14 +5,22 @@ import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.d
 
 import 'package:sqlparser/sqlparser.dart';
 
+/// Generates tables barrel file to export all generated table files
 class TablesBarrelGenerator extends FileGenerator {
+  /// Creates new instance which uses given [statements]
   TablesBarrelGenerator(this.statements);
 
+  /// Create table statements from sql file
   final List<Either<CreateTableStatement, String>> statements;
 
-  final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
-
+  /// Output file name of generated file
   final String targetFileName = 'tables/tables.dart';
+
+  /// Placeholder to be replaced with filename
+  final String placeholderFileName = '%fileName%';
+
+  /// Source code line for exporting a file in the barrel file
+  final String exportLine = '''export '%fileName%/%fileName%.dart';''';
 
   @override
   Future<FileGeneratorResult> generate() async {
@@ -22,8 +30,10 @@ class TablesBarrelGenerator extends FileGenerator {
     {
       final statement = item.asLeft();
       final fileName = statement.toFileName();
+      final sourceLine = exportLine
+        .replaceAll(placeholderFileName, fileName);
 
-      sb.writeln('''export '$fileName/$fileName.dart';''');
+      sb.writeln(sourceLine);
     }
 
     return FileGeneratorResult(

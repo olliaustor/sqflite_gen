@@ -8,8 +8,10 @@ import 'package:sqlparser/sqlparser.dart';
 /// the database.
 /// This generates the entry point for the database usage in the target app.
 class DatabaseGenerator extends FileGenerator {
+  /// Creates new instance which uses given [statements]
   DatabaseGenerator(this.statements);
 
+  /// Create table statements from sql file
   final List<Either<CreateTableStatement, String>> statements;
 
   /// Output file name of generated file

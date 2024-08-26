@@ -6,7 +6,7 @@ class UtilsGenerator extends FileGenerator {
   final String targetFileName = 'utils.dart';
 
   /// Content of output file
-  final content = '''  
+  final content = '''
 bool intToBool(int value) => value == 1;
 int boolToInt(bool value) => value ? 1 : 0;
 bool isNull(dynamic value) => value == null;
