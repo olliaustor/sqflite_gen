@@ -8,7 +8,7 @@ import 'package:sqflite_gen/src/generators/file_generators/db/db_generator.dart'
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/generic_provider/generic_provider_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/tables_barrel_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/utils_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/utils/utils_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_barrel_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_model_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_provider_generator.dart';
