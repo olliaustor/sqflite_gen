@@ -13,10 +13,10 @@ class MethodGetTablesProviderGenerator {
   final content = '''
 List<GenericProvider<Object>> _getTableProviders(Database db) {
   return [
-%provider%  
+%provider%
   ];
 }
-    ''';
+''';
 
   /// Generates private method which returns all known table providers.
   ///
