@@ -16,7 +16,7 @@ class Wrapped<T> {
   const Wrapped.value(this.value);
   isEmpty() => isNull(value);
 }
-    ''';
+''';
 
   @override
   Future<FileGeneratorResult> generate() async {
