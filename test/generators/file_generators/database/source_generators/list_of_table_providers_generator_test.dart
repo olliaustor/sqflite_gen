@@ -34,7 +34,7 @@ void main() {
     }),
 
     test('with multiple tables generates multiline string', () {
-      final expected = '''
+      const expected = '''
     ExampleTableProvider(db),
     AnotherTableProvider(db),''';
       final generator = ListOfTableProvidersGenerator();

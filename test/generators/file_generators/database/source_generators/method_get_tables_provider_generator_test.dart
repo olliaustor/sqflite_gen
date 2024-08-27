@@ -15,7 +15,7 @@ void main() {
 
   group('MethodGetTablesProviderGenerator', () => {
     test('with empty list generates valid method', () {
-      final expected = '''
+      const expected = '''
 List<GenericProvider<Object>> _getTableProviders(Database db) {
   return [
 
@@ -30,7 +30,7 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
     }),
 
     test('with table generates valid method', () {
-      final expected = '''
+      const expected = '''
 List<GenericProvider<Object>> _getTableProviders(Database db) {
   return [
     ExampleTableProvider(db),

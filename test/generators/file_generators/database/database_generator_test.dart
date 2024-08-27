@@ -21,7 +21,7 @@ void main() {
     }),
 
     test('contains valid imports', () async {
-      final expected = '''
+      const expected = '''
 import 'generic_provider.dart';
 import 'tables/tables.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,7 +33,7 @@ import 'package:sqflite/sqflite.dart';
       expect(result.content, contains(expected));
     }),
     test('contains method openDatabaseWithMigration', () async {
-      final expected = '''
+      const expected = '''
 Future<Database> openDatabaseWithMigration(String path) async {
   return openDatabase(path,
     version: 1,
@@ -48,7 +48,7 @@ Future<Database> openDatabaseWithMigration(String path) async {
       expect(result.content, contains(expected));
     }),
     test('contains method _onCreate', () async {
-      final expected = '''
+      const expected = '''
 Future<void> _onCreate(Database db, int version) async {
   final scriptList = <String>[];
   final tables = _getTableProviders(db);

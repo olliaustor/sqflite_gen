@@ -10,7 +10,7 @@ class DbGenerator extends FileGenerator {
   final content = '''
 export 'database_repository.dart';
 export 'tables/tables.dart';
-    ''';
+''';
 
   @override
   Future<FileGeneratorResult> generate() async {
