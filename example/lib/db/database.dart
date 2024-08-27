@@ -35,8 +35,8 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
     CustomerOwnershipProvider(db),
     ManufacturePlantProvider(db),
     DealersProvider(db),
-    DealerBrandProvider(db),  
+    DealerBrandProvider(db),
   ];
 }
-    
+
     

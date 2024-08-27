@@ -1,3 +1,4 @@
+/// Extensions for type [String]
 extension StringX on String {
   /// Converts [String] into all lowercase except for first character
   /// test Me NOW -> Test me now
