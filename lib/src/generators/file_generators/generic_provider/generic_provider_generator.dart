@@ -15,7 +15,7 @@ abstract class GenericProvider<T> {
   Future<int> delete(int id);
   Future<int> update(T general);
 }
-    ''';
+''';
 
   @override
   Future<FileGeneratorResult> generate() async {
