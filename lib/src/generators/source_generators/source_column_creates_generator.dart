@@ -29,7 +29,7 @@ class SourceColumnCreatesGenerator extends SourceGenerator {
 
     return MapEntry(
       columnDefinition.columnName,
-      ' \$${_getConstColumnName(tableName, columnDefinition.columnName)}$value,',
+      '  \$${_getConstColumnName(tableName, columnDefinition.columnName)}$value,',
     );
   }
 

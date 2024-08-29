@@ -36,7 +36,7 @@ CREATE TABLE \$%lowerCaseSqlTableName% (
 %column_definitions%
 )
 \'\'\';
-  ''';
+''';
 
   @override
   Future<FileGeneratorResult> generate() async {

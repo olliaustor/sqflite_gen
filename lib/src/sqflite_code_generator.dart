@@ -12,7 +12,7 @@ import 'package:sqflite_gen/src/generators/file_generators/utils/utils_generator
 import 'package:sqflite_gen/src/generators/file_generators/table_barrel/table_barrel_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_model_generator.dart';
 import 'package:sqflite_gen/src/generators/table/table_provider_generator.dart';
-import 'package:sqflite_gen/src/generators/table/table_values_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_values/table_values_generator.dart';
 import 'package:sqflite_gen/src/parser/create_script_parser.dart';
 import 'package:sqlparser/sqlparser.dart';
 
