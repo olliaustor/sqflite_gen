@@ -4,10 +4,9 @@ const String dealersColumnDealerName = 'dealer_name';
 const String dealersColumnDealerAddress = 'dealer_address';
 
 const String dealersTableCreate = '''
-CREATE TABLE $dealersTable (
- $dealersColumnDealerId INTEGER PRIMARY KEY AUTOINCREMENT,
- $dealersColumnDealerName VARCHAR(50) NOT NULL,
- $dealersColumnDealerAddress VARCHAR(100),
-)
+Create Table Dealers (
+  dealer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  dealer_name VARCHAR(50) NOT NULL,
+  dealer_address VARCHAR(100)
+);
 ''';
-  

@@ -9,15 +9,19 @@ const String carOptionsColumnColor = 'color';
 const String carOptionsColumnOptionSetPrice = 'option_set_price';
 
 const String carOptionsTableCreate = '''
-CREATE TABLE $carOptionsTable (
- $carOptionsColumnOptionSetId INTEGER PRIMARY KEY AUTOINCREMENT,
- $carOptionsColumnModelId INTEGER NULL,
- $carOptionsColumnEngineId INTEGER NOT NULL,
- $carOptionsColumnTransmissionId INTEGER NOT NULL,
- $carOptionsColumnChassisId INTEGER NOT NULL,
- $carOptionsColumnPremiumSoundId INTEGER,
- $carOptionsColumnColor VARCHAR(30) NOT NULL,
- $carOptionsColumnOptionSetPrice INTEGER NOT NULL,
-)
+Create Table Car_Options(
+  option_set_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  model_id INTEGER NULL,
+  engine_id INTEGER NOT NULL,
+  transmission_id INTEGER NOT NULL,
+  chassis_id INTEGER NOT NULL,
+  premium_sound_id INTEGER,
+  color VARCHAR(30) NOT NULL,
+  option_set_price INTEGER NOT NUll,
+  FOREIGN KEY (model_id) REFERENCES Models(model_id),
+  FOREIGN KEY (engine_id) REFERENCES Car_Parts(part_id),
+  FOREIGN KEY (premium_sound_id) REFERENCES Car_Parts(part_id),
+  FOREIGN KEY (transmission_id) REFERENCES Car_Parts(part_id),
+  FOREIGN KEY (chassis_id) REFERENCES Car_Parts(part_id)
+);
 ''';
-  

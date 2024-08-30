@@ -6,12 +6,11 @@ const String manufacturePlantColumnPlantLocation = 'plant_location';
 const String manufacturePlantColumnCompanyOwned = 'company_owned';
 
 const String manufacturePlantTableCreate = '''
-CREATE TABLE $manufacturePlantTable (
- $manufacturePlantColumnManufacturePlantId INTEGER PRIMARY KEY AUTOINCREMENT,
- $manufacturePlantColumnPlantName VARCHAR(50) NOT NULL,
- $manufacturePlantColumnPlantType VARCHAR (7) CHECK (="ASSEMBLY" OR ="PARTS"),
- $manufacturePlantColumnPlantLocation VARCHAR(100),
- $manufacturePlantColumnCompanyOwned INTEGER CHECK(=0 OR =1),
-)
+Create Table Manufacture_Plant(
+  manufacture_plant_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  plant_name VARCHAR(50) NOT NULL,
+  plant_type VARCHAR (7) CHECK (plant_type="Assembly" or plant_type="Parts"),
+  plant_location VARCHAR(100),
+  company_owned INTEGER CHECK(company_owned=0 or company_owned=1)
+);
 ''';
-  

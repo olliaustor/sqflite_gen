@@ -11,17 +11,16 @@ const String customersColumnIsActive = 'is_active';
 const String customersColumnNullableIsActive = 'nullable_is_active';
 
 const String customersTableCreate = '''
-CREATE TABLE $customersTable (
- $customersColumnCustomerId INTEGER PRIMARY KEY AUTOINCREMENT,
- $customersColumnFirstName VARCHAR(50) NOT NULL,
- $customersColumnLastName VARCHAR(50) NOT NULL,
- $customersColumnGender STRING CHECK( = "MALE" OR  = "FEMALE"),
- $customersColumnHouseholdIncome INTEGER,
- $customersColumnBirthdate DATE NOT NULL,
- $customersColumnPhoneNumber INTEGER NOT NULL,
- $customersColumnEmail VARCHAR(128),
- $customersColumnIsActive BOOL NOT NULL,
- $customersColumnNullableIsActive BOOL,
-)
+Create Table Customers(
+  customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  gender STRING CHECK(gender = "Male" or gender = "Female"),
+  household_income INTEGER,
+  birthdate DATE NOT NULL,
+  phone_number INTEGER NOT NULL,
+  email VARCHAR(128),
+  is_active BOOL NOT NULL,
+  nullable_is_active BOOL
+);
 ''';
-  

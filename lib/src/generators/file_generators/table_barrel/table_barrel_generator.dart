@@ -3,7 +3,7 @@ import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dar
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_barrel/source_generators/table_file_name_generator.dart';
+import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
 

@@ -4,12 +4,11 @@ import 'package:test/test.dart';
 
 void main() {
   const validCreateTable = '''
-      CREATE TABLE frameworks (
-        id INTEGER NOT NULL PRIMARY KEY,
-        name TEXT NOT NULL,
-        popularity REAL NOT NULL
-      );
-      ''';
+CREATE TABLE frameworks (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL,
+  popularity REAL NOT NULL
+);''';
 
   final parser = CreateScriptParser();
   final createTableStmt = parser.parse(
@@ -64,34 +63,10 @@ void main() {
 
         expect(result.content, contains(expectedValue));
       }),
-      test('contains create table statement', () async {
-        const expectedValue = 'CREATE TABLE \$frameworksTable (\n';
-
+      test('contains sql create table statement ', () async {
         final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains create for id column', () async {
-        const expectedValue =
-            '\$frameworksColumnId INTEGER NOT NULL PRIMARY KEY,\n';
-
-        final result = await generator.generate();
-
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains create for name column', () async {
-        const expectedValue = '\$frameworksColumnName TEXT NOT NULL,\n';
-
-        final result = await generator.generate();
-
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains create for popularity column', () async {
-        const expectedValue = '\$frameworksColumnPopularity REAL NOT NULL,\n';
-
-        final result = await generator.generate();
-
-        expect(result.content, contains(expectedValue));
+        expect(result.content, contains(validCreateTable));
       }),
       test('creates valid file', () async {
         const expectedValue = '''
@@ -101,11 +76,7 @@ const String frameworksColumnName = 'name';
 const String frameworksColumnPopularity = 'popularity';
 
 const String frameworksTableCreate = \'\'\'
-CREATE TABLE \$frameworksTable (
-  \$frameworksColumnId INTEGER NOT NULL PRIMARY KEY,
-  \$frameworksColumnName TEXT NOT NULL,
-  \$frameworksColumnPopularity REAL NOT NULL,
-)
+$validCreateTable
 \'\'\';
 ''';
         final result = await generator.generate();

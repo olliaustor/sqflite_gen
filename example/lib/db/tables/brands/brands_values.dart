@@ -3,9 +3,8 @@ const String brandsColumnBrandId = 'brand_id';
 const String brandsColumnBrandName = 'brand_name';
 
 const String brandsTableCreate = '''
-CREATE TABLE $brandsTable (
- $brandsColumnBrandId INTEGER PRIMARY KEY AUTOINCREMENT,
- $brandsColumnBrandName VARCHAR(50) NOT NULL,
-)
+Create Table Brands(
+  brand_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  brand_name VARCHAR(50) NOT NUll
+);
 ''';
-  

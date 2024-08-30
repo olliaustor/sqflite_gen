@@ -1,133 +1,94 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:path/path.dart' as Path;
-import 'package:sqflite_gen/src/converters/camel_case_to_underscore_converter.dart';
-import 'package:sqflite_gen/src/converters/table_name_to_const_name_converter.dart';
+import 'package:sqflite_gen/src/CreateTableStatementExt.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
-import 'package:sqflite_gen/src/generators/source_generators/source_column_const_names_generator.dart';
-import 'package:sqflite_gen/src/generators/source_generators/source_column_creates_generator.dart';
-import 'package:sqflite_gen/src/generators/source_generators/source_table_name_to_const_definition_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_values/source_generators/columns_to_const_definitions_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_values/source_generators/table_to_const_create_name_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_values/source_generators/table_to_const_definition_generator.dart';
+import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
 
+/// Generates file containing all const values from table
 class TableValuesGenerator extends FileGenerator {
+  /// Creates new object for given [statement]
   TableValuesGenerator(this.statement);
 
+  /// [statement] of table to be processed
   final Either<CreateTableStatement, String> statement;
 
-  final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
-  final String placeholderLowerCaseWithUnderscoreSqlTableName =
-      '%lowerCaseWithUnderscoreSqlTableName%';
-  final String placeholderLowerCaseSqlTableName = '%lowerCaseSqlTableName%';
+  /// Suffix to be added to the final filename
+  final String fileNameSuffix = 'values';
+
+  /// Placeholder for const definition of table name
   final String placeholderConstTable = '%const_definition_table%';
+
+  /// Placeholder for const definitions of all columns of table
   final String placeholderConstColumns = '%const_definition_columns%';
+
+  /// Placeholder for plain sql create script
+  final String placeholderSqlTableCreate = '%sqlTableCreate%';
+
+  /// Placeholder for table const name
+  final String placeholderTableNameCreate = '%tableNameCreate%';
+
+  /// Placeholder for sql definitions of all columns of table
   final String placeholderColumnDefinitions = '%column_definitions%';
 
-  final String targetFileName =
-      'tables/%underscoreSqlTableName%/%underscoreSqlTableName%_values.dart';
-
-  final String createStatement = '''
+  /// Content of file (including placeholder(s))
+  final String content = '''
 %const_definition_table%
 %const_definition_columns%
 
-const String %lowerCaseSqlTableName%Create = \'\'\'
-CREATE TABLE \$%lowerCaseSqlTableName% (
-%column_definitions%
-)
+const String %tableNameCreate% = \'\'\'
+%sqlTableCreate%
 \'\'\';
 ''';
 
   @override
   Future<FileGeneratorResult> generate() async {
-    final createTableStatement = statement.asLeft();
+    final createTableStatement = statement.asLeft() as CreateTableStatementExt;
     final sqlTableName = createTableStatement.tableName;
 
     final mapReplacements = [
-      MapEntry(
-        placeholderLowerCaseWithUnderscoreSqlTableName,
-        CamelCaseToUnderscoreConverter().convert(sqlTableName),
-      ),
-      MapEntry(
-        placeholderLowerCaseSqlTableName,
-        TableNameToConstNameConverter()
-            .convert(sqlTableName)
-            .toStartWithLowerCase(),
-      ),
+      /// Const definition of table name
       MapEntry(
         placeholderConstTable,
-        SourceTableNameToConstDefinitionGenerator(sqlTableName).generate(),
+        TableToConstDefinitionGenerator()(createTableStatement),
       ),
+
+      /// Const definitions of all columns
       MapEntry(
         placeholderConstColumns,
-        _getConstColumnsReplacementValue(
-          createTableStatement.tableName,
-          createTableStatement.columns,
-        ),
+        ColumnsToConstDefinitionsGenerator()(createTableStatement),
       ),
+
+      /// Const name of create statement
       MapEntry(
-        placeholderColumnDefinitions,
-        _getColumnsDefinitionReplacementValue(
-          createTableStatement.tableName,
-          createTableStatement.columns,
-        ),
+        placeholderTableNameCreate,
+        TableToConstCreateNameGenerator()(createTableStatement),
       ),
-      MapEntry(placeholderUnderscoreSqlTableName,
-          CamelCaseToUnderscoreConverter().convert(sqlTableName)),
+
+      /// Plain sql create script
+      MapEntry(
+        placeholderSqlTableCreate,
+        createTableStatement.createSqlStatement,
+      ),
     ];
 
-    final content = _replaceAll(
-      createStatement,
+    final fileContent = content.replaceAllFromList(
       mapReplacements,
     );
 
-    final fullFileName = _getFullFileName(mapReplacements);
+    final fullFileName = TableFileNameGenerator()(
+      createTableStatement,
+      fileNameSuffix: fileNameSuffix,
+    );
 
     return FileGeneratorResult(
       targetFileName: fullFileName,
-      content: content,
+      content: fileContent,
     );
-  }
-
-  String _getConstColumnsReplacementValue(
-      String tableName, List<ColumnDefinition> columnDefinitions) {
-    var generator = SourceColumnConstNamesGenerator(
-      tableName,
-      columnDefinitions,
-    );
-
-    return generator.generate();
-  }
-
-  String _getColumnsDefinitionReplacementValue(
-      String tableName, List<ColumnDefinition> columnDefinitions) {
-    var generator = SourceColumnCreatesGenerator(
-      tableName,
-      columnDefinitions,
-    );
-
-    return generator.generate();
-  }
-
-  String _getFullFileName(List<MapEntry<String, String>> mapReplaceValues) {
-    final fullFileName = _replaceAll(targetFileName, mapReplaceValues);
-
-    return fullFileName;
-  }
-
-  String _replaceAll(
-    String source,
-    List<MapEntry<String, String>> mapReplaceValues,
-  ) {
-    var text = source;
-
-    for (final mapEntry in mapReplaceValues) {
-      final key = mapEntry.key;
-      final value = mapEntry.value;
-
-      text = text.replaceAll(key, value);
-    }
-
-    return text;
   }
 }
