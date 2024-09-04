@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/columns_to_field_definitions_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/constructor/columns_to_constructor_parameters_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
@@ -17,30 +17,30 @@ void main() {
   );
 
   group(
-    'ColumnsToFieldDefinitionsGenerator',
+    'ColumnsToConstructorParametersGenerator',
     () => {
       test('empty list returns empty string', () {
         const expected = '';
 
-        final result = ColumnsToFieldDefinitionsGenerator()(
+        final result = ColumnsToConstructorParametersGenerator()(
           <ColumnDefinition>[],
         );
 
         expect(result, equals(expected));
       }),
       test('single column returns single line string', () {
-        const expected = '    final int? id;';
+        const expected = '    this.id,';
 
-        final result = ColumnsToFieldDefinitionsGenerator()(
+        final result = ColumnsToConstructorParametersGenerator()(
           [columnDefinition],
         );
 
         expect(result, equals(expected));
       }),
       test('multiple column returns multiple line string', () {
-        const expected = '    final int? id;\n    final String text;';
+        const expected = '    this.id,\n    required this.text,';
 
-        final result = ColumnsToFieldDefinitionsGenerator()(
+        final result = ColumnsToConstructorParametersGenerator()(
           [
             columnDefinition,
             columnDefinitionRequired,

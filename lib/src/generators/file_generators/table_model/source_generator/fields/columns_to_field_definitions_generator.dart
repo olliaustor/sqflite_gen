@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/column_to_field_definition_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/fields/column_to_field_definition_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 /// Generates field definitions for given columns

@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/column_to_constructor_parameter_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/constructor/column_to_constructor_parameter_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 /// Generates constructor parameters for given columns
