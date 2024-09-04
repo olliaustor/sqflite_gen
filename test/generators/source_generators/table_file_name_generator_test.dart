@@ -24,5 +24,14 @@ void main() {
 
           expect(result, equals(expected));
         }),
+        test('generates valid filename without path', () {
+          const expected = 'my_table_name_model.dart';
+          final generator = TableFileNameGenerator();
+          final result = generator(statement, fileNameSuffix: 'model',
+            includeRelativePath: false,
+          );
+
+          expect(result, equals(expected));
+        }),
       });
 }

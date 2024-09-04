@@ -1,41 +1,57 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:sqflite_gen/src/converters/camel_case_to_underscore_converter.dart';
-import 'package:sqflite_gen/src/converters/underscore_to_camel_case_converter.dart';
+import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/columns_to_field_definitions_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_copy_with_generator.dart';
-import 'package:sqflite_gen/src/generators/source_generators/source_field_definitions_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_from_map_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_parameters_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_to_map_generator.dart';
+import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
 
+/// Generates file containing model declaration for table
 class TableModelGenerator extends FileGenerator {
+  /// Creates new object for given [statement]
   TableModelGenerator(this.statement);
 
+  /// [statement] of table to be processed
   final Either<CreateTableStatement, String> statement;
+
+  /// Suffix to be added to the final filename
+  final String fileNameSuffix = 'model';
+
+  /// Suffix to be added to the import of the
+  final String importFileNameValuesSuffix = 'values';
+
+  /// Placeholder for values declaration file name
+  final String placeholderValuesFileName = '%values_file_name%';
+
+  /// Placeholder for class name
+  final String placeholderClassName = '%className%';
+
+  /// Placeholder for constructor
+  final String placeholderConstructor = '%constructor%';
+
+  // Placeholder for field definitions
+  final String placeholderFields = '%fields%';
 
   final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
   final String placeholderTableName = '%tableName%';
-  final String placeholderFields = '%fields%';
   final String placeholderConstructorParameters = '%constructorParameters%';
   final String placeholderToMap = '%toMap%';
   final String placeholderFromMap = '%fromMap%';
   final String placeholderCopyWith = '%copyWith%';
 
-  final String targetFileName =
-      'tables/%underscoreSqlTableName%/%underscoreSqlTableName%_model.dart';
-
   final content = '''
-import '%underscoreSqlTableName%_values.dart';
+import '%values_file_name%';
 import '../../utils.dart';
 
-class %tableName% {
-  %tableName%({
-%constructorParameters%
-  });
+class %className% {
+%constructor%
   
 %fields%
 
@@ -52,18 +68,27 @@ class %tableName% {
 
     final mapReplacements = [
       MapEntry(
-        placeholderUnderscoreSqlTableName,
-        CamelCaseToUnderscoreConverter().convert(sqlTableName),
+        placeholderValuesFileName,
+          TableFileNameGenerator()(
+            createTableStatement,
+            fileNameSuffix: importFileNameValuesSuffix,
+            includeRelativePath: false,
+          ),
       ),
       MapEntry(
-        placeholderTableName,
-        UnderscoreToCamelCaseConverter().convert(sqlTableName),
+        placeholderClassName,
+        createTableStatement.toClassName(),
+      ),
+      MapEntry(
+        placeholderConstructor,
+        TableToConstructorGenerator()(createTableStatement),
       ),
       MapEntry(
         placeholderFields,
-        SourceFieldDefinitionsGenerator(createTableStatement.columns)
-            .generate(),
+        ColumnsToFieldDefinitionsGenerator()(createTableStatement.columns),
       ),
+
+
       MapEntry(
         placeholderConstructorParameters,
         SourceFieldParametersGenerator(createTableStatement.columns).generate(),
@@ -91,7 +116,10 @@ class %tableName% {
       ),
     ];
 
-    final fullFileName = _getFullFileName(mapReplacements);
+    final fullFileName = TableFileNameGenerator()(
+      createTableStatement,
+      fileNameSuffix: fileNameSuffix,
+    );
 
     final fileContent = content.replaceAllFromList(mapReplacements);
 
@@ -99,11 +127,5 @@ class %tableName% {
       targetFileName: fullFileName,
       content: fileContent,
     );
-  }
-
-  String _getFullFileName(List<MapEntry<String, String>> mapReplaceValues) {
-    final fullFileName = targetFileName.replaceAllFromList(mapReplaceValues);
-
-    return fullFileName;
   }
 }
