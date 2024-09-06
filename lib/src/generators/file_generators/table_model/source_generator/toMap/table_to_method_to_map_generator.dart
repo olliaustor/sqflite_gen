@@ -1,5 +1,6 @@
 import 'package:sqflite_gen/src/converters/column_name_to_const_name_converter.dart';
 import 'package:sqflite_gen/src/extensions/column_definition_extensions.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/toMap/columns_to_map_assignment_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_column_to_to_map_assignment_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 
@@ -39,8 +40,6 @@ class TableToMethodToMapGenerator {
     var primaryKeyAssignment = '';
 
     for (final columnDefinition in statement.columns) {
-      final assignmentGenerator =
-          SourceColumnToToMapAssignmentGenerator(statement.tableName, columnDefinition);
       final columnConstName = columnToConstConverter.convert(
         columnDefinition.columnName,
       );
@@ -54,15 +53,14 @@ class TableToMethodToMapGenerator {
             .replaceAll(placeholderColumnConst, columnConstName);
         continue;
       }
-
-      final assignment = assignmentGenerator.generate();
-      sb.writeln('      $assignment,');
     }
+
+    final assignmentGenerator = ColumnsToMapAssignmentGenerator();
 
     return content
         .replaceAll(
           placeholderAssignments,
-          sb.toString().trimRight(),
+          assignmentGenerator(statement),
         )
         .replaceAll(
           placeholderKeyAssignment,
