@@ -1,3 +1,4 @@
+import 'package:sqflite_gen/src/extensions/column_definition_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/toMap/column_to_map_assignment_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 
@@ -11,8 +12,11 @@ class ColumnsToMapAssignmentGenerator {
     final generator = ColumnToMapAssignmentGenerator();
 
     final sB = StringBuffer();
+    final validColumns = statement.columns
+      .where((column) => !column.isAutoIncrement());
 
-    for (final column in statement.columns) {
+
+    for (final column in validColumns) {
       sB.writeln('${generator(statement, column)},');
     }
 

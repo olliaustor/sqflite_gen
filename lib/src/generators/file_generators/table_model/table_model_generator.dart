@@ -1,14 +1,12 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
-import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/fields/columns_to_field_definitions_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/constructor/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/toMap/table_to_method_to_map_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_copy_with_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/source_field_from_map_generator.dart';
-import 'package:sqflite_gen/src/generators/source_generators/source_field_parameters_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
@@ -36,19 +34,19 @@ class TableModelGenerator extends FileGenerator {
   /// Placeholder for constructor
   final String placeholderConstructor = '%constructor%';
 
-  // Placeholder for field definitions
+  /// Placeholder for field definitions
   final String placeholderFields = '%fields%';
 
-  // Placeholder for method toMap
+  /// Placeholder for method toMap
   final String placeholderToMap = '%toMap%';
 
-  final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
-  final String placeholderTableName = '%tableName%';
-  final String placeholderConstructorParameters = '%constructorParameters%';
-
+  /// Placeholder for method fromMap
   final String placeholderFromMap = '%fromMap%';
+
+  /// Placeholder for method copyWith
   final String placeholderCopyWith = '%copyWith%';
 
+  /// File content with placeholder
   final content = '''
 import '%values_file_name%';
 import '../../utils.dart';
@@ -69,62 +67,44 @@ class %className% {
     final createTableStatement = statement.asLeft();
     final sqlTableName = createTableStatement.tableName;
 
-    final mapReplacements = [
-      MapEntry(
-        placeholderValuesFileName,
-          TableFileNameGenerator()(
-            createTableStatement,
-            fileNameSuffix: importFileNameValuesSuffix,
-            includeRelativePath: false,
-          ),
-      ),
-      MapEntry(
-        placeholderClassName,
-        createTableStatement.toClassName(),
-      ),
-      MapEntry(
-        placeholderConstructor,
-        TableToConstructorGenerator()(createTableStatement),
-      ),
-      MapEntry(
-        placeholderFields,
-        ColumnsToFieldDefinitionsGenerator()(createTableStatement.columns),
-      ),
-      MapEntry(
-        placeholderToMap,
-        TableToMethodToMapGenerator()(createTableStatement),
-      ),
+    final fileNameGenerator = TableFileNameGenerator();
+    final constructorGenerator = TableToConstructorGenerator();
+    final fieldsGenerator = ColumnsToFieldDefinitionsGenerator();
+    final toMapGenerator = TableToMethodToMapGenerator();
 
-      MapEntry(
-        placeholderConstructorParameters,
-        SourceFieldParametersGenerator(createTableStatement.columns).generate(),
-      ),
-      MapEntry(
-        placeholderFromMap,
-        SourceFieldFromMapGenerator(
-          createTableStatement.tableName,
-          createTableStatement.columns,
-        ).generate(),
-      ),
-      MapEntry(
-        placeholderCopyWith,
-        SourceFieldCopyWithGenerator(
-          createTableStatement.tableName,
-          createTableStatement.columns,
-        ).generate(),
-      ),
-    ];
+    final fromMapGenerator =  SourceFieldFromMapGenerator(
+      createTableStatement.tableName,
+      createTableStatement.columns,
+    );
+    final copyWithGenerator = SourceFieldCopyWithGenerator(
+      createTableStatement.tableName,
+      createTableStatement.columns,
+    );
 
     final fullFileName = TableFileNameGenerator()(
-      createTableStatement,
-      fileNameSuffix: fileNameSuffix,
+    createTableStatement,
+    fileNameSuffix: fileNameSuffix,
     );
 
-    final fileContent = content.replaceAllFromList(mapReplacements);
+    final fileContent = content
+        .replaceAll(placeholderValuesFileName, fileNameGenerator(
+          createTableStatement,
+          fileNameSuffix: importFileNameValuesSuffix,
+          includeRelativePath: false,
+          ),)
+        .replaceAll(placeholderClassName, createTableStatement.toClassName())
+        .replaceAll(placeholderConstructor,
+          constructorGenerator(createTableStatement),)
+        .replaceAll(placeholderFields,
+          fieldsGenerator(createTableStatement.columns),)
+        .replaceAll(placeholderToMap, toMapGenerator(createTableStatement))
+        .replaceAll(placeholderFromMap, fromMapGenerator.generate())
+        .replaceAll(placeholderCopyWith, copyWithGenerator.generate());
+
 
     return FileGeneratorResult(
-      targetFileName: fullFileName,
-      content: fileContent,
+    targetFileName: fullFileName,
+    content: fileContent,
     );
-  }
+    }
 }

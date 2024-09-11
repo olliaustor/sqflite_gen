@@ -1,4 +1,3 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/constructor/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/toMap/table_to_method_to_map_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
@@ -84,7 +83,7 @@ void main() {
     var map = <String, Object?> {
       myTableNameColumnText: text,
     };
-  
+
     if (id != null) {
       map[myTableNameColumnId] = id;
     }
