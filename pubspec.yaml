@@ -31,7 +31,7 @@ dependencies:
   code_builder: ^4.10.0
   http: ^1.2.2
   yaml: ^3.1.2
-  sqlparser: ^0.37.1
+  sqlparser: ">=0.37.1 <0.39.0"
   fpdart: ^1.1.0
 
 dev_dependencies:
