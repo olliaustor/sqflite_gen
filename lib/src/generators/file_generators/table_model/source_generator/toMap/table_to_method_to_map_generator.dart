@@ -12,7 +12,7 @@ class TableToMethodToMapGenerator {
   /// column
   final placeholderKeyAssignment = '%placeholderAutoIncrementAssignment%';
 
-  /// File content with placeholder
+  /// Method content with placeholder
   final content = '''
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
