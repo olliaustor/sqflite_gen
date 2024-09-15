@@ -105,7 +105,7 @@ void main() {
     final text = map[myTableNameColumnText] as String?;
 
     return MyTableName(
-      id: id, 
+      id: id,
       text: text,
     );
   }  
