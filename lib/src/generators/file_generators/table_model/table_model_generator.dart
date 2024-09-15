@@ -2,13 +2,12 @@ import 'package:fpdart/fpdart.dart';
 import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/constructor/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/copy_with/table_to_method_copy_with_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/fields/columns_to_field_definitions_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/constructor/table_to_constructor_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/fromMap/table_to_method_from_map_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/toMap/table_to_method_to_map_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/table_to_method_from_map_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/to_map/table_to_method_to_map_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
-
 import 'package:sqlparser/sqlparser.dart';
 
 /// Generates file containing model declaration for table
