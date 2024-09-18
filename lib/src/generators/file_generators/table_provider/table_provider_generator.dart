@@ -7,13 +7,28 @@ import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dar
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/constructor/table_to_constructor_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_create_generator.dart';
+import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
 
+/// Generates file containing provider declaration for table
 class TableProviderGenerator extends FileGenerator {
+  /// Creates new object for given [statement]
   TableProviderGenerator(this.statement);
 
+  /// [statement] of table to be processed
   final Either<CreateTableStatement, String> statement;
+
+  /// Suffix to be added to the final filename
+  final String fileNameSuffix = 'provider';
+
+  /// Placeholder for constructor
+  final String placeholderConstructor = '%constructor%';
+
+  /// Placeholder for method create
+  final String placeholderCreate = '%create%';
 
   final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
   final String placeholderClassName = '%className%';
@@ -32,15 +47,12 @@ import '%fileName%_model.dart';
 import '%fileName%_values.dart';
 import 'package:sqflite/sqflite.dart';
 
-class %className%Provider implements GenericProvider<%className%> {
-  %className%Provider(this.db);
+class %className%Provider {
+%constructor%
 
-  Database db;
+  final Database db;
 
-  @override
-  List<String> create(int version) {
-    return [%fieldName%TableCreate];
-  }
+%create%
 
   @override
   Future<%className%> insert(%className% %fieldName%) async {
@@ -83,14 +95,19 @@ class %className%Provider implements GenericProvider<%className%> {
     final createTableStatement = statement.asLeft();
     final sqlTableName = createTableStatement.tableName;
 
+    final fileNameGenerator = TableFileNameGenerator();
+    final constructorGenerator = TableToConstructorGenerator();
+    final createGenerator = TableToMethodCreateGenerator();
+
+    final fullFileName = TableFileNameGenerator()(
+      createTableStatement,
+      fileNameSuffix: fileNameSuffix,
+    );
+
     final mapReplacements = [
       MapEntry(
         placeholderUnderscoreSqlTableName,
         CamelCaseToUnderscoreConverter().convert(sqlTableName),
-      ),
-      MapEntry(
-        placeholderClassName,
-        createTableStatement.toClassName(),
       ),
       MapEntry(
         placeholderFieldName,
@@ -114,20 +131,19 @@ class %className%Provider implements GenericProvider<%className%> {
       ),
     ];
 
-    final fullFileName = _getFullFileName(mapReplacements);
+    final fileContent = content
+        .replaceAll(placeholderClassName, createTableStatement.toClassName())
+        .replaceAll(placeholderConstructor,
+      constructorGenerator(createTableStatement),)
+        .replaceAll(placeholderCreate,
+      createGenerator(createTableStatement),)
 
-    final fileContent = content.replaceAllFromList(mapReplacements);
+        .replaceAllFromList(mapReplacements);
 
     return FileGeneratorResult(
       targetFileName: fullFileName,
       content: fileContent,
     );
-  }
-
-  String _getFullFileName(List<MapEntry<String, String>> mapReplaceValues) {
-    final fullFileName = targetFileName.replaceAllFromList(mapReplaceValues);
-
-    return fullFileName;
   }
 
   String _getPrimaryColumnNameConst(String tableName, List<ColumnDefinition> columns) {

@@ -71,13 +71,6 @@ CREATE TABLE frameworks (
 
         expect(result.content, contains(expectedValue));
       }),
-          test('contains valid inheritance', () async {
-            const expectedValue = 'implements GenericProvider<Frameworks> {\n';
-
-            final result = await generator.generate();
-
-            expect(result.content, contains(expectedValue));
-          }),
       test('contains constructor', () async {
         const expectedValue = 'FrameworksProvider(this.db);';
 
@@ -86,17 +79,14 @@ CREATE TABLE frameworks (
         expect(result.content, contains(expectedValue));
       }),
       test('contains field for database', () async {
-        const expectedValue = 'Database db;\n';
+        const expectedValue = 'final Database db;\n';
 
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
       }),
       test('contains method create', () async {
-        const expectedValue = '''
-  @override
-  List<String> create(int version) {
-''';
+        const expectedValue = 'List<String> create(int version) {';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
