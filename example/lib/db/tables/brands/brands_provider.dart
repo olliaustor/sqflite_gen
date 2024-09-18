@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 class BrandsProvider implements GenericProvider<Brands> {
   BrandsProvider(this.db);
 
-  Database db;
+  final Database db;
 
   @override
   List<String> create(int version) {
