@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_update_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/update/table_to_method_update_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
@@ -41,7 +41,7 @@ void main() {
       test('generates valid method with primary int column', () {
         const expected = r'''
   Future<bool> update(MyTableName myTableName) async {
-    final result = db.update(myTableNameTable, myTableName.toMap(),
+    final result = await db.update(myTableNameTable, myTableName.toMap(),
       where: '\$myTableNameColumnId = ?',
       whereArgs: [myTableName.id],);
       
@@ -58,7 +58,7 @@ void main() {
       test('generates valid method with primary string column', () {
         const expected = r'''
   Future<bool> update(MyTableName myTableName) async {
-    final result = db.update(myTableNameTable, myTableName.toMap(),
+    final result = await db.update(myTableNameTable, myTableName.toMap(),
       where: '\$myTableNameColumnId = ?',
       whereArgs: [myTableName.id],);
       

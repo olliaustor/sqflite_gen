@@ -24,7 +24,7 @@ class TableToMethodUpdateGenerator {
   /// Content containing replacement values
   final content = r'''
   Future<bool> update(%className% %fieldName%) async {
-    final result = db.update(%tableNameConst%, %fieldName%.toMap(),
+    final result = await db.update(%tableNameConst%, %fieldName%.toMap(),
       where: '\$%primaryColumnNameConst% = ?',
       whereArgs: [%fieldName%.%primaryColumnFieldName%],);
       

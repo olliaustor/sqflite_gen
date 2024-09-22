@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_delete_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/get/table_to_method_get_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
@@ -36,20 +36,22 @@ void main() {
   );
 
   group(
-    'TableToMethodDeleteGenerator',
+    'TableToMethodGetGenerator',
     () => {
       test('generates valid method with primary int column', () {
         const expected = r'''
-  Future<bool> delete(int id) async {
-    final result = db.delete(myTableNameTable,
+  Future<MyTableName?> get(int id) async {
+    final maps = await db.query(myTableNameTable,
       where: '\$myTableNameColumnId = ?',
       whereArgs: [id],);
-      
-    return result > 0;  
+
+    return maps.isEmpty
+      ? null
+      : MyTableName.fromMap(maps.first);
   }
 ''';
 
-        final result = TableToMethodDeleteGenerator()(
+        final result = TableToMethodGetGenerator()(
           statementPkInt,
         );
 
@@ -57,16 +59,18 @@ void main() {
       }),
       test('generates valid method with primary string column', () {
         const expected = r'''
-  Future<bool> delete(String id) async {
-    final result = db.delete(myTableNameTable,
+  Future<MyTableName?> get(String id) async {
+    final maps = await db.query(myTableNameTable,
       where: '\$myTableNameColumnId = ?',
       whereArgs: [id],);
-      
-    return result > 0;  
+
+    return maps.isEmpty
+      ? null
+      : MyTableName.fromMap(maps.first);
   }
 ''';
 
-        final result = TableToMethodDeleteGenerator()(
+        final result = TableToMethodGetGenerator()(
           statementPkString,
         );
 
@@ -75,7 +79,7 @@ void main() {
       test('generates empty string without primary column', () {
         const expected = '';
 
-        final result = TableToMethodDeleteGenerator()(
+        final result = TableToMethodGetGenerator()(
           statement,
         );
 

@@ -9,10 +9,10 @@ import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/constructor/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_create_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_delete_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_get_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_insert_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_update_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/delete/table_to_method_delete_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/get/table_to_method_get_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/insert/table_to_method_insert_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/update/table_to_method_update_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';

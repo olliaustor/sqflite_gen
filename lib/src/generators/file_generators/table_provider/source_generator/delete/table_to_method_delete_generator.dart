@@ -20,7 +20,7 @@ class TableToMethodDeleteGenerator {
   /// Content containing replacement values
   final content = r'''
   Future<bool> delete(%fieldType% %primaryColumnFieldName%) async {
-    final result = db.delete(%tableNameConst%,
+    final result = await db.delete(%tableNameConst%,
       where: '\$%primaryColumnNameConst% = ?',
       whereArgs: [%primaryColumnFieldName%],);
       

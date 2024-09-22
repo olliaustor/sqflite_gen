@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_get_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/delete/table_to_method_delete_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
@@ -36,22 +36,20 @@ void main() {
   );
 
   group(
-    'TableToMethodGetGenerator',
+    'TableToMethodDeleteGenerator',
     () => {
       test('generates valid method with primary int column', () {
         const expected = r'''
-  Future<MyTableName?> get(int id) async {
-    final maps = await db.query(myTableNameTable,
+  Future<bool> delete(int id) async {
+    final result = await db.delete(myTableNameTable,
       where: '\$myTableNameColumnId = ?',
       whereArgs: [id],);
-
-    return maps.isEmpty
-      ? null
-      : MyTableName.fromMap(maps.first);
+      
+    return result > 0;  
   }
 ''';
 
-        final result = TableToMethodGetGenerator()(
+        final result = TableToMethodDeleteGenerator()(
           statementPkInt,
         );
 
@@ -59,18 +57,16 @@ void main() {
       }),
       test('generates valid method with primary string column', () {
         const expected = r'''
-  Future<MyTableName?> get(String id) async {
-    final maps = await db.query(myTableNameTable,
+  Future<bool> delete(String id) async {
+    final result = await db.delete(myTableNameTable,
       where: '\$myTableNameColumnId = ?',
       whereArgs: [id],);
-
-    return maps.isEmpty
-      ? null
-      : MyTableName.fromMap(maps.first);
+      
+    return result > 0;  
   }
 ''';
 
-        final result = TableToMethodGetGenerator()(
+        final result = TableToMethodDeleteGenerator()(
           statementPkString,
         );
 
@@ -79,7 +75,7 @@ void main() {
       test('generates empty string without primary column', () {
         const expected = '';
 
-        final result = TableToMethodGetGenerator()(
+        final result = TableToMethodDeleteGenerator()(
           statement,
         );
 
