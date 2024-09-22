@@ -1,7 +1,4 @@
-import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/database/source_generators/list_of_table_providers_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/database/source_generators/provider_constructor_call_generator.dart';
-import 'package:sqflite_gen/src/generators/source_generators/source_generator_base.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 /// Generates private method which returns all known table providers.
