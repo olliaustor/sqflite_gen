@@ -1,4 +1,4 @@
-import '../../generic_provider.dart';
+import '../../utils.dart';  
 import 'manufacture_plant_model.dart';
 import 'manufacture_plant_values.dart';
 import 'package:sqflite/sqflite.dart';
@@ -15,7 +15,7 @@ class ManufacturePlantProvider {
   Future<ManufacturePlant> insert(ManufacturePlant manufacturePlant) async {
     final result = await db.insert(manufacturePlantTable, manufacturePlant.toMap());
     
-    return manufacturePlant.copyWith(manufacturePlantId: result);
+    return manufacturePlant.copyWith(manufacturePlantId: Wrapped.value(result));
   }
 
   Future<ManufacturePlant?> get(int manufacturePlantId) async {
@@ -29,7 +29,7 @@ class ManufacturePlantProvider {
   }
 
   Future<bool> delete(int manufacturePlantId) async {
-    final result = db.delete(manufacturePlantTable,
+    final result = await db.delete(manufacturePlantTable,
       where: '\$manufacturePlantColumnManufacturePlantId = ?',
       whereArgs: [manufacturePlantId],);
       
@@ -37,10 +37,11 @@ class ManufacturePlantProvider {
   }
 
   Future<bool> update(ManufacturePlant manufacturePlant) async {
-    final result = db.update(manufacturePlantTable, manufacturePlant.toMap(),
+    final result = await db.update(manufacturePlantTable, manufacturePlant.toMap(),
       where: '\$manufacturePlantColumnManufacturePlantId = ?',
       whereArgs: [manufacturePlant.manufacturePlantId],);
       
     return result > 0;  
   }
 
+}

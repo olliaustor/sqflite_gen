@@ -1,4 +1,4 @@
-import '../../generic_provider.dart';
+import '../../utils.dart';  
 import 'customer_ownership_model.dart';
 import 'customer_ownership_values.dart';
 import 'package:sqflite/sqflite.dart';
@@ -21,3 +21,4 @@ class CustomerOwnershipProvider {
 
 
 
+}

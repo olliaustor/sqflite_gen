@@ -20,7 +20,7 @@ class ColumnBoolToAssignmentGenerator implements ColumnToAssignmentGenerator {
   }
 
   String _propertyToAssignment(String propertyName) {
-    return 'intToBool(map[$propertyName])';
+    return 'intToBool(map[$propertyName] as int)';
   }
 
   String _propertyToNullableAssignment(

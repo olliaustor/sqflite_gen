@@ -1,4 +1,4 @@
-import '../../generic_provider.dart';
+import '../../utils.dart';  
 import 'models_model.dart';
 import 'models_values.dart';
 import 'package:sqflite/sqflite.dart';
@@ -15,7 +15,7 @@ class ModelsProvider {
   Future<Models> insert(Models models) async {
     final result = await db.insert(modelsTable, models.toMap());
     
-    return models.copyWith(modelId: result);
+    return models.copyWith(modelId: Wrapped.value(result));
   }
 
   Future<Models?> get(int modelId) async {
@@ -29,7 +29,7 @@ class ModelsProvider {
   }
 
   Future<bool> delete(int modelId) async {
-    final result = db.delete(modelsTable,
+    final result = await db.delete(modelsTable,
       where: '\$modelsColumnModelId = ?',
       whereArgs: [modelId],);
       
@@ -37,10 +37,11 @@ class ModelsProvider {
   }
 
   Future<bool> update(Models models) async {
-    final result = db.update(modelsTable, models.toMap(),
+    final result = await db.update(modelsTable, models.toMap(),
       where: '\$modelsColumnModelId = ?',
       whereArgs: [models.modelId],);
       
     return result > 0;  
   }
 
+}

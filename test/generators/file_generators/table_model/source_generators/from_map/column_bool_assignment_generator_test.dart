@@ -22,7 +22,7 @@ void main() {
     'ColumnBoolToAssignmentGenerator',
     () => {
       test('bool generates valid assignment', () {
-        const expected = 'intToBool(map[myTableNameColumnVal])';
+        const expected = 'intToBool(map[myTableNameColumnVal] as int)';
 
         final result = ColumnBoolToAssignmentGenerator()(
           statement, columnDefinitionNotNullable,
@@ -32,7 +32,7 @@ void main() {
       }),
       test('bool? generates valid assignment', () {
         const expected =
-            'isNull(map[myTableNameColumnVal]) ? null : intToBool(map[myTableNameColumnVal])';
+            'isNull(map[myTableNameColumnVal]) ? null : intToBool(map[myTableNameColumnVal] as int)';
 
         final result = ColumnBoolToAssignmentGenerator()(
           statement, columnDefinitionNullable,

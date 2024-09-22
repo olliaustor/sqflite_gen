@@ -1,5 +1,4 @@
 import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/constructor/columns_to_constructor_parameters_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 /// Generates method create for table

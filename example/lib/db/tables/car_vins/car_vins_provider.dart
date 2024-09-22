@@ -1,4 +1,4 @@
-import '../../generic_provider.dart';
+import '../../utils.dart';  
 import 'car_vins_model.dart';
 import 'car_vins_values.dart';
 import 'package:sqflite/sqflite.dart';
@@ -15,7 +15,7 @@ class CarVinsProvider {
   Future<CarVins> insert(CarVins carVins) async {
     final result = await db.insert(carVinsTable, carVins.toMap());
     
-    return carVins.copyWith(vin: result);
+    return carVins.copyWith(vin: Wrapped.value(result));
   }
 
   Future<CarVins?> get(int vin) async {
@@ -29,7 +29,7 @@ class CarVinsProvider {
   }
 
   Future<bool> delete(int vin) async {
-    final result = db.delete(carVinsTable,
+    final result = await db.delete(carVinsTable,
       where: '\$carVinsColumnVin = ?',
       whereArgs: [vin],);
       
@@ -37,10 +37,11 @@ class CarVinsProvider {
   }
 
   Future<bool> update(CarVins carVins) async {
-    final result = db.update(carVinsTable, carVins.toMap(),
+    final result = await db.update(carVinsTable, carVins.toMap(),
       where: '\$carVinsColumnVin = ?',
       whereArgs: [carVins.vin],);
       
     return result > 0;  
   }
 
+}

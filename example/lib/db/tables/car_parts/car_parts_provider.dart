@@ -1,4 +1,4 @@
-import '../../generic_provider.dart';
+import '../../utils.dart';  
 import 'car_parts_model.dart';
 import 'car_parts_values.dart';
 import 'package:sqflite/sqflite.dart';
@@ -15,7 +15,7 @@ class CarPartsProvider {
   Future<CarParts> insert(CarParts carParts) async {
     final result = await db.insert(carPartsTable, carParts.toMap());
     
-    return carParts.copyWith(partId: result);
+    return carParts.copyWith(partId: Wrapped.value(result));
   }
 
   Future<CarParts?> get(int partId) async {
@@ -29,7 +29,7 @@ class CarPartsProvider {
   }
 
   Future<bool> delete(int partId) async {
-    final result = db.delete(carPartsTable,
+    final result = await db.delete(carPartsTable,
       where: '\$carPartsColumnPartId = ?',
       whereArgs: [partId],);
       
@@ -37,10 +37,11 @@ class CarPartsProvider {
   }
 
   Future<bool> update(CarParts carParts) async {
-    final result = db.update(carPartsTable, carParts.toMap(),
+    final result = await db.update(carPartsTable, carParts.toMap(),
       where: '\$carPartsColumnPartId = ?',
       whereArgs: [carParts.partId],);
       
     return result > 0;  
   }
 
+}

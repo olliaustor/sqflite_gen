@@ -24,6 +24,10 @@ class TableToMethodInsertGenerator {
   final returnCopyWithCall =
       'return %fieldName%.copyWith(%primaryColumnFieldName%: result);';
 
+  /// Content for returning new object from copy with call and nullable value
+  final returnCopyWithCallNullable =
+      'return %fieldName%.copyWith(%primaryColumnFieldName%: Wrapped.value(result));';
+
   /// Content for returning the received object
   final returnDefault = 'return %fieldName%;';
 
@@ -82,7 +86,11 @@ class TableToMethodInsertGenerator {
   /// Returns [String] containing the return statement with a clone of the
   /// given object including the id from the newly created record
   String _getReturnCopyWithCall(CreateTableStatement statement) {
-    return returnCopyWithCall
+    final content = _getPrimaryColumn(statement)!.isNonNullable
+      ? returnCopyWithCall
+      : returnCopyWithCallNullable;
+
+    return content
         .replaceAll(placeholderFieldName, statement.toFieldName())
         .replaceAll(
           placeholderPrimaryColumnFieldName,

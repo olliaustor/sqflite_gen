@@ -55,8 +55,8 @@ class Customers {
     final birthdate = DateTime.fromMillisecondsSinceEpoch(map[customersColumnBirthdate] as int, isUtc: true,);
     final phoneNumber = map[customersColumnPhoneNumber] as int;
     final email = map[customersColumnEmail] as String?;
-    final isActive = intToBool(map[customersColumnIsActive]);
-    final nullableIsActive = isNull(map[customersColumnNullableIsActive]) ? null : intToBool(map[customersColumnNullableIsActive]);
+    final isActive = intToBool(map[customersColumnIsActive] as int);
+    final nullableIsActive = isNull(map[customersColumnNullableIsActive]) ? null : intToBool(map[customersColumnNullableIsActive] as int);
 
     return Customers(
       customerId: customerId,

@@ -9,6 +9,12 @@ void main() {
     constraints: [PrimaryKeyColumn('id', autoIncrement: true)],
   );
 
+  final columnDefinitionPkNullable = ColumnDefinition(
+    columnName: 'id',
+    typeName: 'INT',
+    constraints: [PrimaryKeyColumn('id', autoIncrement: true), NotNull('id')],
+  );
+
   final columnDefinitionPkString = ColumnDefinition(
     columnName: 'id',
     typeName: 'STRING',
@@ -23,6 +29,11 @@ void main() {
   final statementPkInt = CreateTableStatement(
     tableName: 'my_table_name',
     columns: [columnDefinitionPkInt],
+  );
+
+  final statementPkNullable = CreateTableStatement(
+    tableName: 'my_table_name',
+    columns: [columnDefinitionPkNullable],
   );
 
   final statementPkString = CreateTableStatement(
@@ -43,12 +54,27 @@ void main() {
   Future<MyTableName> insert(MyTableName myTableName) async {
     final result = await db.insert(myTableNameTable, myTableName.toMap());
     
-    return myTableName.copyWith(id: result);
+    return myTableName.copyWith(id: Wrapped.value(result));
   }
 ''';
 
         final result = TableToMethodInsertGenerator()(
           statementPkInt,
+        );
+
+        expect(result, equals(expected));
+      }),
+      test('generates valid method with primary column nullable', () {
+        const expected = '''
+  Future<MyTableName> insert(MyTableName myTableName) async {
+    final result = await db.insert(myTableNameTable, myTableName.toMap());
+    
+    return myTableName.copyWith(id: result);
+  }
+''';
+
+        final result = TableToMethodInsertGenerator()(
+          statementPkNullable,
         );
 
         expect(result, equals(expected));
