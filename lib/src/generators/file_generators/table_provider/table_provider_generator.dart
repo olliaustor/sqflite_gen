@@ -54,7 +54,6 @@ class TableProviderGenerator extends FileGenerator {
 
   /// File content with placeholders
   final content = '''
-import '../../generic_provider.dart';
 import '%fileName%_model.dart';
 import '%fileName%_values.dart';
 import 'package:sqflite/sqflite.dart';

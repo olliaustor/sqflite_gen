@@ -7,14 +7,14 @@ class Brands {
     required this.brandName,
   });
   
-  final int? brandId;
-  final String brandName;
+    final int? brandId;
+    final String brandName;
 
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
       brandsColumnBrandName: brandName,
     };
-  
+
     if (brandId != null) {
       map[brandsColumnBrandId] = brandId;
     }
@@ -27,19 +27,19 @@ class Brands {
     final brandName = map[brandsColumnBrandName] as String;
 
     return Brands(
-      brandId: brandId, 
+      brandId: brandId,
       brandName: brandName,
     );
   }  
 
   Brands copyWith({
-       Wrapped<int?>? brandId,
-       String? brandName,
+    Wrapped<int?>? brandId,
+    String? brandName,
   }) {
     return Brands(
       brandId: isNull(brandId) ? this.brandId : (brandId!.value),
-      brandName: isNull(brandName) ? this.brandName : brandName!,    
+      brandName: isNull(brandName) ? this.brandName : brandName!,
     );
-  }  
+  }
 
 }

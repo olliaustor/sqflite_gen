@@ -27,14 +27,14 @@ CREATE TABLE frameworks (
 
         expect(result.targetFileName, equals(expected));
       }),
-      test('has four exports', () async {
+      test('has three exports', () async {
         final result = await generator.generate();
 
         final regEx = RegExp('import');
         final amount = regEx
             .allMatches(result.content)
             .length;
-        expect(amount, equals(4));
+        expect(amount, equals(3));
       }),
       test('contains ..._values.dart import', () async {
         const expectedValue = "import 'frameworks_values.dart';\n";
@@ -45,13 +45,6 @@ CREATE TABLE frameworks (
       }),
       test('contains ..._model.dart import', () async {
         const expectedValue = "import 'frameworks_model.dart';\n";
-
-        final result = await generator.generate();
-
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains generic_provider.dart import', () async {
-        const expectedValue = "import '../../generic_provider.dart';\n";
 
         final result = await generator.generate();
 

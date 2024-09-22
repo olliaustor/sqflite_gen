@@ -3,47 +3,44 @@ import 'manufacture_plant_model.dart';
 import 'manufacture_plant_values.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ManufacturePlantProvider implements GenericProvider<ManufacturePlant> {
+class ManufacturePlantProvider {
   ManufacturePlantProvider(this.db);
 
-  Database db;
+  final Database db;
 
-  @override
   List<String> create(int version) {
     return [manufacturePlantTableCreate];
   }
 
-  @override
   Future<ManufacturePlant> insert(ManufacturePlant manufacturePlant) async {
     final result = await db.insert(manufacturePlantTable, manufacturePlant.toMap());
-       
+    
     return manufacturePlant.copyWith(manufacturePlantId: result);
   }
 
-  @override
   Future<ManufacturePlant?> get(int manufacturePlantId) async {
     final maps = await db.query(manufacturePlantTable,
-      where: '$manufacturePlantColumnManufacturePlantId = ?',
+      where: '\$manufacturePlantColumnManufacturePlantId = ?',
       whereArgs: [manufacturePlantId],);
 
-    if (maps.isNotEmpty) {
-      return ManufacturePlant.fromMap(maps.first);
-    }
-
-    return null;
+    return maps.isEmpty
+      ? null
+      : ManufacturePlant.fromMap(maps.first);
   }
 
-  @override
-  Future<int> delete(int manufacturePlantId) async {
-    return db.delete(manufacturePlantTable,
-      where: '$manufacturePlantColumnManufacturePlantId = ?',
+  Future<bool> delete(int manufacturePlantId) async {
+    final result = db.delete(manufacturePlantTable,
+      where: '\$manufacturePlantColumnManufacturePlantId = ?',
       whereArgs: [manufacturePlantId],);
+      
+    return result > 0;  
   }
 
-  @override
-  Future<int> update(ManufacturePlant manufacturePlant) async {
-    return db.update(manufacturePlantTable, manufacturePlant.toMap(),
-      where: '$manufacturePlantColumnManufacturePlantId = ?',
+  Future<bool> update(ManufacturePlant manufacturePlant) async {
+    final result = db.update(manufacturePlantTable, manufacturePlant.toMap(),
+      where: '\$manufacturePlantColumnManufacturePlantId = ?',
       whereArgs: [manufacturePlant.manufacturePlantId],);
+      
+    return result > 0;  
   }
-}
+

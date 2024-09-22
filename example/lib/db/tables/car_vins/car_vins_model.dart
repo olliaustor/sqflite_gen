@@ -10,11 +10,11 @@ class CarVins {
     required this.manufacturedPlantId,
   });
   
-  final int? vin;
-  final int modelId;
-  final int optionSetId;
-  final DateTime manufacturedDate;
-  final int manufacturedPlantId;
+    final int? vin;
+    final int modelId;
+    final int optionSetId;
+    final DateTime manufacturedDate;
+    final int manufacturedPlantId;
 
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
@@ -23,7 +23,7 @@ class CarVins {
       carVinsColumnManufacturedDate: manufacturedDate.toUtc().millisecondsSinceEpoch,
       carVinsColumnManufacturedPlantId: manufacturedPlantId,
     };
-  
+
     if (vin != null) {
       map[carVinsColumnVin] = vin;
     }
@@ -35,32 +35,32 @@ class CarVins {
     final vin = map[carVinsColumnVin] as int?;
     final modelId = map[carVinsColumnModelId] as int;
     final optionSetId = map[carVinsColumnOptionSetId] as int;
-    final manufacturedDate = DateTime.fromMillisecondsSinceEpoch(map[carVinsColumnManufacturedDate]! as int, isUtc: true,);
+    final manufacturedDate = DateTime.fromMillisecondsSinceEpoch(map[carVinsColumnManufacturedDate] as int, isUtc: true,);
     final manufacturedPlantId = map[carVinsColumnManufacturedPlantId] as int;
 
     return CarVins(
-      vin: vin, 
-      modelId: modelId, 
-      optionSetId: optionSetId, 
-      manufacturedDate: manufacturedDate, 
+      vin: vin,
+      modelId: modelId,
+      optionSetId: optionSetId,
+      manufacturedDate: manufacturedDate,
       manufacturedPlantId: manufacturedPlantId,
     );
   }  
 
   CarVins copyWith({
-       Wrapped<int?>? vin,
-       int? modelId,
-       int? optionSetId,
-       DateTime? manufacturedDate,
-       int? manufacturedPlantId,
+    Wrapped<int?>? vin,
+    int? modelId,
+    int? optionSetId,
+    DateTime? manufacturedDate,
+    int? manufacturedPlantId,
   }) {
     return CarVins(
       vin: isNull(vin) ? this.vin : (vin!.value),
       modelId: isNull(modelId) ? this.modelId : modelId!,
       optionSetId: isNull(optionSetId) ? this.optionSetId : optionSetId!,
       manufacturedDate: isNull(manufacturedDate) ? this.manufacturedDate : manufacturedDate!,
-      manufacturedPlantId: isNull(manufacturedPlantId) ? this.manufacturedPlantId : manufacturedPlantId!,    
+      manufacturedPlantId: isNull(manufacturedPlantId) ? this.manufacturedPlantId : manufacturedPlantId!,
     );
-  }  
+  }
 
 }

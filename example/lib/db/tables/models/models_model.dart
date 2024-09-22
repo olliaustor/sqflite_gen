@@ -9,10 +9,10 @@ class Models {
     required this.brandId,
   });
   
-  final int? modelId;
-  final String modelName;
-  final int modelBasePrice;
-  final int brandId;
+    final int? modelId;
+    final String modelName;
+    final int modelBasePrice;
+    final int brandId;
 
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
@@ -20,7 +20,7 @@ class Models {
       modelsColumnModelBasePrice: modelBasePrice,
       modelsColumnBrandId: brandId,
     };
-  
+
     if (modelId != null) {
       map[modelsColumnModelId] = modelId;
     }
@@ -35,25 +35,25 @@ class Models {
     final brandId = map[modelsColumnBrandId] as int;
 
     return Models(
-      modelId: modelId, 
-      modelName: modelName, 
-      modelBasePrice: modelBasePrice, 
+      modelId: modelId,
+      modelName: modelName,
+      modelBasePrice: modelBasePrice,
       brandId: brandId,
     );
   }  
 
   Models copyWith({
-       Wrapped<int?>? modelId,
-       String? modelName,
-       int? modelBasePrice,
-       int? brandId,
+    Wrapped<int?>? modelId,
+    String? modelName,
+    int? modelBasePrice,
+    int? brandId,
   }) {
     return Models(
       modelId: isNull(modelId) ? this.modelId : (modelId!.value),
       modelName: isNull(modelName) ? this.modelName : modelName!,
       modelBasePrice: isNull(modelBasePrice) ? this.modelBasePrice : modelBasePrice!,
-      brandId: isNull(brandId) ? this.brandId : brandId!,    
+      brandId: isNull(brandId) ? this.brandId : brandId!,
     );
-  }  
+  }
 
 }

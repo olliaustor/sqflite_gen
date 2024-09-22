@@ -3,47 +3,44 @@ import 'customers_model.dart';
 import 'customers_values.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CustomersProvider implements GenericProvider<Customers> {
+class CustomersProvider {
   CustomersProvider(this.db);
 
-  Database db;
+  final Database db;
 
-  @override
   List<String> create(int version) {
     return [customersTableCreate];
   }
 
-  @override
   Future<Customers> insert(Customers customers) async {
     final result = await db.insert(customersTable, customers.toMap());
-       
+    
     return customers.copyWith(customerId: result);
   }
 
-  @override
   Future<Customers?> get(int customerId) async {
     final maps = await db.query(customersTable,
-      where: '$customersColumnCustomerId = ?',
+      where: '\$customersColumnCustomerId = ?',
       whereArgs: [customerId],);
 
-    if (maps.isNotEmpty) {
-      return Customers.fromMap(maps.first);
-    }
-
-    return null;
+    return maps.isEmpty
+      ? null
+      : Customers.fromMap(maps.first);
   }
 
-  @override
-  Future<int> delete(int customerId) async {
-    return db.delete(customersTable,
-      where: '$customersColumnCustomerId = ?',
+  Future<bool> delete(int customerId) async {
+    final result = db.delete(customersTable,
+      where: '\$customersColumnCustomerId = ?',
       whereArgs: [customerId],);
+      
+    return result > 0;  
   }
 
-  @override
-  Future<int> update(Customers customers) async {
-    return db.update(customersTable, customers.toMap(),
-      where: '$customersColumnCustomerId = ?',
+  Future<bool> update(Customers customers) async {
+    final result = db.update(customersTable, customers.toMap(),
+      where: '\$customersColumnCustomerId = ?',
       whereArgs: [customers.customerId],);
+      
+    return result > 0;  
   }
-}
+

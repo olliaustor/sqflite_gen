@@ -7,8 +7,8 @@ class DealerBrand {
     required this.brandId,
   });
   
-  final int dealerId;
-  final int brandId;
+    final int dealerId;
+    final int brandId;
 
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
@@ -24,19 +24,19 @@ class DealerBrand {
     final brandId = map[dealerBrandColumnBrandId] as int;
 
     return DealerBrand(
-      dealerId: dealerId, 
+      dealerId: dealerId,
       brandId: brandId,
     );
   }  
 
   DealerBrand copyWith({
-       int? dealerId,
-       int? brandId,
+    int? dealerId,
+    int? brandId,
   }) {
     return DealerBrand(
       dealerId: isNull(dealerId) ? this.dealerId : dealerId!,
-      brandId: isNull(brandId) ? this.brandId : brandId!,    
+      brandId: isNull(brandId) ? this.brandId : brandId!,
     );
-  }  
+  }
 
 }

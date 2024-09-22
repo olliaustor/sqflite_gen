@@ -6,7 +6,6 @@ import 'package:sqflite_gen/src/generators/file_generators/database/database_gen
 import 'package:sqflite_gen/src/generators/file_generators/database_repositiory/database_repository_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/db/db_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
-import 'package:sqflite_gen/src/generators/file_generators/generic_provider/generic_provider_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/tables/tables_barrel_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/utils/utils_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_barrel/table_barrel_generator.dart';
@@ -41,7 +40,6 @@ class SqfliteCodeGenerator {
   List<FileGenerator> _getStaticGenerators(List<Either<CreateTableStatement, String>> statements) {
     return [
       DbGenerator(),
-      GenericProviderGenerator(),
       UtilsGenerator(),
       DatabaseRepositoryGenerator(),
       DatabaseGenerator(statements),

@@ -3,47 +3,44 @@ import 'models_model.dart';
 import 'models_values.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ModelsProvider implements GenericProvider<Models> {
+class ModelsProvider {
   ModelsProvider(this.db);
 
-  Database db;
+  final Database db;
 
-  @override
   List<String> create(int version) {
     return [modelsTableCreate];
   }
 
-  @override
   Future<Models> insert(Models models) async {
     final result = await db.insert(modelsTable, models.toMap());
-       
+    
     return models.copyWith(modelId: result);
   }
 
-  @override
   Future<Models?> get(int modelId) async {
     final maps = await db.query(modelsTable,
-      where: '$modelsColumnModelId = ?',
+      where: '\$modelsColumnModelId = ?',
       whereArgs: [modelId],);
 
-    if (maps.isNotEmpty) {
-      return Models.fromMap(maps.first);
-    }
-
-    return null;
+    return maps.isEmpty
+      ? null
+      : Models.fromMap(maps.first);
   }
 
-  @override
-  Future<int> delete(int modelId) async {
-    return db.delete(modelsTable,
-      where: '$modelsColumnModelId = ?',
+  Future<bool> delete(int modelId) async {
+    final result = db.delete(modelsTable,
+      where: '\$modelsColumnModelId = ?',
       whereArgs: [modelId],);
+      
+    return result > 0;  
   }
 
-  @override
-  Future<int> update(Models models) async {
-    return db.update(modelsTable, models.toMap(),
-      where: '$modelsColumnModelId = ?',
+  Future<bool> update(Models models) async {
+    final result = db.update(modelsTable, models.toMap(),
+      where: '\$modelsColumnModelId = ?',
       whereArgs: [models.modelId],);
+      
+    return result > 0;  
   }
-}
+

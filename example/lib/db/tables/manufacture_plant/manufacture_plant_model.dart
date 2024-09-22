@@ -10,11 +10,11 @@ class ManufacturePlant {
     this.companyOwned,
   });
   
-  final int? manufacturePlantId;
-  final String plantName;
-  final String? plantType;
-  final String? plantLocation;
-  final int? companyOwned;
+    final int? manufacturePlantId;
+    final String plantName;
+    final String? plantType;
+    final String? plantLocation;
+    final int? companyOwned;
 
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
@@ -23,7 +23,7 @@ class ManufacturePlant {
       manufacturePlantColumnPlantLocation: plantLocation,
       manufacturePlantColumnCompanyOwned: companyOwned,
     };
-  
+
     if (manufacturePlantId != null) {
       map[manufacturePlantColumnManufacturePlantId] = manufacturePlantId;
     }
@@ -39,28 +39,28 @@ class ManufacturePlant {
     final companyOwned = map[manufacturePlantColumnCompanyOwned] as int?;
 
     return ManufacturePlant(
-      manufacturePlantId: manufacturePlantId, 
-      plantName: plantName, 
-      plantType: plantType, 
-      plantLocation: plantLocation, 
+      manufacturePlantId: manufacturePlantId,
+      plantName: plantName,
+      plantType: plantType,
+      plantLocation: plantLocation,
       companyOwned: companyOwned,
     );
   }  
 
   ManufacturePlant copyWith({
-       Wrapped<int?>? manufacturePlantId,
-       String? plantName,
-       Wrapped<String?>? plantType,
-       Wrapped<String?>? plantLocation,
-       Wrapped<int?>? companyOwned,
+    Wrapped<int?>? manufacturePlantId,
+    String? plantName,
+    Wrapped<String?>? plantType,
+    Wrapped<String?>? plantLocation,
+    Wrapped<int?>? companyOwned,
   }) {
     return ManufacturePlant(
       manufacturePlantId: isNull(manufacturePlantId) ? this.manufacturePlantId : (manufacturePlantId!.value),
       plantName: isNull(plantName) ? this.plantName : plantName!,
       plantType: isNull(plantType) ? this.plantType : (plantType!.value),
       plantLocation: isNull(plantLocation) ? this.plantLocation : (plantLocation!.value),
-      companyOwned: isNull(companyOwned) ? this.companyOwned : (companyOwned!.value),    
+      companyOwned: isNull(companyOwned) ? this.companyOwned : (companyOwned!.value),
     );
-  }  
+  }
 
 }

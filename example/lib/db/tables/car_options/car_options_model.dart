@@ -13,14 +13,14 @@ class CarOptions {
     required this.optionSetPrice,
   });
   
-  final int? optionSetId;
-  final int? modelId;
-  final int engineId;
-  final int transmissionId;
-  final int chassisId;
-  final int? premiumSoundId;
-  final String color;
-  final int optionSetPrice;
+    final int? optionSetId;
+    final int? modelId;
+    final int engineId;
+    final int transmissionId;
+    final int chassisId;
+    final int? premiumSoundId;
+    final String color;
+    final int optionSetPrice;
 
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
@@ -32,7 +32,7 @@ class CarOptions {
       carOptionsColumnColor: color,
       carOptionsColumnOptionSetPrice: optionSetPrice,
     };
-  
+
     if (optionSetId != null) {
       map[carOptionsColumnOptionSetId] = optionSetId;
     }
@@ -51,26 +51,26 @@ class CarOptions {
     final optionSetPrice = map[carOptionsColumnOptionSetPrice] as int;
 
     return CarOptions(
-      optionSetId: optionSetId, 
-      modelId: modelId, 
-      engineId: engineId, 
-      transmissionId: transmissionId, 
-      chassisId: chassisId, 
-      premiumSoundId: premiumSoundId, 
-      color: color, 
+      optionSetId: optionSetId,
+      modelId: modelId,
+      engineId: engineId,
+      transmissionId: transmissionId,
+      chassisId: chassisId,
+      premiumSoundId: premiumSoundId,
+      color: color,
       optionSetPrice: optionSetPrice,
     );
   }  
 
   CarOptions copyWith({
-       Wrapped<int?>? optionSetId,
-       Wrapped<int?>? modelId,
-       int? engineId,
-       int? transmissionId,
-       int? chassisId,
-       Wrapped<int?>? premiumSoundId,
-       String? color,
-       int? optionSetPrice,
+    Wrapped<int?>? optionSetId,
+    Wrapped<int?>? modelId,
+    int? engineId,
+    int? transmissionId,
+    int? chassisId,
+    Wrapped<int?>? premiumSoundId,
+    String? color,
+    int? optionSetPrice,
   }) {
     return CarOptions(
       optionSetId: isNull(optionSetId) ? this.optionSetId : (optionSetId!.value),
@@ -80,8 +80,8 @@ class CarOptions {
       chassisId: isNull(chassisId) ? this.chassisId : chassisId!,
       premiumSoundId: isNull(premiumSoundId) ? this.premiumSoundId : (premiumSoundId!.value),
       color: isNull(color) ? this.color : color!,
-      optionSetPrice: isNull(optionSetPrice) ? this.optionSetPrice : optionSetPrice!,    
+      optionSetPrice: isNull(optionSetPrice) ? this.optionSetPrice : optionSetPrice!,
     );
-  }  
+  }
 
 }
