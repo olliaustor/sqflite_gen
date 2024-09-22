@@ -9,8 +9,10 @@ import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/constructor/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_create_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_delete_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_get_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_insert_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_update_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
@@ -38,17 +40,19 @@ class TableProviderGenerator extends FileGenerator {
   /// Placeholder for method get
   final String placeholderGet = '%get%';
 
-  final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
+  /// Placeholder for method delete
+  final String placeholderDelete = '%delete%';
+
+  /// Placeholder for method delete
+  final String placeholderUpdate = '%update%';
+
+  /// Placeholder for class name
   final String placeholderClassName = '%className%';
-  final String placeholderFieldName = '%fieldName%';
+
+  /// Placeholder for filename in source
   final String placeholderFileName = '%fileName%';
-  final String placeholderTableNameConst = '%tableNameConst%';
-  final String placeholderPrimaryColumnNameConst = '%primaryColumnNameConst%';
-  final String placeholderPrimaryColumnFieldName = '%primaryColumnFieldName%';
 
-  final String targetFileName =
-      'tables/%underscoreSqlTableName%/%underscoreSqlTableName%_provider.dart';
-
+  /// File content with placeholders
   final content = '''
 import '../../generic_provider.dart';
 import '%fileName%_model.dart';
@@ -63,21 +67,8 @@ class %className%Provider {
 %create%
 %insert%
 %get%
-
-  @override
-  Future<int> delete(int %primaryColumnFieldName%) async {
-    return db.delete(%tableNameConst%,
-      where: '\$%primaryColumnNameConst% = ?',
-      whereArgs: [%primaryColumnFieldName%],);
-  }
-
-  @override
-  Future<int> update(%className% %fieldName%) async {
-    return db.update(%tableNameConst%, %fieldName%.toMap(),
-      where: '\$%primaryColumnNameConst% = ?',
-      whereArgs: [%fieldName%.%primaryColumnFieldName%],);
-  }
-}
+%delete%
+%update%
 ''';
 
   @override
@@ -90,51 +81,29 @@ class %className%Provider {
     final createGenerator = TableToMethodCreateGenerator();
     final insertGenerator = TableToMethodInsertGenerator();
     final getGenerator = TableToMethodGetGenerator();
+    final deleteGenerator = TableToMethodDeleteGenerator();
+    final updateGenerator = TableToMethodUpdateGenerator();
 
     final fullFileName = TableFileNameGenerator()(
       createTableStatement,
       fileNameSuffix: fileNameSuffix,
     );
 
-    final mapReplacements = [
-      MapEntry(
-        placeholderUnderscoreSqlTableName,
-        CamelCaseToUnderscoreConverter().convert(sqlTableName),
-      ),
-      MapEntry(
-        placeholderFieldName,
-        createTableStatement.toFieldName(),
-      ),
-      MapEntry(
-        placeholderFileName,
-        createTableStatement.toFileName(),
-      ),
-      MapEntry(
-        placeholderTableNameConst,
-        TableNameToConstNameConverter().convert(sqlTableName),
-      ),
-      MapEntry(
-        placeholderPrimaryColumnNameConst,
-          _getPrimaryColumnNameConst(sqlTableName, createTableStatement.columns),
-      ),
-      MapEntry(
-        placeholderPrimaryColumnFieldName,
-        _getPrimaryColumnNameField(sqlTableName, createTableStatement.columns),
-      ),
-    ];
-
     final fileContent = content
+        .replaceAll(placeholderFileName, createTableStatement.toFileName())
         .replaceAll(placeholderClassName, createTableStatement.toClassName())
         .replaceAll(placeholderConstructor,
-      constructorGenerator(createTableStatement),)
+          constructorGenerator(createTableStatement),)
         .replaceAll(placeholderCreate,
-      createGenerator(createTableStatement),)
+          createGenerator(createTableStatement),)
         .replaceAll(placeholderInsert,
-      insertGenerator(createTableStatement),)
+          insertGenerator(createTableStatement),)
         .replaceAll(placeholderGet,
-      getGenerator(createTableStatement),)
-
-        .replaceAllFromList(mapReplacements);
+          getGenerator(createTableStatement),)
+        .replaceAll(placeholderDelete,
+          deleteGenerator(createTableStatement),)
+        .replaceAll(placeholderUpdate,
+          updateGenerator(createTableStatement),);
 
     return FileGeneratorResult(
       targetFileName: fullFileName,

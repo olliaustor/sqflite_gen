@@ -104,19 +104,13 @@ CREATE TABLE frameworks (
         expect(result.content, contains(expectedValue));
       }),
       test('contains method delete', () async {
-        const expectedValue = '''
-  @override
-  Future<int> delete(int id) async {
-''';
+        const expectedValue = 'Future<bool> delete(int id) async {';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
       }),
       test('contains method update', () async {
-        const expectedValue = '''
-  @override
-  Future<int> update(Frameworks frameworks) async {
-''';
+        const expectedValue = 'Future<bool> update(Frameworks frameworks) async {';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
