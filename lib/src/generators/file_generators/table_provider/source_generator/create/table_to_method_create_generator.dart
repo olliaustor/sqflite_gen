@@ -19,8 +19,6 @@ class TableToMethodCreateGenerator {
   ///
   /// Returns [String] containing the constructor
   String call(CreateTableStatement statement) {
-    final generator = ColumnsToConstructorParametersGenerator();
-
     final text = content
         .replaceAll(
       placeholderFieldName,

@@ -9,6 +9,8 @@ import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/constructor/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_create_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_get_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_insert_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
 
 import 'package:sqlparser/sqlparser.dart';
@@ -29,6 +31,12 @@ class TableProviderGenerator extends FileGenerator {
 
   /// Placeholder for method create
   final String placeholderCreate = '%create%';
+
+  /// Placeholder for method insert
+  final String placeholderInsert = '%insert%';
+
+  /// Placeholder for method get
+  final String placeholderGet = '%get%';
 
   final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
   final String placeholderClassName = '%className%';
@@ -53,26 +61,8 @@ class %className%Provider {
   final Database db;
 
 %create%
-
-  @override
-  Future<%className%> insert(%className% %fieldName%) async {
-    final result = await db.insert(%tableNameConst%, %fieldName%.toMap());
-       
-    return %fieldName%.copyWith(%primaryColumnFieldName%: result);
-  }
-
-  @override
-  Future<%className%?> get(int %primaryColumnFieldName%) async {
-    final maps = await db.query(%tableNameConst%,
-      where: '\$%primaryColumnNameConst% = ?',
-      whereArgs: [%primaryColumnFieldName%],);
-
-    if (maps.isNotEmpty) {
-      return %className%.fromMap(maps.first);
-    }
-
-    return null;
-  }
+%insert%
+%get%
 
   @override
   Future<int> delete(int %primaryColumnFieldName%) async {
@@ -98,6 +88,8 @@ class %className%Provider {
     final fileNameGenerator = TableFileNameGenerator();
     final constructorGenerator = TableToConstructorGenerator();
     final createGenerator = TableToMethodCreateGenerator();
+    final insertGenerator = TableToMethodInsertGenerator();
+    final getGenerator = TableToMethodGetGenerator();
 
     final fullFileName = TableFileNameGenerator()(
       createTableStatement,
@@ -137,6 +129,10 @@ class %className%Provider {
       constructorGenerator(createTableStatement),)
         .replaceAll(placeholderCreate,
       createGenerator(createTableStatement),)
+        .replaceAll(placeholderInsert,
+      insertGenerator(createTableStatement),)
+        .replaceAll(placeholderGet,
+      getGenerator(createTableStatement),)
 
         .replaceAllFromList(mapReplacements);
 

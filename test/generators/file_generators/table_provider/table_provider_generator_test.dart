@@ -92,19 +92,13 @@ CREATE TABLE frameworks (
         expect(result.content, contains(expectedValue));
       }),
       test('contains method insert', () async {
-        const expectedValue = '''
-  @override
-  Future<Frameworks> insert(Frameworks frameworks) async {
-''';
+        const expectedValue = 'Future<Frameworks> insert(Frameworks frameworks) async {';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
       }),
       test('contains method get', () async {
-        const expectedValue = '''
-  @override
-  Future<Frameworks?> get(int id) async {
-''';
+        const expectedValue = 'Future<Frameworks?> get(int id) async {';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
