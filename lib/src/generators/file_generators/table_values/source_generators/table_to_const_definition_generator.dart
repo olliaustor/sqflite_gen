@@ -8,8 +8,7 @@ class TableToConstDefinitionGenerator {
   ///
   /// Returns [String] containing the const definition of the table name
   String call(CreateTableStatement statement) {
-    final constNameGenerator =
-      TableToConstNameGenerator();
+    final constNameGenerator = TableToConstNameGenerator();
     final tableSqlName = statement.tableName;
     final constName = constNameGenerator(statement);
 

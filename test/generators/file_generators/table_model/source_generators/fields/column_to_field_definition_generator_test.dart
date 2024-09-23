@@ -10,9 +10,10 @@ void main() {
 
   final columnDefinitionRequired = ColumnDefinition(
     columnName: 'id',
-    typeName: 'INT',constraints: [
-    NotNull('id'),
-  ],
+    typeName: 'INT',
+    constraints: [
+      NotNull('id'),
+    ],
   );
 
   group(

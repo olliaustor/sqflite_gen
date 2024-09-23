@@ -3,8 +3,8 @@ abstract class FileGenerator {
 }
 
 class FileGeneratorResult {
-  FileGeneratorResult({required this.targetFileName, required this.content}) { }
+  FileGeneratorResult({required this.targetFileName, required this.content}) {}
 
   final String targetFileName;
-  final  String content;
+  final String content;
 }

@@ -17,8 +17,7 @@ class TableToConstructorGenerator {
   String call(CreateTableStatement statement) {
     final generator = ColumnsToConstructorParametersGenerator();
 
-    final text = content
-        .replaceAll(
+    final text = content.replaceAll(
       placeholderClassName,
       statement.toClassName(),
     );

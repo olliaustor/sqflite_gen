@@ -93,18 +93,30 @@ class %className%Provider {
     final fileContent = content
         .replaceAll(placeholderFileName, createTableStatement.toFileName())
         .replaceAll(placeholderClassName, createTableStatement.toClassName())
-        .replaceAll(placeholderConstructor,
-          constructorGenerator(createTableStatement),)
-        .replaceAll(placeholderCreate,
-          createGenerator(createTableStatement),)
-        .replaceAll(placeholderInsert,
-          insertGenerator(createTableStatement),)
-        .replaceAll(placeholderGet,
-          getGenerator(createTableStatement),)
-        .replaceAll(placeholderDelete,
-          deleteGenerator(createTableStatement),)
-        .replaceAll(placeholderUpdate,
-          updateGenerator(createTableStatement),);
+        .replaceAll(
+          placeholderConstructor,
+          constructorGenerator(createTableStatement),
+        )
+        .replaceAll(
+          placeholderCreate,
+          createGenerator(createTableStatement),
+        )
+        .replaceAll(
+          placeholderInsert,
+          insertGenerator(createTableStatement),
+        )
+        .replaceAll(
+          placeholderGet,
+          getGenerator(createTableStatement),
+        )
+        .replaceAll(
+          placeholderDelete,
+          deleteGenerator(createTableStatement),
+        )
+        .replaceAll(
+          placeholderUpdate,
+          updateGenerator(createTableStatement),
+        );
 
     return FileGeneratorResult(
       targetFileName: fullFileName,
@@ -112,9 +124,10 @@ class %className%Provider {
     );
   }
 
-  String _getPrimaryColumnNameConst(String tableName, List<ColumnDefinition> columns) {
-    final primaryKeyColumn = columns
-        .where((column) => column.isPrimaryKey()).firstOrNull;
+  String _getPrimaryColumnNameConst(
+      String tableName, List<ColumnDefinition> columns) {
+    final primaryKeyColumn =
+        columns.where((column) => column.isPrimaryKey()).firstOrNull;
 
     return primaryKeyColumn == null
         ? 'unknown'
@@ -122,9 +135,10 @@ class %className%Provider {
             .convert(primaryKeyColumn.columnName);
   }
 
-  String _getPrimaryColumnNameField(String tableName, List<ColumnDefinition> columns) {
-    final primaryKeyColumn = columns
-        .where((column) => column.isPrimaryKey()).firstOrNull;
+  String _getPrimaryColumnNameField(
+      String tableName, List<ColumnDefinition> columns) {
+    final primaryKeyColumn =
+        columns.where((column) => column.isPrimaryKey()).firstOrNull;
 
     return primaryKeyColumn == null
         ? 'unknown'

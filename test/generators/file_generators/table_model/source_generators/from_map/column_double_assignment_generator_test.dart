@@ -25,7 +25,8 @@ void main() {
         const expected = 'map[myTableNameColumnVal] as Double';
 
         final result = ColumnDoubleToAssignmentGenerator()(
-          statement, columnDefinitionNotNullable,
+          statement,
+          columnDefinitionNotNullable,
         );
 
         expect(result, equals(expected));
@@ -34,12 +35,12 @@ void main() {
         const expected = 'map[myTableNameColumnVal] as Double?';
 
         final result = ColumnDoubleToAssignmentGenerator()(
-          statement, columnDefinitionNullable,
+          statement,
+          columnDefinitionNullable,
         );
 
         expect(result, equals(expected));
       }),
-
     },
   );
 }

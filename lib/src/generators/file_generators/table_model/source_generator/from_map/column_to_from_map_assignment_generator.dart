@@ -26,16 +26,13 @@ class ColumnToFromMapAssignmentGenerator {
   ///  'columnDefinition': column definition
   ///
   /// Returns [String] containing the map assignment
-  String call(CreateTableStatement statement, ColumnDefinition columnDefinition)
-  {
+  String call(
+      CreateTableStatement statement, ColumnDefinition columnDefinition) {
     final columnPropertyName = columnDefinition.toFieldName();
-    final columnFieldType = columnDefinition
-        .toFieldType()
-        .replaceAll('?', '');
+    final columnFieldType = columnDefinition.toFieldType().replaceAll('?', '');
 
-    final generator = typeMappings
-        .firstWhere((entry) => entry.key == columnFieldType)
-        .value;
+    final generator =
+        typeMappings.firstWhere((entry) => entry.key == columnFieldType).value;
 
     final sourceValue = generator(statement, columnDefinition);
 

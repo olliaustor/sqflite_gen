@@ -2,16 +2,17 @@ import 'package:sqflite_gen/src/generators/file_generators/database_repositiory/
 import 'package:test/test.dart';
 
 void main() {
-  group('DatabaseRepositoryGenerator', () => {
-    test('has valid target filename', () async {
-      final generator = DatabaseRepositoryGenerator();
-      final result = await generator.generate();
+  group(
+      'DatabaseRepositoryGenerator',
+      () => {
+            test('has valid target filename', () async {
+              final generator = DatabaseRepositoryGenerator();
+              final result = await generator.generate();
 
-      expect(result.targetFileName, equals('database_repository.dart'));
-    }),
-
-    test('contains valid imports', () async {
-      const expected = '''
+              expect(result.targetFileName, equals('database_repository.dart'));
+            }),
+            test('contains valid imports', () async {
+              const expected = '''
 import 'dart:async';
 
 import 'database.dart';
@@ -19,22 +20,21 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 ''';
 
-      final generator = DatabaseRepositoryGenerator();
-      final result = await generator.generate();
+              final generator = DatabaseRepositoryGenerator();
+              final result = await generator.generate();
 
-      expect(result.content, contains(expected));
-    }),
+              expect(result.content, contains(expected));
+            }),
+            test('contains class DatabaseRepository', () async {
+              const expected = 'class DatabaseRepository';
 
-    test('contains class DatabaseRepository', () async {
-      const expected = 'class DatabaseRepository';
+              final generator = DatabaseRepositoryGenerator();
+              final result = await generator.generate();
 
-      final generator = DatabaseRepositoryGenerator();
-      final result = await generator.generate();
-
-      expect(result.content, contains(expected));
-    }),
-    test('contains getter database', () async {
-      final expected = '''
+              expect(result.content, contains(expected));
+            }),
+            test('contains getter database', () async {
+              final expected = '''
   Future<Database> get database async {
     if (_database != null) {
       return _database!;
@@ -44,13 +44,13 @@ import 'package:sqflite/sqflite.dart';
     return _database!;
   }
 ''';
-      final generator = DatabaseRepositoryGenerator();
-      final result = await generator.generate();
+              final generator = DatabaseRepositoryGenerator();
+              final result = await generator.generate();
 
-      expect(result.content, contains(expected));
-    }),
-    test('contains method _open', () async {
-      const expected = '''
+              expect(result.content, contains(expected));
+            }),
+            test('contains method _open', () async {
+              const expected = '''
   Future<Database> _open() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'database.db');
@@ -58,10 +58,10 @@ import 'package:sqflite/sqflite.dart';
     return openDatabaseWithMigration(path);
   }
 ''';
-      final generator = DatabaseRepositoryGenerator();
-      final result = await generator.generate();
+              final generator = DatabaseRepositoryGenerator();
+              final result = await generator.generate();
 
-      expect(result.content, contains(expected));
-    }),
-  });
+              expect(result.content, contains(expected));
+            }),
+          });
 }

@@ -26,20 +26,19 @@ extension ColumnDefinitionX on ColumnDefinition {
   }
 
   /// Returns 'true' when column is defined as primary key, false otherwise
-  bool isPrimaryKey() => constraints.any((c) => c
-      is PrimaryKeyColumn
+  bool isPrimaryKey() => constraints.any((c) => c is PrimaryKeyColumn
       //.toString()
       //.toUpperCase()
       //.contains('PRIMARY KEY'),
-  );
+      );
 
   /// Returns 'true' when column is defined as auto increment, false otherwise
-  bool isAutoIncrement() => constraints.any((c) => c
-      is PrimaryKeyColumn && c.autoIncrement
-      //.toString()
-      //.toUpperCase()
-      //.contains('AUTOINCREMENT'),
-  );
+  bool isAutoIncrement() =>
+      constraints.any((c) => c is PrimaryKeyColumn && c.autoIncrement
+          //.toString()
+          //.toUpperCase()
+          //.contains('AUTOINCREMENT'),
+          );
 }
 
 /// Type mapping from different database types to dart types

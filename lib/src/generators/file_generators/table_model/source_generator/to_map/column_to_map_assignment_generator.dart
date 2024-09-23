@@ -35,13 +35,10 @@ class ColumnToMapAssignmentGenerator {
     final columnConstName = columnToConstConverter.convert(
       columnDefinition.toFieldName(),
     );
-    final columnFieldType = columnDefinition
-        .toFieldType()
-        .replaceAll('?', '');
+    final columnFieldType = columnDefinition.toFieldType().replaceAll('?', '');
 
-    final generator = typeMappings
-        .firstWhere((entry) => entry.key == columnFieldType)
-        .value;
+    final generator =
+        typeMappings.firstWhere((entry) => entry.key == columnFieldType).value;
 
     final sourceValue = generator(columnDefinition);
 

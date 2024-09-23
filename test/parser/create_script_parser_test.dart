@@ -52,7 +52,8 @@ void main() {
   test('parses multipleStatements', () {
     final parser = CreateScriptParser();
 
-    var createTableStmt = parser.parse(validCreateTable + '\n\n' + validCreateTableWithAutoIncrement);
+    var createTableStmt = parser
+        .parse(validCreateTable + '\n\n' + validCreateTableWithAutoIncrement);
 
     expect(createTableStmt.length, 2);
   });

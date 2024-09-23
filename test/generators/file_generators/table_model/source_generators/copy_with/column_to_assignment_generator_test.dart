@@ -22,7 +22,7 @@ void main() {
 
   group(
     'ColumnToParameterGenerator',
-        () => {
+    () => {
       test('nullable column returns valid string', () {
         const expected = '      val: isNull(val) ? this.val : (val!.value)';
 

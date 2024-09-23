@@ -8,6 +8,7 @@ import 'package:sqlparser/sqlparser.dart';
 class TableToMethodToMapGenerator {
   /// Placeholder for column value to map assignments
   final placeholderAssignments = '%assignments%';
+
   /// Placeholder for special assignment when table includes an auto increment
   /// column
   final placeholderKeyAssignment = '%placeholderAutoIncrementAssignment%';
@@ -38,7 +39,7 @@ class TableToMethodToMapGenerator {
         )
         .replaceAll(
           placeholderKeyAssignment,
-      autoIncrementGenerator(statement),
+          autoIncrementGenerator(statement),
         );
   }
 }

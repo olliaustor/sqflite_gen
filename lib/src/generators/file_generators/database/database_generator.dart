@@ -53,8 +53,7 @@ Future<void> _onCreate(Database db, int version) async {
 
   @override
   Future<FileGeneratorResult> generate() async {
-    final methodGetTableProviders =
-      MethodGetTablesProviderGenerator();
+    final methodGetTableProviders = MethodGetTablesProviderGenerator();
 
     final fileContent = content.replaceAll(
       placeholderGetTableProvider,

@@ -25,7 +25,8 @@ void main() {
         const expected = 'map[myTableNameColumnVal] as int';
 
         final result = ColumnIntToAssignmentGenerator()(
-          statement, columnDefinitionNotNullable,
+          statement,
+          columnDefinitionNotNullable,
         );
 
         expect(result, equals(expected));
@@ -34,12 +35,12 @@ void main() {
         const expected = 'map[myTableNameColumnVal] as int?';
 
         final result = ColumnIntToAssignmentGenerator()(
-          statement, columnDefinitionNullable,
+          statement,
+          columnDefinitionNullable,
         );
 
         expect(result, equals(expected));
       }),
-
     },
   );
 }

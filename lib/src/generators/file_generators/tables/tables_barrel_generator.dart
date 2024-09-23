@@ -27,11 +27,9 @@ class TablesBarrelGenerator extends FileGenerator {
     final sb = StringBuffer();
     final validStatements = getValidTableStatements(statements);
 
-    for (final statement in validStatements)
-    {
+    for (final statement in validStatements) {
       final fileName = statement.toFileName();
-      final sourceLine = exportLine
-        .replaceAll(placeholderFileName, fileName);
+      final sourceLine = exportLine.replaceAll(placeholderFileName, fileName);
 
       sb.writeln(sourceLine);
     }

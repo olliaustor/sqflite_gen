@@ -16,7 +16,6 @@ class ColumnToParameterGenerator {
     }
     if (!fieldType.endsWith('?')) fieldType += '?';
 
-
     return '    $fieldType $fieldName';
   }
 }

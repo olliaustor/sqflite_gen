@@ -8,7 +8,8 @@ class ColumnToFieldDefinitionGenerator {
   ///
   /// Returns [String] containing the field definition for column
   String call(ColumnDefinition columnDefinition) {
-    final result = 'final ${columnDefinition.toFieldType()} ${columnDefinition.toFieldName()};';
+    final result =
+        'final ${columnDefinition.toFieldType()} ${columnDefinition.toFieldName()};';
 
     return result;
   }

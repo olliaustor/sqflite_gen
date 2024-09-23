@@ -10,10 +10,10 @@ class ColumnDateTimeToAssignmentGenerator
   ///
   /// Returns [String] containing the map value assignment for given column
   @override
-  String call(CreateTableStatement statement, ColumnDefinition columnDefinition)
-  {
-    final columnPropertyName = ColumnToConstNameGenerator()
-        .call(statement, columnDefinition);
+  String call(
+      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    final columnPropertyName =
+        ColumnToConstNameGenerator().call(statement, columnDefinition);
 
     return columnDefinition.isNonNullable
         ? _propertyToAssignment(columnPropertyName)
@@ -27,8 +27,7 @@ class ColumnDateTimeToAssignmentGenerator
   String _propertyToNullableAssignment(
     String propertyName,
     ColumnDefinition columnDefinition,
-  )
-  {
+  ) {
     return 'isNull(map[$propertyName]) ? null : ${_propertyToAssignment(propertyName)}';
   }
 }

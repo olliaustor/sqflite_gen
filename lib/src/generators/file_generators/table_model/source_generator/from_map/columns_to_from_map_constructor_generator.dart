@@ -22,7 +22,7 @@ class ColumnsToFromMapConstructorGenerator {
   /// Returns [String] containing the constructor
   String call(CreateTableStatement statement) {
     final tableName = UnderscoreToCamelCaseConverter().convert(
-        statement.tableName,
+      statement.tableName,
     );
     final sB = StringBuffer();
 

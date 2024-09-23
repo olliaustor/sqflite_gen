@@ -87,8 +87,8 @@ class TableToMethodInsertGenerator {
   /// given object including the id from the newly created record
   String _getReturnCopyWithCall(CreateTableStatement statement) {
     final content = _getPrimaryColumn(statement)!.isNonNullable
-      ? returnCopyWithCall
-      : returnCopyWithCallNullable;
+        ? returnCopyWithCall
+        : returnCopyWithCallNullable;
 
     return content
         .replaceAll(placeholderFieldName, statement.toFieldName())
@@ -123,6 +123,6 @@ class TableToMethodInsertGenerator {
   bool _hasIntegerPrimaryColumn(CreateTableStatement statement) {
     final primaryKeyColumn = _getPrimaryColumn(statement);
     return primaryKeyColumn != null &&
-      primaryKeyColumn.toFieldType().startsWith('int');
+        primaryKeyColumn.toFieldType().startsWith('int');
   }
 }

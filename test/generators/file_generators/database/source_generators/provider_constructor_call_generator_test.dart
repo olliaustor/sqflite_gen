@@ -3,17 +3,18 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final validStatement =
-    CreateTableStatement(
-        tableName: 'example_table',
-    );
+  final validStatement = CreateTableStatement(
+    tableName: 'example_table',
+  );
 
-  group('ProviderConstructorCallGenerator', () => {
-    test('builds valid provider class name', () {
-      final generator = ProviderConstructorCallGenerator();
-      final result = generator(validStatement);
+  group(
+      'ProviderConstructorCallGenerator',
+      () => {
+            test('builds valid provider class name', () {
+              final generator = ProviderConstructorCallGenerator();
+              final result = generator(validStatement);
 
-      expect(result, equals('ExampleTableProvider(db)'));
-    }),
-  });
+              expect(result, equals('ExampleTableProvider(db)'));
+            }),
+          });
 }

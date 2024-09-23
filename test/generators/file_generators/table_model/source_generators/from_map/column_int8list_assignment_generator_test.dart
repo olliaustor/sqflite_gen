@@ -25,7 +25,8 @@ void main() {
         const expected = 'map[myTableNameColumnVal] as Int8List';
 
         final result = ColumnInt8ListToAssignmentGenerator()(
-          statement, columnDefinitionNotNullable,
+          statement,
+          columnDefinitionNotNullable,
         );
 
         expect(result, equals(expected));
@@ -34,12 +35,12 @@ void main() {
         const expected = 'map[myTableNameColumnVal] as Int8List?';
 
         final result = ColumnInt8ListToAssignmentGenerator()(
-          statement, columnDefinitionNullable,
+          statement,
+          columnDefinitionNullable,
         );
 
         expect(result, equals(expected));
       }),
-
     },
   );
 }

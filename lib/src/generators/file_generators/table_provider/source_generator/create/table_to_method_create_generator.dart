@@ -18,8 +18,7 @@ class TableToMethodCreateGenerator {
   ///
   /// Returns [String] containing the constructor
   String call(CreateTableStatement statement) {
-    final text = content
-        .replaceAll(
+    final text = content.replaceAll(
       placeholderFieldName,
       statement.toFieldName(),
     );

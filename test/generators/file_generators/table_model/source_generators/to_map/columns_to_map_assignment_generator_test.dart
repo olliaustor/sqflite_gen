@@ -25,7 +25,7 @@ void main() {
 
   final statementWithOneColumn = CreateTableStatement(
     tableName: 'my_table_name',
-      columns: [columnDefinitionBool],
+    columns: [columnDefinitionBool],
   );
 
   final statementWithMultipleColumns = CreateTableStatement(
@@ -57,7 +57,7 @@ void main() {
           statementWithOneColumn,
         );
 
-        expect(result,isNot(contains('\n')));
+        expect(result, isNot(contains('\n')));
       }),
       test('multiple columns returns multiline string', () {
         const expected = 'myTableNameColumnVal: val';
@@ -75,7 +75,7 @@ void main() {
           statementWithAutoIncrement,
         );
 
-        expect(result,isNot(contains(expected)));
+        expect(result, isNot(contains(expected)));
       }),
     },
   );

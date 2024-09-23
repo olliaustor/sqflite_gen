@@ -70,33 +70,40 @@ class %className% {
     final constructorGenerator = TableToConstructorGenerator();
     final fieldsGenerator = ColumnsToFieldDefinitionsGenerator();
     final toMapGenerator = TableToMethodToMapGenerator();
-    final fromMapGenerator =  TableToMethodFromMapGenerator();
+    final fromMapGenerator = TableToMethodFromMapGenerator();
     final copyWithGenerator = TableToMethodCopyWithGenerator();
 
     final fullFileName = TableFileNameGenerator()(
-    createTableStatement,
-    fileNameSuffix: fileNameSuffix,
+      createTableStatement,
+      fileNameSuffix: fileNameSuffix,
     );
 
     final fileContent = content
-        .replaceAll(placeholderValuesFileName, fileNameGenerator(
-          createTableStatement,
-          fileNameSuffix: importFileNameValuesSuffix,
-          includeRelativePath: false,
-          ),)
+        .replaceAll(
+          placeholderValuesFileName,
+          fileNameGenerator(
+            createTableStatement,
+            fileNameSuffix: importFileNameValuesSuffix,
+            includeRelativePath: false,
+          ),
+        )
         .replaceAll(placeholderClassName, createTableStatement.toClassName())
-        .replaceAll(placeholderConstructor,
-          constructorGenerator(createTableStatement),)
-        .replaceAll(placeholderFields,
-          fieldsGenerator(createTableStatement.columns),)
+        .replaceAll(
+          placeholderConstructor,
+          constructorGenerator(createTableStatement),
+        )
+        .replaceAll(
+          placeholderFields,
+          fieldsGenerator(createTableStatement.columns),
+        )
         .replaceAll(placeholderToMap, toMapGenerator(createTableStatement))
         .replaceAll(placeholderFromMap, fromMapGenerator(createTableStatement))
-        .replaceAll(placeholderCopyWith, copyWithGenerator(createTableStatement));
-
+        .replaceAll(
+            placeholderCopyWith, copyWithGenerator(createTableStatement));
 
     return FileGeneratorResult(
-    targetFileName: fullFileName,
-    content: fileContent,
+      targetFileName: fullFileName,
+      content: fileContent,
     );
-    }
+  }
 }

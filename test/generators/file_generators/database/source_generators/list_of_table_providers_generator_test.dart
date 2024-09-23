@@ -6,7 +6,7 @@ void main() {
   final emptyStatements = <CreateTableStatement>[];
   final validStatement = [
     CreateTableStatement(
-        tableName: 'example_table',
+      tableName: 'example_table',
     ),
   ];
   final validStatements = [
@@ -18,29 +18,29 @@ void main() {
     ),
   ];
 
-  group('ListOfTableProvidersGenerator', () => {
-    test('with empty list generates empty string', () {
-      final generator = ListOfTableProvidersGenerator();
-      final result = generator(emptyStatements);
+  group(
+      'ListOfTableProvidersGenerator',
+      () => {
+            test('with empty list generates empty string', () {
+              final generator = ListOfTableProvidersGenerator();
+              final result = generator(emptyStatements);
 
-      expect(result, equals(''));
-    }),
+              expect(result, equals(''));
+            }),
+            test('with one table generates single line string', () {
+              final generator = ListOfTableProvidersGenerator();
+              final result = generator(validStatement);
 
-    test('with one table generates single line string', () {
-      final generator = ListOfTableProvidersGenerator();
-      final result = generator(validStatement);
-
-      expect(result, equals('    ExampleTableProvider(db),'));
-    }),
-
-    test('with multiple tables generates multiline string', () {
-      const expected = '''
+              expect(result, equals('    ExampleTableProvider(db),'));
+            }),
+            test('with multiple tables generates multiline string', () {
+              const expected = '''
     ExampleTableProvider(db),
     AnotherTableProvider(db),''';
-      final generator = ListOfTableProvidersGenerator();
-      final result = generator(validStatements);
+              final generator = ListOfTableProvidersGenerator();
+              final result = generator(validStatements);
 
-      expect(result, equals(expected));
-    }),
-  });
+              expect(result, equals(expected));
+            }),
+          });
 }

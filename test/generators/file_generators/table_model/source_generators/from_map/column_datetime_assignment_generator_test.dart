@@ -22,24 +22,27 @@ void main() {
     'ColumnDateTimeToAssignmentGenerator',
     () => {
       test('DateTime generates valid assignment', () {
-        const expected = 'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as int, isUtc: true,)';
+        const expected =
+            'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as int, isUtc: true,)';
 
         final result = ColumnDateTimeToAssignmentGenerator()(
-          statement, columnDefinitionNotNullable,
+          statement,
+          columnDefinitionNotNullable,
         );
 
         expect(result, equals(expected));
       }),
       test('DateTime? generates valid assignment', () {
-        const expected = 'isNull(map[myTableNameColumnVal]) ? null : DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as int, isUtc: true,)';
+        const expected =
+            'isNull(map[myTableNameColumnVal]) ? null : DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as int, isUtc: true,)';
 
         final result = ColumnDateTimeToAssignmentGenerator()(
-          statement, columnDefinitionNullable,
+          statement,
+          columnDefinitionNullable,
         );
 
         expect(result, equals(expected));
       }),
-
     },
   );
 }

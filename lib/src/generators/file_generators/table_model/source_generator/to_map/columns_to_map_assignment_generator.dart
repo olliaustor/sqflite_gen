@@ -12,9 +12,8 @@ class ColumnsToMapAssignmentGenerator {
     final generator = ColumnToMapAssignmentGenerator();
 
     final sB = StringBuffer();
-    final validColumns = statement.columns
-      .where((column) => !column.isAutoIncrement());
-
+    final validColumns =
+        statement.columns.where((column) => !column.isAutoIncrement());
 
     for (final column in validColumns) {
       sB.writeln('${generator(statement, column)},');

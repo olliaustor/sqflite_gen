@@ -10,8 +10,8 @@ void main() {
   );
 
   final secondColumnDefinition = ColumnDefinition(
-      columnName: 'text',
-      typeName: 'STRING',
+    columnName: 'text',
+    typeName: 'STRING',
   );
 
   final autoIncrementColumnDefinition = ColumnDefinition(

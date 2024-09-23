@@ -20,7 +20,7 @@ CREATE TABLE frameworks (
 
   group(
     'TableProviderGenerator',
-        () => {
+    () => {
       test('has valid target filename', () async {
         const expected = 'tables/frameworks/frameworks_provider.dart';
         final result = await generator.generate();
@@ -31,9 +31,7 @@ CREATE TABLE frameworks (
         final result = await generator.generate();
 
         final regEx = RegExp('import');
-        final amount = regEx
-            .allMatches(result.content)
-            .length;
+        final amount = regEx.allMatches(result.content).length;
         expect(amount, equals(4));
       }),
       test('contains ../../utils.dart import', () async {
@@ -92,7 +90,8 @@ CREATE TABLE frameworks (
         expect(result.content, contains(expectedValue));
       }),
       test('contains method insert', () async {
-        const expectedValue = 'Future<Frameworks> insert(Frameworks frameworks) async {';
+        const expectedValue =
+            'Future<Frameworks> insert(Frameworks frameworks) async {';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
@@ -110,7 +109,8 @@ CREATE TABLE frameworks (
         expect(result.content, contains(expectedValue));
       }),
       test('contains method update', () async {
-        const expectedValue = 'Future<bool> update(Frameworks frameworks) async {';
+        const expectedValue =
+            'Future<bool> update(Frameworks frameworks) async {';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));

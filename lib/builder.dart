@@ -10,12 +10,12 @@ import 'package:build/build.dart';
 class TextBuilder implements Builder {
   @override
   Map<String, List<String>> get buildExtensions => const {
-    // To implement directory moves, this builder uses capture groups
-    // ({{}}). Capture groups can match anything in the input's path,
-    // including subdirectories. The `^assets` at the beginning ensures that
-    // only jsons under the top-level `assets/` folder will be considered.
-    '^assets/{{}}.json': ['lib/generated/{{}}.dart'],
-  };
+        // To implement directory moves, this builder uses capture groups
+        // ({{}}). Capture groups can match anything in the input's path,
+        // including subdirectories. The `^assets` at the beginning ensures that
+        // only jsons under the top-level `assets/` folder will be considered.
+        '^assets/{{}}.json': ['lib/generated/{{}}.dart'],
+      };
 
   @override
   Future<void> build(BuildStep buildStep) async {

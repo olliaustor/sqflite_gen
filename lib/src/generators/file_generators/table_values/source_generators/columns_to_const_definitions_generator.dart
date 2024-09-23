@@ -8,8 +8,7 @@ class ColumnsToConstDefinitionsGenerator {
   ///
   /// Returns [String] containing the const name of the table name
   String call(CreateTableStatement statement) {
-    final constGenerator =
-      ColumnToConstDefinitionGenerator();
+    final constGenerator = ColumnToConstDefinitionGenerator();
     final sb = StringBuffer();
     for (final columnDefinition in statement.columns) {
       sb.writeln(constGenerator(statement, columnDefinition));

@@ -6,13 +6,12 @@ import 'package:sqlparser/sqlparser.dart';
 extension CreateTableStatementX on CreateTableStatement {
   /// Converts table name into source code field name
   String toFieldName() => UnderscoreToCamelCaseConverter(
-      startsWithUpperCase: false,).convert(tableName);
+        startsWithUpperCase: false,
+      ).convert(tableName);
 
   /// Converts table name into source code class name
-  String toClassName() => UnderscoreToCamelCaseConverter()
-      .convert(tableName);
+  String toClassName() => UnderscoreToCamelCaseConverter().convert(tableName);
 
   /// Converts table name into valid dart file name (with underscores)
-  String toFileName() => CamelCaseToUnderscoreConverter()
-      .convert(tableName);
+  String toFileName() => CamelCaseToUnderscoreConverter().convert(tableName);
 }

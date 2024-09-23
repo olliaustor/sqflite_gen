@@ -66,9 +66,7 @@ void main() {
                         final result = 'W'.toStartWithLowerCase();
                         expect(result, equals('w'));
                       }),
-                      test(
-                          'changes all word to start with lowercase',
-                          () {
+                      test('changes all word to start with lowercase', () {
                         final result = 'This IS a Test t0 test 8 random WOrds'
                             .toStartWithLowerCase();
                         expect(result,

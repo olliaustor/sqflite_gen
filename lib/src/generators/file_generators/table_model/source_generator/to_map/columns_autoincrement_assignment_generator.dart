@@ -35,9 +35,9 @@ class ColumnsAutoIncrementAssignmentGenerator {
 
     final columnPropertyName = autoIncrementColumn.toFieldName();
     final columnConstName =
-      ColumnNameToConstNameConverter(statement.tableName).convert(
-        autoIncrementColumn.toFieldName(),
-      );
+        ColumnNameToConstNameConverter(statement.tableName).convert(
+      autoIncrementColumn.toFieldName(),
+    );
 
     return primaryKeyAssignmentContent
         .replaceAll(placeholderPropertyName, columnPropertyName)

@@ -25,9 +25,7 @@ void main() {
               final result = await generator.generate();
 
               final regEx = RegExp('export');
-              final amount = regEx
-                  .allMatches(result.content)
-                  .length;
+              final amount = regEx.allMatches(result.content).length;
               expect(amount, equals(2));
             }),
             test('exports ..._model.dart file', () async {

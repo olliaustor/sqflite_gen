@@ -62,7 +62,7 @@ class TableToMethodGetGenerator {
           ),
         )
         .replaceAll(
-      placeholderFieldType,
+          placeholderFieldType,
           _getPrimaryColumnNameType(
             statement,
           ),

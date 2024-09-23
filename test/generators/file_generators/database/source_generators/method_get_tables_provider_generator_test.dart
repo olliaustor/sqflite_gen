@@ -13,9 +13,11 @@ void main() {
     ),
   ];
 
-  group('MethodGetTablesProviderGenerator', () => {
-    test('with empty list generates valid method', () {
-      const expected = '''
+  group(
+      'MethodGetTablesProviderGenerator',
+      () => {
+            test('with empty list generates valid method', () {
+              const expected = '''
 List<GenericProvider<Object>> _getTableProviders(Database db) {
   return [
 
@@ -23,14 +25,13 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
 }
 ''';
 
-      final generator = MethodGetTablesProviderGenerator();
-      final result = generator(emptyStatements);
+              final generator = MethodGetTablesProviderGenerator();
+              final result = generator(emptyStatements);
 
-      expect(result, equals(expected));
-    }),
-
-    test('with table generates valid method', () {
-      const expected = '''
+              expect(result, equals(expected));
+            }),
+            test('with table generates valid method', () {
+              const expected = '''
 List<GenericProvider<Object>> _getTableProviders(Database db) {
   return [
     ExampleTableProvider(db),
@@ -38,10 +39,10 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
   ];
 }
 ''';
-      final generator = MethodGetTablesProviderGenerator();
-      final result = generator(validStatements);
+              final generator = MethodGetTablesProviderGenerator();
+              final result = generator(validStatements);
 
-      expect(result, equals(expected));
-    }),
-  });
+              expect(result, equals(expected));
+            }),
+          });
 }

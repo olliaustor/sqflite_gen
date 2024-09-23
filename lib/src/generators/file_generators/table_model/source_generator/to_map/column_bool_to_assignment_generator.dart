@@ -24,8 +24,7 @@ class ColumnBoolToAssignmentGenerator implements ColumnToAssignmentGenerator {
   String _propertyToNullableAssignment(
     String propertyName,
     ColumnDefinition columnDefinition,
-  )
-  {
+  ) {
     return 'isNull($propertyName) ? null : ${_propertyToAssignment(propertyName + '!')}';
   }
 }

@@ -9,10 +9,7 @@ void main() {
   );
 
   final nullableColumnDefinition = ColumnDefinition(
-      columnName: 'text',
-      typeName: 'STRING',
-      constraints: [NotNull('text')]
-  );
+      columnName: 'text', typeName: 'STRING', constraints: [NotNull('text')]);
 
   final statementWithoutColumns = CreateTableStatement(
     tableName: 'my_table_name',

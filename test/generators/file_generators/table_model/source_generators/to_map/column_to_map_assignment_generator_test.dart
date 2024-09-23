@@ -41,10 +41,12 @@ void main() {
     'ColumnToMapAssignmentGenerator',
     () => {
       test('bool generates valid assignment', () {
-        const expected = '      myTableNameColumnVal: isNull(val) ? null : boolToInt(val!)';
+        const expected =
+            '      myTableNameColumnVal: isNull(val) ? null : boolToInt(val!)';
 
         final result = ColumnToMapAssignmentGenerator()(
-          statement, columnDefinitionBool,
+          statement,
+          columnDefinitionBool,
         );
 
         expect(result, equals(expected));
@@ -53,7 +55,8 @@ void main() {
         const expected = '      myTableNameColumnVal: val';
 
         final result = ColumnToMapAssignmentGenerator()(
-          statement, columnDefinitionInt,
+          statement,
+          columnDefinitionInt,
         );
 
         expect(result, equals(expected));
@@ -62,7 +65,8 @@ void main() {
         const expected = '      myTableNameColumnVal: val';
 
         final result = ColumnToMapAssignmentGenerator()(
-          statement, columnDefinitionDouble,
+          statement,
+          columnDefinitionDouble,
         );
 
         expect(result, equals(expected));
@@ -71,16 +75,19 @@ void main() {
         const expected = '      myTableNameColumnVal: val';
 
         final result = ColumnToMapAssignmentGenerator()(
-          statement, columnDefinitionString,
+          statement,
+          columnDefinitionString,
         );
 
         expect(result, equals(expected));
       }),
       test('DateTime generates valid assignment', () {
-        const expected = '      myTableNameColumnVal: isNull(val) ? null : val!.toUtc().millisecondsSinceEpoch';
+        const expected =
+            '      myTableNameColumnVal: isNull(val) ? null : val!.toUtc().millisecondsSinceEpoch';
 
         final result = ColumnToMapAssignmentGenerator()(
-          statement, columnDefinitionDateTime,
+          statement,
+          columnDefinitionDateTime,
         );
 
         expect(result, equals(expected));
@@ -89,7 +96,8 @@ void main() {
         const expected = '      myTableNameColumnVal: val';
 
         final result = ColumnToMapAssignmentGenerator()(
-          statement, columnDefinitionInt8List,
+          statement,
+          columnDefinitionInt8List,
         );
 
         expect(result, equals(expected));

@@ -25,7 +25,8 @@ void main() {
         const expected = 'intToBool(map[myTableNameColumnVal] as int)';
 
         final result = ColumnBoolToAssignmentGenerator()(
-          statement, columnDefinitionNotNullable,
+          statement,
+          columnDefinitionNotNullable,
         );
 
         expect(result, equals(expected));
@@ -35,7 +36,8 @@ void main() {
             'isNull(map[myTableNameColumnVal]) ? null : intToBool(map[myTableNameColumnVal] as int)';
 
         final result = ColumnBoolToAssignmentGenerator()(
-          statement, columnDefinitionNullable,
+          statement,
+          columnDefinitionNullable,
         );
 
         expect(result, equals(expected));

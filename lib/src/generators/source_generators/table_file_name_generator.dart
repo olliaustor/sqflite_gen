@@ -7,11 +7,11 @@ class TableFileNameGenerator {
   final String targetFilePath = 'tables/%underscoreSqlTableName%/';
 
   /// Default filename with path and placeholders
-  final String targetFileName =
-      '%underscoreSqlTableName%%fileNameSuffix%.dart';
+  final String targetFileName = '%underscoreSqlTableName%%fileNameSuffix%.dart';
 
   /// Placeholder to be replaced with table name as filename
   final String placeholderUnderscoreSqlTableName = '%underscoreSqlTableName%';
+
   /// Placeholder for optional filename suffix
   final String placeholderSuffix = '%fileNameSuffix%';
 
@@ -25,18 +25,21 @@ class TableFileNameGenerator {
   /// - `includeRelativePath`: include file path or generate filename only
   ///
   /// Returns a `String` containing the full filename (including the filepath)
-  String call(CreateTableStatement statement, {String fileNameSuffix = '',
-    bool includeRelativePath = true,}) {
-    final suffix = fileNameSuffix == ''
-      ? ''
-      : '_$fileNameSuffix';
+  String call(
+    CreateTableStatement statement, {
+    String fileNameSuffix = '',
+    bool includeRelativePath = true,
+  }) {
+    final suffix = fileNameSuffix == '' ? '' : '_$fileNameSuffix';
 
-    final fullFileName = (includeRelativePath
-      ? targetFilePath
-        : '') + targetFileName;
+    final fullFileName =
+        (includeRelativePath ? targetFilePath : '') + targetFileName;
 
     final fileName = fullFileName
-        .replaceAll(placeholderUnderscoreSqlTableName, statement.toFileName(),)
+        .replaceAll(
+          placeholderUnderscoreSqlTableName,
+          statement.toFileName(),
+        )
         .replaceAll(placeholderSuffix, suffix);
 
     return fileName;

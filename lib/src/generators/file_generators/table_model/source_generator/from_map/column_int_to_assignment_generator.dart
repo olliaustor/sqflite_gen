@@ -11,14 +11,12 @@ class ColumnIntToAssignmentGenerator implements ColumnToAssignmentGenerator {
   ///
   /// Returns [String] containing the map value assignment for given column
   @override
-  String call(CreateTableStatement statement, ColumnDefinition columnDefinition)
-  {
-    final columnPropertyName = ColumnToConstNameGenerator()
-        .call(statement, columnDefinition);
+  String call(
+      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    final columnPropertyName =
+        ColumnToConstNameGenerator().call(statement, columnDefinition);
     final assignment = 'map[$columnPropertyName] as int';
 
-    return columnDefinition.isNonNullable
-        ? assignment
-        : '$assignment?';
+    return columnDefinition.isNonNullable ? assignment : '$assignment?';
   }
 }

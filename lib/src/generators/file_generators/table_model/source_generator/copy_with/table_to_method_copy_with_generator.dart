@@ -42,8 +42,8 @@ class TableToMethodCopyWithGenerator {
     final parameters = parametersGenerator(statement);
 
     final parametersList = statement.columns.isEmpty
-      ? ''
-      : parametersContent.replaceAll(placeholderParameters, parameters);
+        ? ''
+        : parametersContent.replaceAll(placeholderParameters, parameters);
 
     return content
         .replaceAll(placeholderAssignments, assignments)

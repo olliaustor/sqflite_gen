@@ -17,8 +17,7 @@ void main() {
   final nullableColumnDefinition = ColumnDefinition(
       columnName: 'text',
       typeName: 'STRING',
-      constraints: [NullColumnConstraint('text')]
-  );
+      constraints: [NullColumnConstraint('text')]);
 
   final statementWithoutColumns = CreateTableStatement(
     tableName: 'my_table_name',

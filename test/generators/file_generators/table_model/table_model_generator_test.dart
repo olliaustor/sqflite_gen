@@ -31,9 +31,7 @@ CREATE TABLE frameworks (
         final result = await generator.generate();
 
         final regEx = RegExp('import');
-        final amount = regEx
-            .allMatches(result.content)
-            .length;
+        final amount = regEx.allMatches(result.content).length;
         expect(amount, equals(2));
       }),
       test('contains ..._values.dart import', () async {

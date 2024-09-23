@@ -19,7 +19,7 @@ void main() {
 
   final statementWithOneColumn = CreateTableStatement(
     tableName: 'my_table_name',
-      columns: [columnDefinitionBool],
+    columns: [columnDefinitionBool],
   );
 
   final statementWithMultipleColumns = CreateTableStatement(

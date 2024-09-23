@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
   group(
     'TableNameToConstNameConverter',
-        () => {
+    () => {
       test('table converts to tableTable', () {
         final converter = TableNameToConstNameConverter();
         final result = converter.convert('table');

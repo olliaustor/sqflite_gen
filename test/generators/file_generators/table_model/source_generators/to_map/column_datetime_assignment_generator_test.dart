@@ -27,7 +27,8 @@ void main() {
         expect(result, equals(expected));
       }),
       test('DateTime? generates valid assignment', () {
-        const expected = 'isNull(val) ? null : val!.toUtc().millisecondsSinceEpoch';
+        const expected =
+            'isNull(val) ? null : val!.toUtc().millisecondsSinceEpoch';
 
         final result = ColumnDateTimeToAssignmentGenerator()(
           columnDefinitionNullable,
@@ -35,7 +36,6 @@ void main() {
 
         expect(result, equals(expected));
       }),
-
     },
   );
 }

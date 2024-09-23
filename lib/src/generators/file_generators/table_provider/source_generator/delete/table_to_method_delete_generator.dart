@@ -51,7 +51,7 @@ class TableToMethodDeleteGenerator {
           ),
         )
         .replaceAll(
-      placeholderFieldType,
+          placeholderFieldType,
           _getPrimaryColumnNameType(
             statement,
           ),

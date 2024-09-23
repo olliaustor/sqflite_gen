@@ -24,9 +24,7 @@ class SqfliteCodeGenerator {
     final stmts = engine.parse(sqlContent);
 
     // Assemble all generators here -> but do not do anything
-    final generators =
-        _getStaticGenerators(stmts) +
-        _getTableGenerators(stmts);
+    final generators = _getStaticGenerators(stmts) + _getTableGenerators(stmts);
 
     // Now execute all generators resulting in filenames and file content
     final generatorResults = await Future.wait(generators.map(
@@ -37,7 +35,8 @@ class SqfliteCodeGenerator {
     await _writeFiles(targetFilePath, generatorResults);
   }
 
-  List<FileGenerator> _getStaticGenerators(List<Either<CreateTableStatement, String>> statements) {
+  List<FileGenerator> _getStaticGenerators(
+      List<Either<CreateTableStatement, String>> statements) {
     return [
       DbGenerator(),
       UtilsGenerator(),
@@ -49,13 +48,15 @@ class SqfliteCodeGenerator {
 
   List<FileGenerator> _getTableGenerators(
       List<Either<CreateTableStatement, String>> statements) {
-
-    return statements.map((stmt) => [
-      TableValuesGenerator(stmt),
-      TableModelGenerator(stmt),
-      TableProviderGenerator(stmt),
-      TableBarrelGenerator(stmt),
-    ]).expand((i) => i).toList();
+    return statements
+        .map((stmt) => [
+              TableValuesGenerator(stmt),
+              TableModelGenerator(stmt),
+              TableProviderGenerator(stmt),
+              TableBarrelGenerator(stmt),
+            ])
+        .expand((i) => i)
+        .toList();
   }
 
   Future<void> _writeFiles(

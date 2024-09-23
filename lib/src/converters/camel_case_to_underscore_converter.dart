@@ -4,7 +4,7 @@ class CamelCaseToUnderscoreConverter extends Converter {
   CamelCaseToUnderscoreConverter() {
     final list = List.generate(
       26,
-          (index) => String.fromCharCode(index + 65),
+      (index) => String.fromCharCode(index + 65),
     );
 
     _charMapList =
@@ -16,8 +16,7 @@ class CamelCaseToUnderscoreConverter extends Converter {
   @override
   String convert(String source) {
     var result = source;
-    for (final charMap in _charMapList)
-    {
+    for (final charMap in _charMapList) {
       result = result.replaceAll(charMap.key, charMap.value);
     }
 

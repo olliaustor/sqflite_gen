@@ -25,8 +25,7 @@ class ColumnDateTimeToAssignmentGenerator
   String _propertyToNullableAssignment(
     String propertyName,
     ColumnDefinition columnDefinition,
-  )
-  {
+  ) {
     return 'isNull($propertyName) ? null : ${_propertyToAssignment(propertyName + '!')}';
   }
 }

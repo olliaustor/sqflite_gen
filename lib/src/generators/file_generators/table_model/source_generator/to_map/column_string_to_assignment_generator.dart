@@ -9,8 +9,7 @@ class ColumnStringToAssignmentGenerator implements ColumnToAssignmentGenerator {
   ///
   /// Returns [String] containing the map value assignment for given column
   @override
-  String call(ColumnDefinition columnDefinition)
-  {
+  String call(ColumnDefinition columnDefinition) {
     return columnDefinition.toFieldName();
   }
 }

@@ -8,9 +8,7 @@ class ColumnToConstructorParameterGenerator {
   ///
   /// Returns [String] containing the constructor parameter for column
   String call(ColumnDefinition columnDefinition) {
-    final requiredText = columnDefinition.isNonNullable
-      ? 'required '
-      : '';
+    final requiredText = columnDefinition.isNonNullable ? 'required ' : '';
 
     final text = '${requiredText}this.${columnDefinition.toFieldName()},';
 
