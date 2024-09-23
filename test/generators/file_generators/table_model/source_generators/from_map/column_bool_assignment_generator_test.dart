@@ -33,7 +33,8 @@ void main() {
       }),
       test('bool? generates valid assignment', () {
         const expected =
-            'isNull(map[myTableNameColumnVal]) ? null : intToBool(map[myTableNameColumnVal] as int)';
+          'isNull(map[myTableNameColumnVal]) ? null : '
+          'intToBool(map[myTableNameColumnVal] as int)';
 
         final result = ColumnBoolToAssignmentGenerator()(
           statement,

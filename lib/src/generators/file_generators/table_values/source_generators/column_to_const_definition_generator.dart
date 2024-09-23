@@ -9,7 +9,9 @@ class ColumnToConstDefinitionGenerator {
   ///
   /// Returns [String] containing the const definition of the table name
   String call(
-      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    CreateTableStatement statement,
+    ColumnDefinition columnDefinition,
+  ) {
     final constNameGenerator = ColumnToConstNameGenerator();
     final columnSqlName = columnDefinition.columnName;
     final constName = constNameGenerator(statement, columnDefinition);

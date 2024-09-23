@@ -12,11 +12,9 @@ class SqfliteDartCodeGenerator implements Builder {
 
   @override
   Future<void> build(BuildStep buildStep) async {
-    final targetFilePath = "lib/db";
+    const targetFilePath = 'lib/db';
 
-    print("Hello world");
-    var s = await buildStep.readAsString(buildStep.inputId);
-    print(s);
+    final s = await buildStep.readAsString(buildStep.inputId);
 
     await SqfliteCodeGenerator().build(
       targetFilePath: targetFilePath,
@@ -26,6 +24,6 @@ class SqfliteDartCodeGenerator implements Builder {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.sql': ['.foo', '.bar']
+        '.sql': ['.foo', '.bar'],
       };
 }

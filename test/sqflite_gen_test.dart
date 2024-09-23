@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:sqflite_gen/sqflite_gen.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('adds one to input values', () {

@@ -8,13 +8,14 @@ void main() {
   );
 
   group(
-      'ProviderConstructorCallGenerator',
-      () => {
-            test('builds valid provider class name', () {
-              final generator = ProviderConstructorCallGenerator();
-              final result = generator(validStatement);
+    'ProviderConstructorCallGenerator',
+    () => {
+      test('builds valid provider class name', () {
+        final generator = ProviderConstructorCallGenerator();
+        final result = generator(validStatement);
 
-              expect(result, equals('ExampleTableProvider(db)'));
-            }),
-          });
+        expect(result, equals('ExampleTableProvider(db)'));
+      }),
+    },
+  );
 }

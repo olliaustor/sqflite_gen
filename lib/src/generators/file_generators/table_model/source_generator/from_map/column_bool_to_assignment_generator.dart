@@ -10,7 +10,9 @@ class ColumnBoolToAssignmentGenerator implements ColumnToAssignmentGenerator {
   /// Returns [String] containing the map value assignment for given column
   @override
   String call(
-      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    CreateTableStatement statement,
+    ColumnDefinition columnDefinition,
+  ) {
     final columnPropertyName =
         ColumnToConstNameGenerator().call(statement, columnDefinition);
 
@@ -27,6 +29,7 @@ class ColumnBoolToAssignmentGenerator implements ColumnToAssignmentGenerator {
     String propertyName,
     ColumnDefinition columnDefinition,
   ) {
-    return 'isNull(map[$propertyName]) ? null : ${_propertyToAssignment(propertyName)}';
+    return 'isNull(map[$propertyName]) ? null : '
+        '${_propertyToAssignment(propertyName)}';
   }
 }

@@ -51,8 +51,6 @@ void main() {
         expect(result, equals(expected));
       }),
       test('single column returns simple string', () {
-        const expected = 'myTableNameColumnVal: val';
-
         final result = ColumnsToMapAssignmentGenerator()(
           statementWithOneColumn,
         );
@@ -60,8 +58,6 @@ void main() {
         expect(result, isNot(contains('\n')));
       }),
       test('multiple columns returns multiline string', () {
-        const expected = 'myTableNameColumnVal: val';
-
         final result = ColumnsToMapAssignmentGenerator()(
           statementWithMultipleColumns,
         );

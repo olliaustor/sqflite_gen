@@ -11,7 +11,9 @@ class ColumnToConstNameGenerator {
   ///
   /// Returns [String] containing the const definition of the column name
   String call(
-      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    CreateTableStatement statement,
+    ColumnDefinition columnDefinition,
+  ) {
     final fieldNameConverter = UnderscoreToCamelCaseConverter();
     final tableFieldName = statement.toFieldName();
     final columnFieldName = fieldNameConverter.convert(

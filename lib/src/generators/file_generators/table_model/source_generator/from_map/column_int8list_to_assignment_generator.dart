@@ -13,7 +13,9 @@ class ColumnInt8ListToAssignmentGenerator
   /// Returns [String] containing the map value assignment for given column
   @override
   String call(
-      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    CreateTableStatement statement,
+    ColumnDefinition columnDefinition,
+  ) {
     final columnPropertyName =
         ColumnToConstNameGenerator().call(statement, columnDefinition);
     final assignment = 'map[$columnPropertyName] as Int8List';

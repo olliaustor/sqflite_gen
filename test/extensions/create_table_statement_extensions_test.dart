@@ -32,7 +32,7 @@ void main() {
         final result = statement.toFileName();
 
         expect(result, equals('test_table_name'));
-      })
+      }),
     },
   );
 }

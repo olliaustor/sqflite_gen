@@ -26,7 +26,8 @@ class TableToMethodInsertGenerator {
 
   /// Content for returning new object from copy with call and nullable value
   final returnCopyWithCallNullable =
-      'return %fieldName%.copyWith(%primaryColumnFieldName%: Wrapped.value(result));';
+      'return %fieldName%.copyWith(%primaryColumnFieldName%: '
+      'Wrapped.value(result));';
 
   /// Content for returning the received object
   final returnDefault = 'return %fieldName%;';
@@ -77,7 +78,9 @@ class TableToMethodInsertGenerator {
   /// Returns [String] containing the return statement
   String _getReturnDefault(CreateTableStatement statement) {
     return returnDefault.replaceAll(
-        placeholderFieldName, statement.toFieldName());
+      placeholderFieldName,
+      statement.toFieldName(),
+    );
   }
 
   /// Generates return statement in case the table does have a primary int key

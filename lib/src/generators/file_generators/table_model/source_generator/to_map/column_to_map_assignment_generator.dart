@@ -28,7 +28,9 @@ class ColumnToMapAssignmentGenerator {
   ///
   /// Returns [String] containing the map assignment
   String call(
-      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    CreateTableStatement statement,
+    ColumnDefinition columnDefinition,
+  ) {
     final columnToConstConverter =
         ColumnNameToConstNameConverter(statement.tableName);
 

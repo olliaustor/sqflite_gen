@@ -2,7 +2,7 @@ import 'package:sqflite_gen/src/converters/converter_base.dart';
 import 'package:sqflite_gen/src/formatters/camel_case_formatter.dart';
 
 class UnderscoreToCamelCaseConverter extends Converter {
-  UnderscoreToCamelCaseConverter({bool this.startsWithUpperCase = true}) {}
+  UnderscoreToCamelCaseConverter({this.startsWithUpperCase = true});
 
   final bool startsWithUpperCase;
 

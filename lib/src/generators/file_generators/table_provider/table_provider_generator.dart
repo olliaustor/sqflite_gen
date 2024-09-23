@@ -1,11 +1,6 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:sqflite_gen/src/converters/camel_case_to_underscore_converter.dart';
-import 'package:sqflite_gen/src/converters/column_name_to_const_name_converter.dart';
-import 'package:sqflite_gen/src/converters/table_name_to_const_name_converter.dart';
-import 'package:sqflite_gen/src/extensions/column_definition_extensions.dart';
 import 'package:sqflite_gen/src/extensions/create_table_statement_extensions.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
-import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/constructor/table_to_constructor_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_create_generator.dart';
@@ -75,9 +70,7 @@ class %className%Provider {
   @override
   Future<FileGeneratorResult> generate() async {
     final createTableStatement = statement.asLeft();
-    final sqlTableName = createTableStatement.tableName;
 
-    final fileNameGenerator = TableFileNameGenerator();
     final constructorGenerator = TableToConstructorGenerator();
     final createGenerator = TableToMethodCreateGenerator();
     final insertGenerator = TableToMethodInsertGenerator();
@@ -122,26 +115,5 @@ class %className%Provider {
       targetFileName: fullFileName,
       content: fileContent,
     );
-  }
-
-  String _getPrimaryColumnNameConst(
-      String tableName, List<ColumnDefinition> columns) {
-    final primaryKeyColumn =
-        columns.where((column) => column.isPrimaryKey()).firstOrNull;
-
-    return primaryKeyColumn == null
-        ? 'unknown'
-        : ColumnNameToConstNameConverter(tableName)
-            .convert(primaryKeyColumn.columnName);
-  }
-
-  String _getPrimaryColumnNameField(
-      String tableName, List<ColumnDefinition> columns) {
-    final primaryKeyColumn =
-        columns.where((column) => column.isPrimaryKey()).firstOrNull;
-
-    return primaryKeyColumn == null
-        ? 'unknown'
-        : primaryKeyColumn.toFieldName();
   }
 }

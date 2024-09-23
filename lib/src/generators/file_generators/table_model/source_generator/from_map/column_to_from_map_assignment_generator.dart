@@ -27,7 +27,9 @@ class ColumnToFromMapAssignmentGenerator {
   ///
   /// Returns [String] containing the map assignment
   String call(
-      CreateTableStatement statement, ColumnDefinition columnDefinition) {
+    CreateTableStatement statement,
+    ColumnDefinition columnDefinition,
+  ) {
     final columnPropertyName = columnDefinition.toFieldName();
     final columnFieldType = columnDefinition.toFieldType().replaceAll('?', '');
 

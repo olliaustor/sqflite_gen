@@ -2,7 +2,7 @@ import 'package:sqflite_gen/src/converters/converter_base.dart';
 import 'package:sqflite_gen/src/formatters/camel_case_formatter.dart';
 
 class ColumnNameToConstNameConverter extends Converter {
-  ColumnNameToConstNameConverter(this.sqlTableName) {}
+  ColumnNameToConstNameConverter(this.sqlTableName);
 
   final CamelCaseFormatter camelCaseFormatter = CamelCaseFormatter();
 
@@ -19,7 +19,7 @@ class ColumnNameToConstNameConverter extends Converter {
       source,
     );
 
-    final result = '${tableName}Column${columnName}';
+    final result = '${tableName}Column$columnName';
 
     return result;
   }

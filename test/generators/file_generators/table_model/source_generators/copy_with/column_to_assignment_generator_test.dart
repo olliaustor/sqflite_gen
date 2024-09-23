@@ -14,12 +14,6 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  final columnDefinitionPrimary = ColumnDefinition(
-    columnName: 'val',
-    typeName: 'INT',
-    constraints: [PrimaryKeyColumn('val')],
-  );
-
   group(
     'ColumnToParameterGenerator',
     () => {

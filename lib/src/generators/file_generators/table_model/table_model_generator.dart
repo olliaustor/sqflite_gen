@@ -64,7 +64,6 @@ class %className% {
   @override
   Future<FileGeneratorResult> generate() async {
     final createTableStatement = statement.asLeft();
-    final sqlTableName = createTableStatement.tableName;
 
     final fileNameGenerator = TableFileNameGenerator();
     final constructorGenerator = TableToConstructorGenerator();
@@ -99,7 +98,9 @@ class %className% {
         .replaceAll(placeholderToMap, toMapGenerator(createTableStatement))
         .replaceAll(placeholderFromMap, fromMapGenerator(createTableStatement))
         .replaceAll(
-            placeholderCopyWith, copyWithGenerator(createTableStatement));
+          placeholderCopyWith,
+          copyWithGenerator(createTableStatement),
+        );
 
     return FileGeneratorResult(
       targetFileName: fullFileName,

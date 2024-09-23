@@ -13,12 +13,6 @@ void main() {
     typeName: 'INT',
   );
 
-  final columnDefinitionAutoIncrement = ColumnDefinition(
-    columnName: 'valAuto',
-    typeName: 'INT',
-    constraints: [PrimaryKeyColumn('valAuto', autoIncrement: true)],
-  );
-
   final statementEmpty = CreateTableStatement(
     tableName: 'my_table_name',
   );
@@ -31,11 +25,6 @@ void main() {
   final statementWithMultipleColumns = CreateTableStatement(
     tableName: 'my_table_name',
     columns: [columnDefinitionBool, columnDefinitionInt],
-  );
-
-  final statementWithAutoIncrement = CreateTableStatement(
-    tableName: 'my_table_name',
-    columns: [columnDefinitionInt, columnDefinitionAutoIncrement],
   );
 
   group(

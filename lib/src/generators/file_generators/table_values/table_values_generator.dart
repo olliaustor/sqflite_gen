@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:sqflite_gen/src/CreateTableStatementExt.dart';
+import 'package:sqflite_gen/src/create_table_statement_ext.dart';
 import 'package:sqflite_gen/src/extensions/either_extensions.dart';
 import 'package:sqflite_gen/src/extensions/string_extensions.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
@@ -49,7 +49,6 @@ const String %tableNameCreate% = \'\'\'
   @override
   Future<FileGeneratorResult> generate() async {
     final createTableStatement = statement.asLeft() as CreateTableStatementExt;
-    final sqlTableName = createTableStatement.tableName;
 
     final mapReplacements = [
       /// Const definition of table name

@@ -23,7 +23,8 @@ void main() {
     () => {
       test('DateTime generates valid assignment', () {
         const expected =
-            'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as int, isUtc: true,)';
+          'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
+          'int, isUtc: true,)';
 
         final result = ColumnDateTimeToAssignmentGenerator()(
           statement,
@@ -34,7 +35,9 @@ void main() {
       }),
       test('DateTime? generates valid assignment', () {
         const expected =
-            'isNull(map[myTableNameColumnVal]) ? null : DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as int, isUtc: true,)';
+          'isNull(map[myTableNameColumnVal]) ? null : '
+          'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
+          'int, isUtc: true,)';
 
         final result = ColumnDateTimeToAssignmentGenerator()(
           statement,

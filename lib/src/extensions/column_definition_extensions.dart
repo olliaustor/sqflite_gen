@@ -30,7 +30,7 @@ extension ColumnDefinitionX on ColumnDefinition {
       //.toString()
       //.toUpperCase()
       //.contains('PRIMARY KEY'),
-      );
+      ,);
 
   /// Returns 'true' when column is defined as auto increment, false otherwise
   bool isAutoIncrement() =>
@@ -38,7 +38,7 @@ extension ColumnDefinitionX on ColumnDefinition {
           //.toString()
           //.toUpperCase()
           //.contains('AUTOINCREMENT'),
-          );
+          ,);
 }
 
 /// Type mapping from different database types to dart types
@@ -76,7 +76,7 @@ const List<String> typeNamesString = [
   'NVARCHAR',
   'TEXT',
   'CLOB',
-  'STRING'
+  'STRING',
 ];
 
 /// Allowed database types to be mapped to dart [Uint8List]

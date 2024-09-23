@@ -21,7 +21,8 @@ List<GenericProvider<Object>> _getTableProviders(Database db) {
   ///
   /// - `statements`: Parsed sql table create statements
   ///
-  /// Returns a `String` containing the formatted source for method _getTableProviders.
+  /// Returns a `String` containing the formatted source for method
+  /// _getTableProviders.
   String call(List<CreateTableStatement> statements) {
     final generator = ListOfTableProvidersGenerator();
 

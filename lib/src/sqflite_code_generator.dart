@@ -1,17 +1,17 @@
 import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
-import 'package:path/path.dart' as Path;
+import 'package:path/path.dart' as path;
 import 'package:sqflite_gen/src/generators/file_generators/database/database_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/database_repositiory/database_repository_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/db/db_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
-import 'package:sqflite_gen/src/generators/file_generators/tables/tables_barrel_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/utils/utils_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_barrel/table_barrel_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/table_model_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/table_provider_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_values/table_values_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/tables/tables_barrel_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/utils/utils_generator.dart';
 import 'package:sqflite_gen/src/parser/create_script_parser.dart';
 import 'package:sqlparser/sqlparser.dart';
 
@@ -27,16 +27,19 @@ class SqfliteCodeGenerator {
     final generators = _getStaticGenerators(stmts) + _getTableGenerators(stmts);
 
     // Now execute all generators resulting in filenames and file content
-    final generatorResults = await Future.wait(generators.map(
-      (generator) async => await generator.generate(),
-    ));
+    final generatorResults = await Future.wait(
+      generators.map(
+        (generator) async => generator.generate(),
+      ),
+    );
 
     // Write all files here. Any error will be part of the respective file
     await _writeFiles(targetFilePath, generatorResults);
   }
 
   List<FileGenerator> _getStaticGenerators(
-      List<Either<CreateTableStatement, String>> statements) {
+    List<Either<CreateTableStatement, String>> statements,
+  ) {
     return [
       DbGenerator(),
       UtilsGenerator(),
@@ -47,14 +50,17 @@ class SqfliteCodeGenerator {
   }
 
   List<FileGenerator> _getTableGenerators(
-      List<Either<CreateTableStatement, String>> statements) {
+    List<Either<CreateTableStatement, String>> statements,
+  ) {
     return statements
-        .map((stmt) => [
-              TableValuesGenerator(stmt),
-              TableModelGenerator(stmt),
-              TableProviderGenerator(stmt),
-              TableBarrelGenerator(stmt),
-            ])
+        .map(
+          (stmt) => [
+            TableValuesGenerator(stmt),
+            TableModelGenerator(stmt),
+            TableProviderGenerator(stmt),
+            TableBarrelGenerator(stmt),
+          ],
+        )
         .expand((i) => i)
         .toList();
   }
@@ -64,18 +70,19 @@ class SqfliteCodeGenerator {
     List<FileGeneratorResult> generatorResults,
   ) async {
     await Future.forEach(
-        generatorResults,
-        (generatorResult) => _writeFile(
-              targetPath,
-              generatorResult,
-            ));
+      generatorResults,
+      (generatorResult) => _writeFile(
+        targetPath,
+        generatorResult,
+      ),
+    );
   }
 
   Future<void> _writeFile(
     String targetPath,
     FileGeneratorResult generatorResult,
   ) async {
-    final targetFileName = Path.join(
+    final targetFileName = path.join(
       targetPath,
       generatorResult.targetFileName,
     );

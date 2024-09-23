@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:sqflite_gen/src/CreateTableStatementExt.dart';
+import 'package:sqflite_gen/src/create_table_statement_ext.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 class CreateScriptParser {
@@ -8,16 +8,18 @@ class CreateScriptParser {
   final String splitPattern = ');';
 
   List<Either<CreateTableStatementExt, String>> parse(String sqlScript) {
-    var parts = _splitSqlScript(sqlScript);
+    final parts = _splitSqlScript(sqlScript);
     final result = parts.map(_parse).toList();
     return result;
   }
 
   List<String> _splitSqlScript(String sqlScript) {
-    var parts = sqlScript.split(splitPattern);
+    final parts = sqlScript.split(splitPattern);
     return parts
-        .where((part) =>
-            part.trim() != '' && part.toUpperCase().contains("CREATE TABLE"))
+        .where(
+          (part) =>
+              part.trim() != '' && part.toUpperCase().contains('CREATE TABLE'),
+        )
         .map((part) => part + splitPattern)
         .toList();
   }

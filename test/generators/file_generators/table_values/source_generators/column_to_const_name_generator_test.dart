@@ -1,4 +1,3 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_values/source_generators/column_to_const_definition_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_values/source_generators/column_to_const_name_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';

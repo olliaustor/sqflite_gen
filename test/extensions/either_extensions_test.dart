@@ -43,15 +43,16 @@ void main() {
         },
       ),
       group(
-          'EitherException',
-          () => {
-                test('toString returns given message', () {
-                  const expected = 'test text';
-                  const exception = EitherException(expected);
+        'EitherException',
+        () => {
+          test('toString returns given message', () {
+            const expected = 'test text';
+            const exception = EitherException(expected);
 
-                  expect(exception.toString(), equals(expected));
-                }),
-              }),
+            expect(exception.toString(), equals(expected));
+          }),
+        },
+      ),
     },
   );
 }

@@ -5,7 +5,8 @@ import 'package:sqlparser/sqlparser.dart';
 /// Converts a list of sql table parsing results and returns the create
 /// statements for the valid table definitions.
 ///
-/// It takes [statements] as parameter and returns a list of `CreateTableStatement`.
+/// It takes [statements] as parameter and returns a list of
+/// `CreateTableStatement`.
 ///
 /// - `statements`: List of sql table parser results
 ///
