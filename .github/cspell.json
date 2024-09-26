@@ -16,6 +16,8 @@
   ],
   "useGitignore": true,
   "words": [
-    "sqflite_gen"
+    "sqflite_gen",
+    "SqfLite",
+    "Sqflite"
   ]
 }
