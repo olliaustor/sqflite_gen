@@ -82,9 +82,8 @@ void main() {
         expect(result, equals(expected));
       }),
       test('DateTime generates valid assignment', () {
-        const expected =
-          '      myTableNameColumnVal: isNull(val) ? null : '
-          'val!.toUtc().millisecondsSinceEpoch';
+        const expected = '      myTableNameColumnVal: isNull(val) ? null : '
+            'val!.toUtc().millisecondsSinceEpoch';
 
         final result = ColumnToMapAssignmentGenerator()(
           statement,

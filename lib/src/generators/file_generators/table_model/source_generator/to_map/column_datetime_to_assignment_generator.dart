@@ -26,8 +26,7 @@ class ColumnDateTimeToAssignmentGenerator
     String propertyName,
     ColumnDefinition columnDefinition,
   ) {
-    return
-      'isNull($propertyName) ? null : '
-      '${_propertyToAssignment('$propertyName!')}';
+    return 'isNull($propertyName) ? null : '
+        '${_propertyToAssignment('$propertyName!')}';
   }
 }

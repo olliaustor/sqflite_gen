@@ -15,6 +15,7 @@ class FileGeneratorResult {
 
   /// Target file name
   final String targetFileName;
+
   /// Generated file content
   final String content;
 }

@@ -42,8 +42,8 @@ void main() {
     () => {
       test('bool generates valid assignment', () {
         const expected =
-          '    final val = isNull(map[myTableNameColumnVal]) ? null : '
-          'intToBool(map[myTableNameColumnVal] as int);';
+            '    final val = isNull(map[myTableNameColumnVal]) ? null : '
+            'intToBool(map[myTableNameColumnVal] as int);';
 
         final result = ColumnToFromMapAssignmentGenerator()(
           statement,
@@ -86,9 +86,9 @@ void main() {
       }),
       test('DateTime generates valid assignment', () {
         const expected =
-          '    final val = isNull(map[myTableNameColumnVal]) ? null : '
-          'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
-          'int, isUtc: true,);';
+            '    final val = isNull(map[myTableNameColumnVal]) ? null : '
+            'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
+            'int, isUtc: true,);';
 
         final result = ColumnToFromMapAssignmentGenerator()(
           statement,

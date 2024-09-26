@@ -43,8 +43,7 @@ void main() {
           }),
           test(
               'changes all words to start with uppercase and '
-              'everything else id lowercase',
-              () {
+              'everything else id lowercase', () {
             final result =
                 'this iS a Test t0 test 8 random WOrds'.toTitleCase();
             expect(

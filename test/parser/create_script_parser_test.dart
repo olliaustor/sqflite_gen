@@ -44,8 +44,8 @@ void main() {
   test('parses multipleStatements', () {
     final parser = CreateScriptParser();
 
-    final createTableStmt = parser
-        .parse('$validCreateTable\n\n$validCreateTableWithAutoIncrement');
+    final createTableStmt =
+        parser.parse('$validCreateTable\n\n$validCreateTableWithAutoIncrement');
 
     expect(createTableStmt.length, 2);
   });
