@@ -15,6 +15,7 @@ class TableToMethodCopyWithGenerator {
   /// Placeholder for class name
   final placeholderTableName = '%tableName%';
 
+  /// Content of method with placeholders
   final parametersContent = '''
 {
 %parameters%

@@ -1,3 +1,4 @@
+/// Declaration of library
 library sqflite_gen;
 
 import 'package:build/build.dart';

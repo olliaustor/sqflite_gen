@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:build/build.dart';
 import 'package:sqflite_gen/src/sqflite_code_generator.dart';
 
+/// Implementation of [Builder]. This is the entry point for this code generator
 class SqfliteDartCodeGenerator implements Builder {
+  /// Creates new object. [builderOptions] contains optional custom values
+  /// declared in a yaml file
   SqfliteDartCodeGenerator(BuilderOptions builderOptions) {
     //options = GeneratorOptions.fromJson(builderOptions.config);
   }

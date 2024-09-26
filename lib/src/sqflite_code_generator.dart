@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite_gen/src/generators/file_generators/database/database_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/database_repositiory/database_repository_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/database_repository/database_repository_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/db/db_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/file_generator_base.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_barrel/table_barrel_generator.dart';
@@ -15,7 +15,13 @@ import 'package:sqflite_gen/src/generators/file_generators/utils/utils_generator
 import 'package:sqflite_gen/src/parser/create_script_parser.dart';
 import 'package:sqlparser/sqlparser.dart';
 
+/// Code generator class
 class SqfliteCodeGenerator {
+  /// Creates code files based on the content of [targetFilePath] and
+  /// [sqlContent]
+  /// [targetFilePath] : All files/directories will be placed within this
+  /// directory
+  /// [sqlContent] : Sql script containing sql table create statements
   Future<void> build({
     required String targetFilePath,
     required String sqlContent,

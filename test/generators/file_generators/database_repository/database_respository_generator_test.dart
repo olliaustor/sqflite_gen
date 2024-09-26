@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/database_repositiory/database_repository_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/database_repository/database_repository_generator.dart';
 import 'package:test/test.dart';
 
 void main() {
