@@ -1,6 +1,5 @@
-// typedef FileGenerator = Future<FileGeneratorResult> Function();
-
 /// Base class for file generators
+// ignore: one_member_abstracts
 abstract class FileGenerator {
   /// Generates file content and returns the target file name and the file
   /// content

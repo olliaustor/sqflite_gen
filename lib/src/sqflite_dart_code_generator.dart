@@ -7,11 +7,12 @@ import 'package:sqflite_gen/src/sqflite_code_generator.dart';
 class SqfliteDartCodeGenerator implements Builder {
   /// Creates new object. [builderOptions] contains optional custom values
   /// declared in a yaml file
-  SqfliteDartCodeGenerator(BuilderOptions builderOptions) {
+  SqfliteDartCodeGenerator(this.builderOptions) {
     //options = GeneratorOptions.fromJson(builderOptions.config);
   }
 
-  //late GeneratorOptions options;
+  /// Unprocessed options from yaml file
+  late BuilderOptions builderOptions;
 
   @override
   Future<void> build(BuildStep buildStep) async {
