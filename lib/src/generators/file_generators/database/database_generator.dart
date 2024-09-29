@@ -17,14 +17,15 @@ class DatabaseGenerator extends FileGenerator {
   /// Output file name of generated file
   final String targetFileName = 'database.dart';
 
-  /// Placeholder for list of used table providers
-  final placeholderGetTableProvider = '%getTableProviders%';
+  /// Placeholder for list of used table create statements
+  final placeholderGetTableCreates = '%getTableCreates%';
 
   /// Content of output file (including dynamic parts)
   final content = '''
-import 'generic_provider.dart';
 import 'tables/tables.dart';
 import 'package:sqflite/sqflite.dart';
+
+typedef GetTableProvider = List<String> Function(int);
 
 Future<Database> openDatabaseWithMigration(String path) async {
   return openDatabase(path,
@@ -35,10 +36,10 @@ Future<Database> openDatabaseWithMigration(String path) async {
 
 Future<void> _onCreate(Database db, int version) async {
   final scriptList = <String>[];
-  final tables = _getTableProviders(db);
+  final tables = _getTableCreates(db);
 
   for (final table in tables) {
-    scriptList.addAll(table.create(version));
+    scriptList.addAll(table(version));
   }
 
   final batch = db.batch();
@@ -48,16 +49,16 @@ Future<void> _onCreate(Database db, int version) async {
   await batch.commit(noResult: true);
 }
 
-%getTableProviders%
+%getTableCreates%
     ''';
 
   @override
   Future<FileGeneratorResult> generate() async {
-    final methodGetTableProviders = MethodGetTablesProviderGenerator();
+    final methodGetTableCreates = MethodGetTablesCreatesGenerator();
 
     final fileContent = content.replaceAll(
-      placeholderGetTableProvider,
-      methodGetTableProviders(
+      placeholderGetTableCreates,
+      methodGetTableCreates(
         getValidTableStatements(statements),
       ),
     );

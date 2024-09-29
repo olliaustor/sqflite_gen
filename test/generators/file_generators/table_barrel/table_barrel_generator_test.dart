@@ -20,13 +20,13 @@ void main() {
 
         expect(result.targetFileName, equals(expected));
       }),
-      test('has two exports', () async {
+      test('has three exports', () async {
         final generator = TableBarrelGenerator(statement);
         final result = await generator.generate();
 
         final regEx = RegExp('export');
         final amount = regEx.allMatches(result.content).length;
-        expect(amount, equals(2));
+        expect(amount, equals(3));
       }),
       test('exports ..._model.dart file', () async {
         const expected = "export 'my_table_name_model.dart'";
@@ -37,6 +37,13 @@ void main() {
       }),
       test('exports ..._provider.dart file', () async {
         const expected = "export 'my_table_name_provider.dart'";
+        final generator = TableBarrelGenerator(statement);
+        final result = await generator.generate();
+
+        expect(result.content, contains(expected));
+      }),
+      test('exports ..._values.dart file', () async {
+        const expected = "export 'my_table_name_values.dart'";
         final generator = TableBarrelGenerator(statement);
         final result = await generator.generate();
 

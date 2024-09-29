@@ -22,6 +22,7 @@ class TableBarrelGenerator extends FileGenerator {
   final content = '''
 export '%underscoreSqlTableName%_model.dart';
 export '%underscoreSqlTableName%_provider.dart';
+export '%underscoreSqlTableName%_values.dart';
 ''';
 
   @override

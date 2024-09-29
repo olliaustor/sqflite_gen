@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/database/source_generators/provider_constructor_call_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/database/source_generators/table_create_call_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 
 /// Generates comma separated list of table provider constructor calls.
@@ -13,7 +13,7 @@ class ListOfTableProvidersGenerator {
   /// constructor calls
   String call(List<CreateTableStatement> statements) {
     final sb = StringBuffer();
-    final generator = ProviderConstructorCallGenerator();
+    final generator = TableCreateCallGenerator();
 
     for (final statement in statements) {
       sb.writeln('    ${generator(statement)},');

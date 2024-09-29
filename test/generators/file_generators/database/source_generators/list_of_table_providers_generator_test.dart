@@ -31,12 +31,15 @@ void main() {
         final generator = ListOfTableProvidersGenerator();
         final result = generator(validStatement);
 
-        expect(result, equals('    ExampleTableProvider(db),'));
+        expect(
+          result,
+          equals('    (int version) => [exampleTableTableCreate],'),
+        );
       }),
       test('with multiple tables generates multiline string', () {
         const expected = '''
-    ExampleTableProvider(db),
-    AnotherTableProvider(db),''';
+    (int version) => [exampleTableTableCreate],
+    (int version) => [anotherTableTableCreate],''';
         final generator = ListOfTableProvidersGenerator();
         final result = generator(validStatements);
 

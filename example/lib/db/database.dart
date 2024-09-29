@@ -1,14 +1,3 @@
-import 'package:example_app/db/tables/car_options/car_options_values.dart';
-import 'package:example_app/db/tables/car_parts/car_parts_values.dart';
-import 'package:example_app/db/tables/car_vins/car_vins_values.dart';
-import 'package:example_app/db/tables/customer_ownership/customer_ownership_values.dart';
-import 'package:example_app/db/tables/customers/customers_values.dart';
-import 'package:example_app/db/tables/dealer_brand/dealer_brand_values.dart';
-import 'package:example_app/db/tables/dealers/dealers_values.dart';
-import 'package:example_app/db/tables/manufacture_plant/manufacture_plant_values.dart';
-import 'package:example_app/db/tables/models/models_values.dart';
-
-import 'tables/brands/brands_values.dart';
 import 'tables/tables.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -23,7 +12,7 @@ Future<Database> openDatabaseWithMigration(String path) async {
 
 Future<void> _onCreate(Database db, int version) async {
   final scriptList = <String>[];
-  final tables = _getTableProviders(db);
+  final tables = _getTableCreates(db);
 
   for (final table in tables) {
     scriptList.addAll(table(version));
@@ -36,7 +25,7 @@ Future<void> _onCreate(Database db, int version) async {
   await batch.commit(noResult: true);
 }
 
-List<GetTableProvider> _getTableProviders(Database db) {
+List<GetTableProvider> _getTableCreates(Database db) {
   return [
     (int version) => [customersTableCreate],
     (int version) => [carVinsTableCreate],

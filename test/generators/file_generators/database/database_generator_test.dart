@@ -23,7 +23,6 @@ void main() {
       }),
       test('contains valid imports', () async {
         const expected = '''
-import 'generic_provider.dart';
 import 'tables/tables.dart';
 import 'package:sqflite/sqflite.dart';
 ''';
@@ -48,14 +47,23 @@ Future<Database> openDatabaseWithMigration(String path) async {
 
         expect(result.content, contains(expected));
       }),
+      test('contains typedef GetTableProvider', () async {
+        const expected = 'typedef GetTableProvider = List<String> '
+          'Function(int);';
+
+        final generator = DatabaseGenerator(validStatement);
+        final result = await generator.generate();
+
+        expect(result.content, contains(expected));
+      }),
       test('contains method _onCreate', () async {
         const expected = '''
 Future<void> _onCreate(Database db, int version) async {
   final scriptList = <String>[];
-  final tables = _getTableProviders(db);
+  final tables = _getTableCreates(db);
 
   for (final table in tables) {
-    scriptList.addAll(table.create(version));
+    scriptList.addAll(table(version));
   }
 
   final batch = db.batch();
@@ -70,11 +78,11 @@ Future<void> _onCreate(Database db, int version) async {
 
         expect(result.content, contains(expected));
       }),
-      test('contains method _getTableProviders', () async {
+      test('contains method _getTableCreates', () async {
         final generator = DatabaseGenerator(validStatement);
         final result = await generator.generate();
 
-        expect(result.content, contains('_getTableProviders'));
+        expect(result.content, contains('_getTableCreates'));
       }),
     },
   );
