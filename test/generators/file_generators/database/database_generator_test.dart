@@ -49,7 +49,7 @@ Future<Database> openDatabaseWithMigration(String path) async {
       }),
       test('contains typedef GetTableProvider', () async {
         const expected = 'typedef GetTableProvider = List<String> '
-          'Function(int);';
+            'Function(int);';
 
         final generator = DatabaseGenerator(validStatement);
         final result = await generator.generate();

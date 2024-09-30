@@ -12,8 +12,8 @@ class TableCreateCallGenerator {
   /// Returns a `String` formatted as
   /// `(int version) => [TABLECREATESCRIPTNAMECreate]`.
   String call(CreateTableStatement statement) {
-    final className = TableNameToConstNameConverter()
-        .convert(statement.tableName);
+    final className =
+        TableNameToConstNameConverter().convert(statement.tableName);
     return '(int version) => [${className}Create]';
   }
 }
