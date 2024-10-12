@@ -3,7 +3,7 @@ import 'package:sqflite_gen/src/generators/file_generators/table_model/source_ge
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_bool_to_assignment_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_datetime_to_assignment_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_double_to_assignment_generator.dart';
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_int8list_to_assignment_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_uint8list_to_assignment_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_int_to_assignment_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_string_to_assignment_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
@@ -14,10 +14,10 @@ class ColumnToFromMapAssignmentGenerator {
   final List<MapEntry<String, ColumnToAssignmentGenerator>> typeMappings = [
     MapEntry('int', ColumnIntToAssignmentGenerator()),
     MapEntry('String', ColumnStringToAssignmentGenerator()),
-    MapEntry('Uint8List', ColumnInt8ListToAssignmentGenerator()),
+    MapEntry('Uint8List', ColumnUint8ListToAssignmentGenerator()),
     MapEntry('bool', ColumnBoolToAssignmentGenerator()),
     MapEntry('DateTime', ColumnDateTimeToAssignmentGenerator()),
-    MapEntry('Double', ColumnDoubleToAssignmentGenerator()),
+    MapEntry('double', ColumnDoubleToAssignmentGenerator()),
   ];
 
   /// Generates map assignment for given [CreateTableStatement] and

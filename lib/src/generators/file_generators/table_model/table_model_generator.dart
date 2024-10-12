@@ -47,6 +47,8 @@ class TableModelGenerator extends FileGenerator {
 
   /// File content with placeholder
   final content = '''
+import 'dart:typed_data';
+
 import '%values_file_name%';
 import '../../utils.dart';
 

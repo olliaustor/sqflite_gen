@@ -18,7 +18,7 @@ class ColumnToMapAssignmentGenerator {
     MapEntry('Uint8List', ColumnInt8ListToAssignmentGenerator()),
     MapEntry('bool', ColumnBoolToAssignmentGenerator()),
     MapEntry('DateTime', ColumnDateTimeToAssignmentGenerator()),
-    MapEntry('Double', ColumnDoubleToAssignmentGenerator()),
+    MapEntry('double', ColumnDoubleToAssignmentGenerator()),
   ];
 
   /// Generates map assignment for given [CreateTableStatement] and

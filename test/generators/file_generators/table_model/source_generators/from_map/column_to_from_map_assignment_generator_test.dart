@@ -97,9 +97,9 @@ void main() {
 
         expect(result, equals(expected));
       }),
-      test('Int8List generates valid assignment', () {
+      test('Uint8List generates valid assignment', () {
         const expected =
-            '    final val = map[myTableNameColumnVal] as Int8List?;';
+            '    final val = map[myTableNameColumnVal] as Uint8List?;';
 
         final result = ColumnToFromMapAssignmentGenerator()(
           statement,

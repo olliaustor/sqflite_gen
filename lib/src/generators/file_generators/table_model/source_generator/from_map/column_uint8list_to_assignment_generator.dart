@@ -4,8 +4,8 @@ import 'package:sqflite_gen/src/generators/file_generators/table_model/source_ge
 import 'package:sqflite_gen/src/generators/file_generators/table_values/source_generators/column_to_const_name_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 
-/// Generates map value assignment for [Int8List] value
-class ColumnInt8ListToAssignmentGenerator
+/// Generates map value assignment for [Uint8List] value
+class ColumnUint8ListToAssignmentGenerator
     implements ColumnToAssignmentGenerator {
   /// Generates assignment for given [ColumnDefinition]
   ///  columnDefinition': Column definition
@@ -18,7 +18,7 @@ class ColumnInt8ListToAssignmentGenerator
   ) {
     final columnPropertyName =
         ColumnToConstNameGenerator().call(statement, columnDefinition);
-    final assignment = 'map[$columnPropertyName] as Int8List';
+    final assignment = 'map[$columnPropertyName] as Uint8List';
 
     return columnDefinition.isNonNullable ? assignment : '$assignment?';
   }

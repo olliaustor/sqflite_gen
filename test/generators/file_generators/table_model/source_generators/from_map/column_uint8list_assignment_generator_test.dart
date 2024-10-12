@@ -1,4 +1,4 @@
-import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_int8list_to_assignment_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_model/source_generator/from_map/column_uint8list_to_assignment_generator.dart';
 import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
@@ -19,12 +19,12 @@ void main() {
   );
 
   group(
-    'ColumnInt8ListToAssignmentGenerator',
+    'ColumnUint8ListToAssignmentGenerator',
     () => {
-      test('Int8List generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as Int8List';
+      test('Uint8List generates valid assignment', () {
+        const expected = 'map[myTableNameColumnVal] as Uint8List';
 
-        final result = ColumnInt8ListToAssignmentGenerator()(
+        final result = ColumnUint8ListToAssignmentGenerator()(
           statement,
           columnDefinitionNotNullable,
         );
@@ -32,9 +32,9 @@ void main() {
         expect(result, equals(expected));
       }),
       test('Int8List? generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as Int8List?';
+        const expected = 'map[myTableNameColumnVal] as Uint8List?';
 
-        final result = ColumnInt8ListToAssignmentGenerator()(
+        final result = ColumnUint8ListToAssignmentGenerator()(
           statement,
           columnDefinitionNullable,
         );

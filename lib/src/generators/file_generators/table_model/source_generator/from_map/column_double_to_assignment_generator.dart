@@ -17,7 +17,7 @@ class ColumnDoubleToAssignmentGenerator implements ColumnToAssignmentGenerator {
   ) {
     final columnPropertyName =
         ColumnToConstNameGenerator().call(statement, columnDefinition);
-    final assignment = 'map[$columnPropertyName] as Double';
+    final assignment = 'map[$columnPropertyName] as double';
 
     return columnDefinition.isNonNullable ? assignment : '$assignment?';
   }

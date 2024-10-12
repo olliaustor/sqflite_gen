@@ -27,16 +27,7 @@ Future<void> _onCreate(Database db, int version) async {
 
 List<GetTableProvider> _getTableCreates(Database db) {
   return [
-    (int version) => [customersTableCreate],
-    (int version) => [carVinsTableCreate],
-    (int version) => [carOptionsTableCreate],
-    (int version) => [carPartsTableCreate],
-    (int version) => [brandsTableCreate],
-    (int version) => [modelsTableCreate],
-    (int version) => [customerOwnershipTableCreate],
-    (int version) => [manufacturePlantTableCreate],
-    (int version) => [dealersTableCreate],
-    (int version) => [dealerBrandTableCreate],
+    (int version) => [testTableCreate],
   ];
 }
 

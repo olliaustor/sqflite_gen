@@ -51,7 +51,7 @@ const List<MapEntry<String, List<String>>> typeMappings = [
   MapEntry('Uint8List', typeNamesUint8List),
   MapEntry('bool', typeNamesBool),
   MapEntry('DateTime', typeNamesDateTime),
-  MapEntry('Double', typeNamesDouble),
+  MapEntry('double', typeNamesDouble),
 ];
 
 // These values are from here: https://www.sqlite.org/datatype3.html
