@@ -3,7 +3,6 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-
   final statement = CreateTableStatement(
     tableName: 'my_table_name',
   );
