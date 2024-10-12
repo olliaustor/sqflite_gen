@@ -6,6 +6,7 @@ import 'package:sqflite_gen/src/generators/file_generators/table_provider/source
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/create/table_to_method_create_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/delete/table_to_method_delete_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/get/table_to_method_get_generator.dart';
+import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/get_all/table_to_method_get_all_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/insert/table_to_method_insert_generator.dart';
 import 'package:sqflite_gen/src/generators/file_generators/table_provider/source_generator/update/table_to_method_update_generator.dart';
 import 'package:sqflite_gen/src/generators/source_generators/table_file_name_generator.dart';
@@ -35,6 +36,9 @@ class TableProviderGenerator extends FileGenerator {
   /// Placeholder for method get
   final String placeholderGet = '%get%';
 
+  /// Placeholder for method getAll
+  final String placeholderGetAll = '%get_all%';
+
   /// Placeholder for method delete
   final String placeholderDelete = '%delete%';
 
@@ -62,6 +66,7 @@ class %className%Provider {
 %create%
 %insert%
 %get%
+%get_all%
 %delete%
 %update%
 }
@@ -75,6 +80,7 @@ class %className%Provider {
     final createGenerator = TableToMethodCreateGenerator();
     final insertGenerator = TableToMethodInsertGenerator();
     final getGenerator = TableToMethodGetGenerator();
+    final getAllGenerator = TableToMethodGetAllGenerator();
     final deleteGenerator = TableToMethodDeleteGenerator();
     final updateGenerator = TableToMethodUpdateGenerator();
 
@@ -101,6 +107,10 @@ class %className%Provider {
         .replaceAll(
           placeholderGet,
           getGenerator(createTableStatement),
+        )
+        .replaceAll(
+          placeholderGetAll,
+          getAllGenerator(createTableStatement),
         )
         .replaceAll(
           placeholderDelete,

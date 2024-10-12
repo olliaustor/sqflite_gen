@@ -20,7 +20,7 @@ class TestProvider {
 
   Future<Test?> get(int id) async {
     final maps = await db.query(testTable,
-      where: '\$testColumnId = ?',
+      where: '$testColumnId = ?',
       whereArgs: [id],);
 
     return maps.isEmpty

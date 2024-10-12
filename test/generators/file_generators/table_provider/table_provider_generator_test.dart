@@ -102,6 +102,12 @@ CREATE TABLE frameworks (
 
         expect(result.content, contains(expectedValue));
       }),
+      test('contains method getAll', () async {
+        const expectedValue = 'Future<List<Frameworks>> getAll() async {';
+        final result = await generator.generate();
+
+        expect(result.content, contains(expectedValue));
+      }),
       test('contains method delete', () async {
         const expectedValue = 'Future<bool> delete(int id) async {';
         final result = await generator.generate();
