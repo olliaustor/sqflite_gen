@@ -28,6 +28,14 @@ class TestProvider {
       : Test.fromMap(maps.first);
   }
 
+  Future<List<Test>> getAll() async {
+    final maps = await db.query(testTable);
+
+    return maps.isEmpty
+      ? []
+      : maps.map((element) => Test.fromMap(element)).toList();
+  }
+
   Future<bool> delete(int id) async {
     final result = await db.delete(testTable,
       where: '\$testColumnId = ?',

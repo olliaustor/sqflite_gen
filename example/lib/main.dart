@@ -62,81 +62,39 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Test> _list = [];
   final uuid = const Uuid();
 
-  void _addRecord() async {
-    setState(() {
-      final guid = uuid.v4();
-      _list.add(Test(
-          text: guid,
-          number: _list.length,
-          numeric: _list.length / 2,
-          date: DateTime.now(),
-          isChecked: _list.length % 2 != 0,
-          anything: Uint8List.fromList(guid.codeUnits)));
-    });
+  @override
+  void initState() {
+    super.initState();
+    _initDatabase();
   }
 
-  @override
-  void initState() async {
-    super.initState();
+  void _initDatabase() async {
+    database = await openDatabaseWithMigration(dbName);
+    final table = TestProvider(database);
+    _updateList(table);
+  }
+
+  void _addRecord() async {
+    final guid = uuid.v4();
+    final newRecord = Test(
+        text: guid,
+        number: _list.length,
+        numeric: _list.length / 2,
+        date: DateTime.now(),
+        isChecked: _list.length % 2 != 0,
+        anything: Uint8List.fromList(guid.codeUnits),
+    );
 
     final table = TestProvider(database);
+    await table.insert(newRecord);
+    _updateList(table);
+  }
+
+  void _updateList(TestProvider table) async {
     final allRecords = await table.getAll();
     setState(() {
       _list = allRecords;
     });
-  }
-
-  Widget _buildContent(BuildContext context, AsyncSnapshot<Database> snapshot) {
-    if (snapshot.hasData) {
-      database = snapshot.data!;
-      return ListView.builder(
-        itemCount: _list.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) => ListTile(
-          title: Text(
-            _list[index].text,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Column(
-            children: [
-              MyListItemDetail(
-                label: 'Integer',
-                text: _list[index].number.toString(),
-              ),
-              MyListItemDetail(
-                label: 'Double',
-                text: _list[index].numeric.toString(),
-              ),
-              MyListItemDetail(
-                label: 'Date',
-                text: _list[index].date.toString(),
-              ),
-              MyListItemDetail(
-                label: 'Boolean',
-                text: _list[index].isChecked.toString(),
-              ),
-              MyListItemDetail(
-                label: 'Blob',
-                text: String.fromCharCodes(_list[index].anything),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Please press + to add a record to the database',
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -146,10 +104,42 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: FutureBuilder(
-        future: openDatabaseWithMigration(dbName),
-        builder: _buildContent,
+      body: ListView.builder(
+      itemCount: _list.length,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) => ListTile(
+        title: Text(
+          _list[index].text,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Column(
+          children: [
+            MyListItemDetail(
+              label: 'Integer',
+              text: _list[index].number.toString(),
+            ),
+            MyListItemDetail(
+              label: 'Double',
+              text: _list[index].numeric.toString(),
+            ),
+            MyListItemDetail(
+              label: 'Date',
+              text: _list[index].date.toString(),
+            ),
+            MyListItemDetail(
+              label: 'Boolean',
+              text: _list[index].isChecked.toString(),
+            ),
+            MyListItemDetail(
+              label: 'Blob',
+              text: String.fromCharCodes(_list[index].anything),
+            ),
+          ],
+        ),
       ),
+    ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addRecord,
         tooltip: 'Add record to database',
