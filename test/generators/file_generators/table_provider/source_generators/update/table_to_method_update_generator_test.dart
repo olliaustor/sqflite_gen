@@ -42,7 +42,7 @@ void main() {
         const expected = r'''
   Future<bool> update(MyTableName myTableName) async {
     final result = await db.update(myTableNameTable, myTableName.toMap(),
-      where: '\$myTableNameColumnId = ?',
+      where: '$myTableNameColumnId = ?',
       whereArgs: [myTableName.id],);
       
     return result > 0;  
@@ -59,7 +59,7 @@ void main() {
         const expected = r'''
   Future<bool> update(MyTableName myTableName) async {
     final result = await db.update(myTableNameTable, myTableName.toMap(),
-      where: '\$myTableNameColumnId = ?',
+      where: '$myTableNameColumnId = ?',
       whereArgs: [myTableName.id],);
       
     return result > 0;  

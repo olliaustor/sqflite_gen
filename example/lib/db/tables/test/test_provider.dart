@@ -38,7 +38,7 @@ class TestProvider {
 
   Future<bool> delete(int id) async {
     final result = await db.delete(testTable,
-      where: '\$testColumnId = ?',
+      where: '$testColumnId = ?',
       whereArgs: [id],);
       
     return result > 0;  
@@ -46,7 +46,7 @@ class TestProvider {
 
   Future<bool> update(Test test) async {
     final result = await db.update(testTable, test.toMap(),
-      where: '\$testColumnId = ?',
+      where: '$testColumnId = ?',
       whereArgs: [test.id],);
       
     return result > 0;  

@@ -21,8 +21,8 @@ void main() {
   group(
     'ColumnDoubleToAssignmentGenerator',
     () => {
-      test('Double generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as Double';
+      test('double generates valid assignment', () {
+        const expected = 'map[myTableNameColumnVal] as double';
 
         final result = ColumnDoubleToAssignmentGenerator()(
           statement,
@@ -31,8 +31,8 @@ void main() {
 
         expect(result, equals(expected));
       }),
-      test('Double? generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as Double?';
+      test('double? generates valid assignment', () {
+        const expected = 'map[myTableNameColumnVal] as double?';
 
         final result = ColumnDoubleToAssignmentGenerator()(
           statement,

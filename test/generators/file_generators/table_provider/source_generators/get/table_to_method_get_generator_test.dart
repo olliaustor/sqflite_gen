@@ -42,7 +42,7 @@ void main() {
         const expected = r'''
   Future<MyTableName?> get(int id) async {
     final maps = await db.query(myTableNameTable,
-      where: '\$myTableNameColumnId = ?',
+      where: '$myTableNameColumnId = ?',
       whereArgs: [id],);
 
     return maps.isEmpty
@@ -61,7 +61,7 @@ void main() {
         const expected = r'''
   Future<MyTableName?> get(String id) async {
     final maps = await db.query(myTableNameTable,
-      where: '\$myTableNameColumnId = ?',
+      where: '$myTableNameColumnId = ?',
       whereArgs: [id],);
 
     return maps.isEmpty

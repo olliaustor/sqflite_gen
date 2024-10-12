@@ -25,7 +25,7 @@ class TableToMethodUpdateGenerator {
   final content = r'''
   Future<bool> update(%className% %fieldName%) async {
     final result = await db.update(%tableNameConst%, %fieldName%.toMap(),
-      where: '\$%primaryColumnNameConst% = ?',
+      where: '$%primaryColumnNameConst% = ?',
       whereArgs: [%fieldName%.%primaryColumnFieldName%],);
       
     return result > 0;  

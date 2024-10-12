@@ -21,7 +21,7 @@ class TableToMethodDeleteGenerator {
   final content = r'''
   Future<bool> delete(%fieldType% %primaryColumnFieldName%) async {
     final result = await db.delete(%tableNameConst%,
-      where: '\$%primaryColumnNameConst% = ?',
+      where: '$%primaryColumnNameConst% = ?',
       whereArgs: [%primaryColumnFieldName%],);
       
     return result > 0;  

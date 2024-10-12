@@ -42,7 +42,7 @@ void main() {
         const expected = r'''
   Future<bool> delete(int id) async {
     final result = await db.delete(myTableNameTable,
-      where: '\$myTableNameColumnId = ?',
+      where: '$myTableNameColumnId = ?',
       whereArgs: [id],);
       
     return result > 0;  
@@ -59,7 +59,7 @@ void main() {
         const expected = r'''
   Future<bool> delete(String id) async {
     final result = await db.delete(myTableNameTable,
-      where: '\$myTableNameColumnId = ?',
+      where: '$myTableNameColumnId = ?',
       whereArgs: [id],);
       
     return result > 0;  

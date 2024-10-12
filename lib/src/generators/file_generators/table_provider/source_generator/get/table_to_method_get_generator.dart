@@ -28,7 +28,7 @@ class TableToMethodGetGenerator {
   final content = r'''
   Future<%className%?> get(%fieldType% %primaryColumnFieldName%) async {
     final maps = await db.query(%tableNameConst%,
-      where: '\$%primaryColumnNameConst% = ?',
+      where: '$%primaryColumnNameConst% = ?',
       whereArgs: [%primaryColumnFieldName%],);
 
     return maps.isEmpty

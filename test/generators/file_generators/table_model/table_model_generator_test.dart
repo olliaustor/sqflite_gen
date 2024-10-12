@@ -27,19 +27,12 @@ CREATE TABLE frameworks (
 
         expect(result.targetFileName, equals(expected));
       }),
-      test('has four exports', () async {
+      test('has three exports', () async {
         final result = await generator.generate();
 
         final regEx = RegExp('import');
         final amount = regEx.allMatches(result.content).length;
-        expect(amount, equals(4));
-      }),
-      test('contains ...dart:ffi import', () async {
-        const expectedValue = "import 'dart:ffi';\n";
-
-        final result = await generator.generate();
-
-        expect(result.content, contains(expectedValue));
+        expect(amount, equals(3));
       }),
       test('contains ...dart:typed_data import', () async {
         const expectedValue = "import 'dart:typed_data';\n";
@@ -95,7 +88,7 @@ CREATE TABLE frameworks (
         expect(result.content, contains(expectedValue));
       }),
       test('contains field for popularity', () async {
-        const expectedValue = 'final Double popularity;\n';
+        const expectedValue = 'final double popularity;\n';
         final result = await generator.generate();
 
         expect(result.content, contains(expectedValue));
@@ -121,7 +114,6 @@ CREATE TABLE frameworks (
       }),
       test('creates valid file', () async {
         const expectedValue = '''
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'frameworks_values.dart';

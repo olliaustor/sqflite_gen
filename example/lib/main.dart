@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:example_app/db/database.dart';
 import 'package:example_app/db/db.dart';
+import 'package:example_app/my_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:sqflite/sqflite.dart';
@@ -25,26 +26,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Sqflite_Gen Demo Home Page'),
-    );
-  }
-}
-
-class MyListItemDetail extends StatelessWidget {
-  const MyListItemDetail({super.key, required this.label, required this.text});
-
-  final String label;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IntrinsicWidth(
-          stepWidth: 80,
-          child: Text(label),
-        ),
-        Text(text),
-      ],
     );
   }
 }
@@ -77,16 +58,31 @@ class _MyHomePageState extends State<MyHomePage> {
   void _addRecord() async {
     final guid = uuid.v4();
     final newRecord = Test(
-        text: guid,
-        number: _list.length,
-        numeric: _list.length / 2,
-        date: DateTime.now(),
-        isChecked: _list.length % 2 != 0,
-        anything: Uint8List.fromList(guid.codeUnits),
+      text: guid,
+      number: _list.length,
+      numeric: _list.length / 2,
+      date: DateTime.now(),
+      isChecked: _list.length % 2 != 0,
+      anything: Uint8List.fromList(guid.codeUnits),
     );
 
     final table = TestProvider(database);
     await table.insert(newRecord);
+    _updateList(table);
+  }
+
+  void _updateRecord(int id) async {
+    final record = _list.firstWhere((item) => item.id == id);
+    final table = TestProvider(database);
+    await table.update(record.copyWith(date: DateTime.now()));
+    _showSnackBar('$id updated');
+    _updateList(table);
+  }
+
+  void _deleteRecord(int id) async {
+    final table = TestProvider(database);
+    await table.delete(id);
+    _showSnackBar('$id deleted');
     _updateList(table);
   }
 
@@ -97,6 +93,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _showSnackBar(String text) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(text),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,42 +110,21 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: ListView.builder(
-      itemCount: _list.length,
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(
-          _list[index].text,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+      body: ListView.separated(
+        separatorBuilder: (_, __) => const Divider(
+          height: 1,
+          indent: 10,
+          endIndent: 10,
         ),
-        subtitle: Column(
-          children: [
-            MyListItemDetail(
-              label: 'Integer',
-              text: _list[index].number.toString(),
-            ),
-            MyListItemDetail(
-              label: 'Double',
-              text: _list[index].numeric.toString(),
-            ),
-            MyListItemDetail(
-              label: 'Date',
-              text: _list[index].date.toString(),
-            ),
-            MyListItemDetail(
-              label: 'Boolean',
-              text: _list[index].isChecked.toString(),
-            ),
-            MyListItemDetail(
-              label: 'Blob',
-              text: String.fromCharCodes(_list[index].anything),
-            ),
-          ],
+        itemCount: _list.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) => MyListItem(
+          key: ValueKey(_list[index].id),
+          record: _list[index],
+          onDelete: _deleteRecord,
+          onUpdate: _updateRecord,
         ),
       ),
-    ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addRecord,
         tooltip: 'Add record to database',

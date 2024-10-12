@@ -384,9 +384,9 @@ void main() {
         },
       ),
       group(
-        'to Double',
+        'to double',
         () => {
-          test('REAL converts to Double', () {
+          test('REAL converts to double', () {
             final column = ColumnDefinition(
               columnName: 'test_column_name',
               typeName: 'REAL',
@@ -395,9 +395,9 @@ void main() {
 
             final result = column.toFieldType();
 
-            expect(result, equals('Double'));
+            expect(result, equals('double'));
           }),
-          test('DOUBLE converts to Double', () {
+          test('DOUBLE converts to double', () {
             final column = ColumnDefinition(
               columnName: 'test_column_name',
               typeName: 'DOUBLE',
@@ -406,9 +406,9 @@ void main() {
 
             final result = column.toFieldType();
 
-            expect(result, equals('Double'));
+            expect(result, equals('double'));
           }),
-          test('DOUBLE PRECISION converts to Double', () {
+          test('DOUBLE PRECISION converts to double', () {
             final column = ColumnDefinition(
               columnName: 'test_column_name',
               typeName: 'DOUBLE PRECISION',
@@ -417,9 +417,9 @@ void main() {
 
             final result = column.toFieldType();
 
-            expect(result, equals('Double'));
+            expect(result, equals('double'));
           }),
-          test('FLOAT converts to Double', () {
+          test('FLOAT converts to double', () {
             final column = ColumnDefinition(
               columnName: 'test_column_name',
               typeName: 'FLOAT',
@@ -428,9 +428,9 @@ void main() {
 
             final result = column.toFieldType();
 
-            expect(result, equals('Double'));
+            expect(result, equals('double'));
           }),
-          test('NUMERIC converts to Double', () {
+          test('NUMERIC converts to double', () {
             final column = ColumnDefinition(
               columnName: 'test_column_name',
               typeName: 'NUMERIC',
@@ -439,9 +439,9 @@ void main() {
 
             final result = column.toFieldType();
 
-            expect(result, equals('Double'));
+            expect(result, equals('double'));
           }),
-          test('DECIMAL converts to Double', () {
+          test('DECIMAL converts to double', () {
             final column = ColumnDefinition(
               columnName: 'test_column_name',
               typeName: 'DECIMAL',
@@ -450,7 +450,7 @@ void main() {
 
             final result = column.toFieldType();
 
-            expect(result, equals('Double'));
+            expect(result, equals('double'));
           }),
         },
       ),

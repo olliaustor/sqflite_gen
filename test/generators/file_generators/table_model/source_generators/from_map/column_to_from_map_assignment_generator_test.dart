@@ -64,7 +64,7 @@ void main() {
       }),
       test('double generates valid assignment', () {
         const expected =
-            '    final val = map[myTableNameColumnVal] as Double?;';
+            '    final val = map[myTableNameColumnVal] as double?;';
 
         final result = ColumnToFromMapAssignmentGenerator()(
           statement,
