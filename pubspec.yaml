@@ -1,9 +1,9 @@
 name: sqflite_gen
-version: 0.0.1
+version: 0.1.0
 
-homepage: https://github.com/epam-cross-platform-lab/swagger-dart-code-generator
-repository: https://github.com/epam-cross-platform-lab/swagger-dart-code-generator
-issue_tracker: https://github.com/epam-cross-platform-lab/swagger-dart-code-generator/issues
+homepage: https://github.com/olliaustor/sqflite_gen
+repository: https://github.com/olliaustor/sqflite_gen
+issue_tracker: https://github.com/olliaustor/sqflite_gen/issues
 
 platforms:
   android:
@@ -13,9 +13,8 @@ platforms:
   linux:
   web:
 
-description: Have you been turned into a problem with writing code for Http
-  requests? This package can help. It has all of the Http and model codegen
-  functionality you have been looking for.
+description: Tired of writing boilerplate code for accessing sqlite database using sqflite? This package can help. 
+  It has all of the table specific provider and model code generation functionality you have been looking for.
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
