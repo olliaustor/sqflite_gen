@@ -18,6 +18,18 @@
   "words": [
     "sqflite_gen",
     "SqfLite",
-    "Sqflite"
+    "Sqflite",
+    "typesafe",
+    "Autoincrement",
+    "autoincrement",
+    "AUTOINCREMENT",
+    "VARCHAR",
+    "Typenames",
+    "TINYINT",
+    "SMALLINT",
+    "MEDIUMINT",
+    "NCHAR",
+    "NVARCHAR",
+    "BLOB"
   ]
 }
