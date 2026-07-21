@@ -3,10 +3,7 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final columnPrimaryKey = ColumnDefinition(
     columnName: 'id',
@@ -44,11 +41,9 @@ void main() {
     columns: [nullableColumnDefinition],
   );
 
-  group(
-    'TableToMethodFromMapGenerator',
-    () => {
-      test('without columns generate method without assignments', () {
-        const expected = '''
+  group('TableToMethodFromMapGenerator', () {
+    test('without columns generate method without assignments', () {
+      const expected = '''
   factory MyTableName.fromMap(Map<String, Object?> map) {
 
 
@@ -58,14 +53,12 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodFromMapGenerator()(
-          statementWithoutColumns,
-        );
+      final result = TableToMethodFromMapGenerator()(statementWithoutColumns);
 
-        expect(result, equals(expected));
-      }),
-      test('with single column generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with single column generates valid method', () {
+      const expected = '''
   factory MyTableName.fromMap(Map<String, Object?> map) {
     final id = map[myTableNameColumnId] as int?;
 
@@ -75,14 +68,12 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodFromMapGenerator()(
-          statementWithSingleColumn,
-        );
+      final result = TableToMethodFromMapGenerator()(statementWithSingleColumn);
 
-        expect(result, equals(expected));
-      }),
-      test('with primary key column generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with primary key column generates valid method', () {
+      const expected = '''
   factory MyTableName.fromMap(Map<String, Object?> map) {
     final id = map[myTableNameColumnId] as int?;
 
@@ -92,14 +83,12 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodFromMapGenerator()(
-          statementWithPrimaryKey,
-        );
+      final result = TableToMethodFromMapGenerator()(statementWithPrimaryKey);
 
-        expect(result, equals(expected));
-      }),
-      test('with two columns generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with two columns generates valid method', () {
+      const expected = '''
   factory MyTableName.fromMap(Map<String, Object?> map) {
     final id = map[myTableNameColumnId] as int?;
     final text = map[myTableNameColumnText] as String?;
@@ -111,14 +100,12 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodFromMapGenerator()(
-          statement,
-        );
+      final result = TableToMethodFromMapGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-      test('with nullable column generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with nullable column generates valid method', () {
+      const expected = '''
   factory MyTableName.fromMap(Map<String, Object?> map) {
     final text = map[myTableNameColumnText] as String?;
 
@@ -128,12 +115,9 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodFromMapGenerator()(
-          statementWithNullable,
-        );
+      final result = TableToMethodFromMapGenerator()(statementWithNullable);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

@@ -11,109 +11,103 @@ CREATE TABLE frameworks (
 );''';
 
   final parser = CreateScriptParser();
-  final createTableStmt = parser.parse(
-    validCreateTable,
-  );
-  final generator = TableModelGenerator(
-    createTableStmt[0],
-  );
+  final createTableStmt = parser.parse(validCreateTable);
+  final generator = TableModelGenerator(createTableStmt[0]);
 
-  group(
-    'TableModelGenerator',
-    () => {
-      test('has valid target filename', () async {
-        const expected = 'tables/frameworks/frameworks_model.dart';
-        final result = await generator.generate();
+  group('TableModelGenerator', () {
+    test('has valid target filename', () async {
+      const expected = 'tables/frameworks/frameworks_model.dart';
+      final result = await generator.generate();
 
-        expect(result.targetFileName, equals(expected));
-      }),
-      test('has three exports', () async {
-        final result = await generator.generate();
+      expect(result.targetFileName, equals(expected));
+    });
+    test('has three exports', () async {
+      final result = await generator.generate();
 
-        final regEx = RegExp('import');
-        final amount = regEx.allMatches(result.content).length;
-        expect(amount, equals(3));
-      }),
-      test('contains ...dart:typed_data import', () async {
-        const expectedValue = "import 'dart:typed_data';\n";
+      final regEx = RegExp('import');
+      final amount = regEx.allMatches(result.content).length;
+      expect(amount, equals(3));
+    });
+    test('contains ...dart:typed_data import', () async {
+      const expectedValue = "import 'dart:typed_data';\n";
 
-        final result = await generator.generate();
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains ..._values.dart import', () async {
-        const expectedValue = "import 'frameworks_values.dart';\n";
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains ..._values.dart import', () async {
+      const expectedValue = "import 'frameworks_values.dart';\n";
 
-        final result = await generator.generate();
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains utils.dart import', () async {
-        const expectedValue = "import '../../utils.dart';\n";
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains utils.dart import', () async {
+      const expectedValue = "import '../../utils.dart';\n";
 
-        final result = await generator.generate();
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains valid class declaration', () async {
-        const expectedValue = 'class Frameworks {\n';
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains valid class declaration', () async {
+      const expectedValue = 'class Frameworks {\n';
 
-        final result = await generator.generate();
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains constructor', () async {
-        const expectedValue = '''
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains constructor', () async {
+      const expectedValue = '''
   Frameworks({
     required this.id,
     required this.name,
     required this.popularity,
   });''';
 
-        final result = await generator.generate();
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains field for id', () async {
-        const expectedValue = 'final int id;\n';
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains field for id', () async {
+      const expectedValue = 'final int id;\n';
 
-        final result = await generator.generate();
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains field for name', () async {
-        const expectedValue = 'final String name;\n';
-        final result = await generator.generate();
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains field for name', () async {
+      const expectedValue = 'final String name;\n';
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains field for popularity', () async {
-        const expectedValue = 'final double popularity;\n';
-        final result = await generator.generate();
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains field for popularity', () async {
+      const expectedValue = 'final double popularity;\n';
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains method toMap', () async {
-        const expectedValue = 'Map<String, Object?> toMap() {\n';
-        final result = await generator.generate();
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains method toMap', () async {
+      const expectedValue = 'Map<String, Object?> toMap() {\n';
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains method fromMap', () async {
-        const expectedValue =
-            'factory Frameworks.fromMap(Map<String, Object?> map) {\n';
-        final result = await generator.generate();
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains method fromMap', () async {
+      const expectedValue =
+          'factory Frameworks.fromMap(Map<String, Object?> map) {\n';
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('contains method copyWith', () async {
-        const expectedValue = 'Frameworks copyWith({\n';
-        final result = await generator.generate();
+      expect(result.content, contains(expectedValue));
+    });
+    test('contains method copyWith', () async {
+      const expectedValue = 'Frameworks copyWith({\n';
+      final result = await generator.generate();
 
-        expect(result.content, contains(expectedValue));
-      }),
-      test('creates valid file', () async {
-        const expectedValue = '''
+      expect(result.content, contains(expectedValue));
+    });
+    test('creates valid file', () async {
+      const expectedValue = '''
 import 'dart:typed_data';
 
 import 'frameworks_values.dart';
@@ -121,10 +115,9 @@ import '../../utils.dart';
 
 class Frameworks {
 ''';
-        final result = await generator.generate();
+      final result = await generator.generate();
 
-        expect(result.content, startsWith(expectedValue));
-      }),
-    },
-  );
+      expect(result.content, startsWith(expectedValue));
+    });
+  });
 }

@@ -14,33 +14,28 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnIntToAssignmentGenerator',
-    () => {
-      test('Int generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as int';
+  group('ColumnIntToAssignmentGenerator', () {
+    test('Int generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as int';
 
-        final result = ColumnIntToAssignmentGenerator()(
-          statement,
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnIntToAssignmentGenerator()(
+        statement,
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('Int? generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as int?';
+      expect(result, equals(expected));
+    });
+    test('Int? generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as int?';
 
-        final result = ColumnIntToAssignmentGenerator()(
-          statement,
-          columnDefinitionNullable,
-        );
+      final result = ColumnIntToAssignmentGenerator()(
+        statement,
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

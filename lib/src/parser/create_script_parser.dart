@@ -34,7 +34,7 @@ class CreateScriptParser {
   }
 
   Either<CreateTableStatementExt, String> _parse(String sqlScript) {
-    final result = engine.parse(sqlScript);
+    final result = engine.parse(ParserEntrypoint.statement, sqlScript);
 
     if (result.errors.isNotEmpty) {
       return Either.right(result.errors[0].message);

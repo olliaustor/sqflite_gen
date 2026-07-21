@@ -33,81 +33,74 @@ void main() {
     typeName: 'BLOB',
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnToFromMapAssignmentGenerator',
-    () => {
-      test('bool generates valid assignment', () {
-        const expected =
-            '    final val = isNull(map[myTableNameColumnVal]) ? null : '
-            'intToBool(map[myTableNameColumnVal] as int);';
+  group('ColumnToFromMapAssignmentGenerator', () {
+    test('bool generates valid assignment', () {
+      const expected =
+          '    final val = isNull(map[myTableNameColumnVal]) ? null : '
+          'intToBool(map[myTableNameColumnVal] as int);';
 
-        final result = ColumnToFromMapAssignmentGenerator()(
-          statement,
-          columnDefinitionBool,
-        );
+      final result = ColumnToFromMapAssignmentGenerator()(
+        statement,
+        columnDefinitionBool,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('int generates valid assignment', () {
-        const expected = '    final val = map[myTableNameColumnVal] as int?;';
+      expect(result, equals(expected));
+    });
+    test('int generates valid assignment', () {
+      const expected = '    final val = map[myTableNameColumnVal] as int?;';
 
-        final result = ColumnToFromMapAssignmentGenerator()(
-          statement,
-          columnDefinitionInt,
-        );
+      final result = ColumnToFromMapAssignmentGenerator()(
+        statement,
+        columnDefinitionInt,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('double generates valid assignment', () {
-        const expected =
-            '    final val = map[myTableNameColumnVal] as double?;';
+      expect(result, equals(expected));
+    });
+    test('double generates valid assignment', () {
+      const expected = '    final val = map[myTableNameColumnVal] as double?;';
 
-        final result = ColumnToFromMapAssignmentGenerator()(
-          statement,
-          columnDefinitionDouble,
-        );
+      final result = ColumnToFromMapAssignmentGenerator()(
+        statement,
+        columnDefinitionDouble,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('string generates valid assignment', () {
-        const expected =
-            '    final val = map[myTableNameColumnVal] as String?;';
+      expect(result, equals(expected));
+    });
+    test('string generates valid assignment', () {
+      const expected = '    final val = map[myTableNameColumnVal] as String?;';
 
-        final result = ColumnToFromMapAssignmentGenerator()(
-          statement,
-          columnDefinitionString,
-        );
+      final result = ColumnToFromMapAssignmentGenerator()(
+        statement,
+        columnDefinitionString,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('DateTime generates valid assignment', () {
-        const expected =
-            '    final val = isNull(map[myTableNameColumnVal]) ? null : '
-            'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
-            'int, isUtc: true,);';
+      expect(result, equals(expected));
+    });
+    test('DateTime generates valid assignment', () {
+      const expected =
+          '    final val = isNull(map[myTableNameColumnVal]) ? null : '
+          'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
+          'int, isUtc: true,);';
 
-        final result = ColumnToFromMapAssignmentGenerator()(
-          statement,
-          columnDefinitionDateTime,
-        );
+      final result = ColumnToFromMapAssignmentGenerator()(
+        statement,
+        columnDefinitionDateTime,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('Uint8List generates valid assignment', () {
-        const expected =
-            '    final val = map[myTableNameColumnVal] as Uint8List?;';
+      expect(result, equals(expected));
+    });
+    test('Uint8List generates valid assignment', () {
+      const expected =
+          '    final val = map[myTableNameColumnVal] as Uint8List?;';
 
-        final result = ColumnToFromMapAssignmentGenerator()(
-          statement,
-          columnDefinitionInt8List,
-        );
+      final result = ColumnToFromMapAssignmentGenerator()(
+        statement,
+        columnDefinitionInt8List,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

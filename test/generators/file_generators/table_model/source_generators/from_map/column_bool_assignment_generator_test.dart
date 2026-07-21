@@ -14,34 +14,30 @@ void main() {
     constraints: [NotNull('bval')],
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnBoolToAssignmentGenerator',
-    () => {
-      test('bool generates valid assignment', () {
-        const expected = 'intToBool(map[myTableNameColumnVal] as int)';
+  group('ColumnBoolToAssignmentGenerator', () {
+    test('bool generates valid assignment', () {
+      const expected = 'intToBool(map[myTableNameColumnVal] as int)';
 
-        final result = ColumnBoolToAssignmentGenerator()(
-          statement,
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnBoolToAssignmentGenerator()(
+        statement,
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('bool? generates valid assignment', () {
-        const expected = 'isNull(map[myTableNameColumnVal]) ? null : '
-            'intToBool(map[myTableNameColumnVal] as int)';
+      expect(result, equals(expected));
+    });
+    test('bool? generates valid assignment', () {
+      const expected =
+          'isNull(map[myTableNameColumnVal]) ? null : '
+          'intToBool(map[myTableNameColumnVal] as int)';
 
-        final result = ColumnBoolToAssignmentGenerator()(
-          statement,
-          columnDefinitionNullable,
-        );
+      final result = ColumnBoolToAssignmentGenerator()(
+        statement,
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

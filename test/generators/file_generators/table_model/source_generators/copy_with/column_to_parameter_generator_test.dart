@@ -3,10 +3,7 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final columnDefinition = ColumnDefinition(
-    columnName: 'val',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'val', typeName: 'INT');
 
   final columnDefinitionNotNullable = ColumnDefinition(
     columnName: 'val',
@@ -14,36 +11,27 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  group(
-    'ColumnToParameterGenerator',
-    () => {
-      test('nullable column returns valid string', () {
-        const expected = '    Wrapped<int?>? val';
+  group('ColumnToParameterGenerator', () {
+    test('nullable column returns valid string', () {
+      const expected = '    Wrapped<int?>? val';
 
-        final result = ColumnToParameterGenerator()(
-          columnDefinition,
-        );
+      final result = ColumnToParameterGenerator()(columnDefinition);
 
-        expect(result, equals(expected));
-      }),
-      test('not nullable column returns valid string', () {
-        const expected = '    int? val';
+      expect(result, equals(expected));
+    });
+    test('not nullable column returns valid string', () {
+      const expected = '    int? val';
 
-        final result = ColumnToParameterGenerator()(
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnToParameterGenerator()(columnDefinitionNotNullable);
 
-        expect(result, equals(expected));
-      }),
-      test('primary column returns valid string', () {
-        const expected = '    Wrapped<int?>? val';
+      expect(result, equals(expected));
+    });
+    test('primary column returns valid string', () {
+      const expected = '    Wrapped<int?>? val';
 
-        final result = ColumnToParameterGenerator()(
-          columnDefinition,
-        );
+      final result = ColumnToParameterGenerator()(columnDefinition);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

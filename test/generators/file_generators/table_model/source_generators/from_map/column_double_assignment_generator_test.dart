@@ -14,33 +14,28 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnDoubleToAssignmentGenerator',
-    () => {
-      test('double generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as double';
+  group('ColumnDoubleToAssignmentGenerator', () {
+    test('double generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as double';
 
-        final result = ColumnDoubleToAssignmentGenerator()(
-          statement,
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnDoubleToAssignmentGenerator()(
+        statement,
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('double? generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as double?';
+      expect(result, equals(expected));
+    });
+    test('double? generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as double?';
 
-        final result = ColumnDoubleToAssignmentGenerator()(
-          statement,
-          columnDefinitionNullable,
-        );
+      final result = ColumnDoubleToAssignmentGenerator()(
+        statement,
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

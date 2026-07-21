@@ -9,10 +9,7 @@ void main() {
     constraints: [PrimaryKeyColumn('id', autoIncrement: true)],
   );
 
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final columnDefinitionPkString = ColumnDefinition(
     columnName: 'id',
@@ -35,11 +32,9 @@ void main() {
     columns: [columnDefinition],
   );
 
-  group(
-    'TableToMethodGetGenerator',
-    () => {
-      test('generates valid method with primary int column', () {
-        const expected = r'''
+  group('TableToMethodGetGenerator', () {
+    test('generates valid method with primary int column', () {
+      const expected = r'''
   Future<MyTableName?> get(int id) async {
     final maps = await db.query(myTableNameTable,
       where: '$myTableNameColumnId = ?',
@@ -51,14 +46,12 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodGetGenerator()(
-          statementPkInt,
-        );
+      final result = TableToMethodGetGenerator()(statementPkInt);
 
-        expect(result, equals(expected));
-      }),
-      test('generates valid method with primary string column', () {
-        const expected = r'''
+      expect(result, equals(expected));
+    });
+    test('generates valid method with primary string column', () {
+      const expected = r'''
   Future<MyTableName?> get(String id) async {
     final maps = await db.query(myTableNameTable,
       where: '$myTableNameColumnId = ?',
@@ -70,21 +63,16 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodGetGenerator()(
-          statementPkString,
-        );
+      final result = TableToMethodGetGenerator()(statementPkString);
 
-        expect(result, equals(expected));
-      }),
-      test('generates empty string without primary column', () {
-        const expected = '';
+      expect(result, equals(expected));
+    });
+    test('generates empty string without primary column', () {
+      const expected = '';
 
-        final result = TableToMethodGetGenerator()(
-          statement,
-        );
+      final result = TableToMethodGetGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

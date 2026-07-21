@@ -9,10 +9,7 @@ void main() {
     constraints: [PrimaryKeyColumn('id', autoIncrement: true)],
   );
 
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final columnDefinitionPkString = ColumnDefinition(
     columnName: 'id',
@@ -35,11 +32,9 @@ void main() {
     columns: [columnDefinition],
   );
 
-  group(
-    'TableToMethodDeleteGenerator',
-    () => {
-      test('generates valid method with primary int column', () {
-        const expected = r'''
+  group('TableToMethodDeleteGenerator', () {
+    test('generates valid method with primary int column', () {
+      const expected = r'''
   Future<bool> delete(int id) async {
     final result = await db.delete(myTableNameTable,
       where: '$myTableNameColumnId = ?',
@@ -49,14 +44,12 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodDeleteGenerator()(
-          statementPkInt,
-        );
+      final result = TableToMethodDeleteGenerator()(statementPkInt);
 
-        expect(result, equals(expected));
-      }),
-      test('generates valid method with primary string column', () {
-        const expected = r'''
+      expect(result, equals(expected));
+    });
+    test('generates valid method with primary string column', () {
+      const expected = r'''
   Future<bool> delete(String id) async {
     final result = await db.delete(myTableNameTable,
       where: '$myTableNameColumnId = ?',
@@ -66,21 +59,16 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodDeleteGenerator()(
-          statementPkString,
-        );
+      final result = TableToMethodDeleteGenerator()(statementPkString);
 
-        expect(result, equals(expected));
-      }),
-      test('generates empty string without primary column', () {
-        const expected = '';
+      expect(result, equals(expected));
+    });
+    test('generates empty string without primary column', () {
+      const expected = '';
 
-        final result = TableToMethodDeleteGenerator()(
-          statement,
-        );
+      final result = TableToMethodDeleteGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

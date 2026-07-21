@@ -14,27 +14,24 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  group(
-    'ColumnInt8ListToAssignmentGenerator',
-    () => {
-      test('Int8List generates valid assignment', () {
-        const expected = 'val';
+  group('ColumnInt8ListToAssignmentGenerator', () {
+    test('Int8List generates valid assignment', () {
+      const expected = 'val';
 
-        final result = ColumnInt8ListToAssignmentGenerator()(
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnInt8ListToAssignmentGenerator()(
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('Int8List? generates valid assignment', () {
-        const expected = 'val';
+      expect(result, equals(expected));
+    });
+    test('Int8List? generates valid assignment', () {
+      const expected = 'val';
 
-        final result = ColumnInt8ListToAssignmentGenerator()(
-          columnDefinitionNullable,
-        );
+      final result = ColumnInt8ListToAssignmentGenerator()(
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

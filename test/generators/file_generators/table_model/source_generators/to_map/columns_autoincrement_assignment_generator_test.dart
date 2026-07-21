@@ -29,41 +29,36 @@ void main() {
     columns: [autoIncrementColumnDefinition],
   );
 
-  group(
-    'ColumnsAutoIncrementAssignmentGenerator',
-    () => {
-      test('without columns generate empty string', () {
-        const expected = '';
+  group('ColumnsAutoIncrementAssignmentGenerator', () {
+    test('without columns generate empty string', () {
+      const expected = '';
 
-        final result = ColumnsAutoIncrementAssignmentGenerator()(
-          statementWithoutColumns,
-        );
+      final result = ColumnsAutoIncrementAssignmentGenerator()(
+        statementWithoutColumns,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('with simple column generates empty string', () {
-        const expected = '';
+      expect(result, equals(expected));
+    });
+    test('with simple column generates empty string', () {
+      const expected = '';
 
-        final result = ColumnsAutoIncrementAssignmentGenerator()(
-          statement,
-        );
+      final result = ColumnsAutoIncrementAssignmentGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-      test('with auto increment generates valid assignment', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with auto increment generates valid assignment', () {
+      const expected = '''
 
     if (id != null) {
       map[myTableNameColumnId] = id;
     }
 ''';
 
-        final result = ColumnsAutoIncrementAssignmentGenerator()(
-          statementWithAutoIncrement,
-        );
+      final result = ColumnsAutoIncrementAssignmentGenerator()(
+        statementWithAutoIncrement,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

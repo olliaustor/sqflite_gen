@@ -4,8 +4,8 @@ import 'package:example_app/db/database.dart';
 import 'package:example_app/db/db.dart';
 import 'package:example_app/my_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
 
 const dbName = 'test.db';
 late Database database;
@@ -95,11 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _showSnackBar(String text) {
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(text),
-        ),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
     }
   }
 
@@ -111,11 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: ListView.separated(
-        separatorBuilder: (_, __) => const Divider(
-          height: 1,
-          indent: 10,
-          endIndent: 10,
-        ),
+        separatorBuilder: (_, _) =>
+            const Divider(height: 1, indent: 10, endIndent: 10),
         itemCount: _list.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) => MyListItem(

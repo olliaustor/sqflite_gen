@@ -9,10 +9,7 @@ void main() {
     constraints: [PrimaryKeyColumn('id', autoIncrement: true)],
   );
 
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final columnDefinitionPkString = ColumnDefinition(
     columnName: 'id',
@@ -35,11 +32,9 @@ void main() {
     columns: [columnDefinition],
   );
 
-  group(
-    'TableToMethodUpdateGenerator',
-    () => {
-      test('generates valid method with primary int column', () {
-        const expected = r'''
+  group('TableToMethodUpdateGenerator', () {
+    test('generates valid method with primary int column', () {
+      const expected = r'''
   Future<bool> update(MyTableName myTableName) async {
     final result = await db.update(myTableNameTable, myTableName.toMap(),
       where: '$myTableNameColumnId = ?',
@@ -49,14 +44,12 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodUpdateGenerator()(
-          statementPkInt,
-        );
+      final result = TableToMethodUpdateGenerator()(statementPkInt);
 
-        expect(result, equals(expected));
-      }),
-      test('generates valid method with primary string column', () {
-        const expected = r'''
+      expect(result, equals(expected));
+    });
+    test('generates valid method with primary string column', () {
+      const expected = r'''
   Future<bool> update(MyTableName myTableName) async {
     final result = await db.update(myTableNameTable, myTableName.toMap(),
       where: '$myTableNameColumnId = ?',
@@ -66,21 +59,16 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodUpdateGenerator()(
-          statementPkString,
-        );
+      final result = TableToMethodUpdateGenerator()(statementPkString);
 
-        expect(result, equals(expected));
-      }),
-      test('generates empty string without primary column', () {
-        const expected = '';
+      expect(result, equals(expected));
+    });
+    test('generates empty string without primary column', () {
+      const expected = '';
 
-        final result = TableToMethodUpdateGenerator()(
-          statement,
-        );
+      final result = TableToMethodUpdateGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

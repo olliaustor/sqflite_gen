@@ -21,10 +21,7 @@ void main() {
     constraints: [PrimaryKeyColumn('id')],
   );
 
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final statementPkInt = CreateTableStatement(
     tableName: 'my_table_name',
@@ -46,11 +43,9 @@ void main() {
     columns: [columnDefinition],
   );
 
-  group(
-    'TableToMethodInsertGenerator',
-    () => {
-      test('generates valid method with primary int column', () {
-        const expected = '''
+  group('TableToMethodInsertGenerator', () {
+    test('generates valid method with primary int column', () {
+      const expected = '''
   Future<MyTableName> insert(MyTableName myTableName) async {
     final result = await db.insert(myTableNameTable, myTableName.toMap());
     
@@ -58,14 +53,12 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodInsertGenerator()(
-          statementPkInt,
-        );
+      final result = TableToMethodInsertGenerator()(statementPkInt);
 
-        expect(result, equals(expected));
-      }),
-      test('generates valid method with primary column nullable', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('generates valid method with primary column nullable', () {
+      const expected = '''
   Future<MyTableName> insert(MyTableName myTableName) async {
     final result = await db.insert(myTableNameTable, myTableName.toMap());
     
@@ -73,14 +66,12 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodInsertGenerator()(
-          statementPkNullable,
-        );
+      final result = TableToMethodInsertGenerator()(statementPkNullable);
 
-        expect(result, equals(expected));
-      }),
-      test('generates valid method with primary string column', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('generates valid method with primary string column', () {
+      const expected = '''
   Future<MyTableName> insert(MyTableName myTableName) async {
     final result = await db.insert(myTableNameTable, myTableName.toMap());
     
@@ -88,14 +79,12 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodInsertGenerator()(
-          statementPkString,
-        );
+      final result = TableToMethodInsertGenerator()(statementPkString);
 
-        expect(result, equals(expected));
-      }),
-      test('generates valid method without primary column', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('generates valid method without primary column', () {
+      const expected = '''
   Future<MyTableName> insert(MyTableName myTableName) async {
     final result = await db.insert(myTableNameTable, myTableName.toMap());
     
@@ -103,12 +92,9 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodInsertGenerator()(
-          statement,
-        );
+      final result = TableToMethodInsertGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

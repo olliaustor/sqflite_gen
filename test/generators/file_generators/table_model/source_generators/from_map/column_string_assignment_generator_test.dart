@@ -14,33 +14,28 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnStringToAssignmentGenerator',
-    () => {
-      test('String generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as String';
+  group('ColumnStringToAssignmentGenerator', () {
+    test('String generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as String';
 
-        final result = ColumnStringToAssignmentGenerator()(
-          statement,
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnStringToAssignmentGenerator()(
+        statement,
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('String? generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as String?';
+      expect(result, equals(expected));
+    });
+    test('String? generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as String?';
 
-        final result = ColumnStringToAssignmentGenerator()(
-          statement,
-          columnDefinitionNullable,
-        );
+      final result = ColumnStringToAssignmentGenerator()(
+        statement,
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

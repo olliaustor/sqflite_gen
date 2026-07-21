@@ -33,75 +33,71 @@ void main() {
     typeName: 'BLOB',
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnToMapAssignmentGenerator',
-    () => {
-      test('bool generates valid assignment', () {
-        const expected =
-            '      myTableNameColumnVal: isNull(val) ? null : boolToInt(val!)';
+  group('ColumnToMapAssignmentGenerator', () {
+    test('bool generates valid assignment', () {
+      const expected =
+          '      myTableNameColumnVal: isNull(val) ? null : boolToInt(val!)';
 
-        final result = ColumnToMapAssignmentGenerator()(
-          statement,
-          columnDefinitionBool,
-        );
+      final result = ColumnToMapAssignmentGenerator()(
+        statement,
+        columnDefinitionBool,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('int generates valid assignment', () {
-        const expected = '      myTableNameColumnVal: val';
+      expect(result, equals(expected));
+    });
+    test('int generates valid assignment', () {
+      const expected = '      myTableNameColumnVal: val';
 
-        final result = ColumnToMapAssignmentGenerator()(
-          statement,
-          columnDefinitionInt,
-        );
+      final result = ColumnToMapAssignmentGenerator()(
+        statement,
+        columnDefinitionInt,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('double generates valid assignment', () {
-        const expected = '      myTableNameColumnVal: val';
+      expect(result, equals(expected));
+    });
+    test('double generates valid assignment', () {
+      const expected = '      myTableNameColumnVal: val';
 
-        final result = ColumnToMapAssignmentGenerator()(
-          statement,
-          columnDefinitionDouble,
-        );
+      final result = ColumnToMapAssignmentGenerator()(
+        statement,
+        columnDefinitionDouble,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('string generates valid assignment', () {
-        const expected = '      myTableNameColumnVal: val';
+      expect(result, equals(expected));
+    });
+    test('string generates valid assignment', () {
+      const expected = '      myTableNameColumnVal: val';
 
-        final result = ColumnToMapAssignmentGenerator()(
-          statement,
-          columnDefinitionString,
-        );
+      final result = ColumnToMapAssignmentGenerator()(
+        statement,
+        columnDefinitionString,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('DateTime generates valid assignment', () {
-        const expected = '      myTableNameColumnVal: isNull(val) ? null : '
-            'val!.toUtc().millisecondsSinceEpoch';
+      expect(result, equals(expected));
+    });
+    test('DateTime generates valid assignment', () {
+      const expected =
+          '      myTableNameColumnVal: isNull(val) ? null : '
+          'val!.toUtc().millisecondsSinceEpoch';
 
-        final result = ColumnToMapAssignmentGenerator()(
-          statement,
-          columnDefinitionDateTime,
-        );
+      final result = ColumnToMapAssignmentGenerator()(
+        statement,
+        columnDefinitionDateTime,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('Int8List generates valid assignment', () {
-        const expected = '      myTableNameColumnVal: val';
+      expect(result, equals(expected));
+    });
+    test('Int8List generates valid assignment', () {
+      const expected = '      myTableNameColumnVal: val';
 
-        final result = ColumnToMapAssignmentGenerator()(
-          statement,
-          columnDefinitionInt8List,
-        );
+      final result = ColumnToMapAssignmentGenerator()(
+        statement,
+        columnDefinitionInt8List,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

@@ -19,9 +19,7 @@ void main() {
     constraints: [PrimaryKeyColumn('valAuto', autoIncrement: true)],
   );
 
-  final statementEmpty = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statementEmpty = CreateTableStatement(tableName: 'my_table_name');
 
   final statementWithOneColumn = CreateTableStatement(
     tableName: 'my_table_name',
@@ -38,41 +36,34 @@ void main() {
     columns: [columnDefinitionInt, columnDefinitionAutoIncrement],
   );
 
-  group(
-    'ColumnsToMapAssignmentGenerator',
-    () => {
-      test('empty list of columns returns empty string', () {
-        const expected = '';
+  group('ColumnsToMapAssignmentGenerator', () {
+    test('empty list of columns returns empty string', () {
+      const expected = '';
 
-        final result = ColumnsToMapAssignmentGenerator()(
-          statementEmpty,
-        );
+      final result = ColumnsToMapAssignmentGenerator()(statementEmpty);
 
-        expect(result, equals(expected));
-      }),
-      test('single column returns simple string', () {
-        final result = ColumnsToMapAssignmentGenerator()(
-          statementWithOneColumn,
-        );
+      expect(result, equals(expected));
+    });
+    test('single column returns simple string', () {
+      final result = ColumnsToMapAssignmentGenerator()(statementWithOneColumn);
 
-        expect(result, isNot(contains('\n')));
-      }),
-      test('multiple columns returns multiline string', () {
-        final result = ColumnsToMapAssignmentGenerator()(
-          statementWithMultipleColumns,
-        );
+      expect(result, isNot(contains('\n')));
+    });
+    test('multiple columns returns multiline string', () {
+      final result = ColumnsToMapAssignmentGenerator()(
+        statementWithMultipleColumns,
+      );
 
-        expect(result, contains('\n'));
-      }),
-      test('exclude auto increment column from list', () {
-        const expected = 'myTableNameColumnValAuto: valAuto';
+      expect(result, contains('\n'));
+    });
+    test('exclude auto increment column from list', () {
+      const expected = 'myTableNameColumnValAuto: valAuto';
 
-        final result = ColumnsToMapAssignmentGenerator()(
-          statementWithAutoIncrement,
-        );
+      final result = ColumnsToMapAssignmentGenerator()(
+        statementWithAutoIncrement,
+      );
 
-        expect(result, isNot(contains(expected)));
-      }),
-    },
-  );
+      expect(result, isNot(contains(expected)));
+    });
+  });
 }

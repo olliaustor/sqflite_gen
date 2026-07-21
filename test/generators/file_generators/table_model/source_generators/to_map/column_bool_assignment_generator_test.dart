@@ -14,27 +14,24 @@ void main() {
     constraints: [NotNull('bval')],
   );
 
-  group(
-    'ColumnBoolToAssignmentGenerator',
-    () => {
-      test('bool generates valid assignment', () {
-        const expected = 'boolToInt(val)';
+  group('ColumnBoolToAssignmentGenerator', () {
+    test('bool generates valid assignment', () {
+      const expected = 'boolToInt(val)';
 
-        final result = ColumnBoolToAssignmentGenerator()(
-          columnDefinitionlNotNullable,
-        );
+      final result = ColumnBoolToAssignmentGenerator()(
+        columnDefinitionlNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('bool? generates valid assignment', () {
-        const expected = 'isNull(val) ? null : boolToInt(val!)';
+      expect(result, equals(expected));
+    });
+    test('bool? generates valid assignment', () {
+      const expected = 'isNull(val) ? null : boolToInt(val!)';
 
-        final result = ColumnBoolToAssignmentGenerator()(
-          columnDefinitionNullable,
-        );
+      final result = ColumnBoolToAssignmentGenerator()(
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

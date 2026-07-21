@@ -5,5 +5,5 @@ bool isNull(dynamic value) => value == null;
 class Wrapped<T> {
   final T value;
   const Wrapped.value(this.value);
-  isEmpty() => isNull(value);
+  bool isEmpty() => isNull(value);
 }

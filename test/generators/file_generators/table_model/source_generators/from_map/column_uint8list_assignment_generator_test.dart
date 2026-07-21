@@ -14,33 +14,28 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnUint8ListToAssignmentGenerator',
-    () => {
-      test('Uint8List generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as Uint8List';
+  group('ColumnUint8ListToAssignmentGenerator', () {
+    test('Uint8List generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as Uint8List';
 
-        final result = ColumnUint8ListToAssignmentGenerator()(
-          statement,
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnUint8ListToAssignmentGenerator()(
+        statement,
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('Int8List? generates valid assignment', () {
-        const expected = 'map[myTableNameColumnVal] as Uint8List?';
+      expect(result, equals(expected));
+    });
+    test('Int8List? generates valid assignment', () {
+      const expected = 'map[myTableNameColumnVal] as Uint8List?';
 
-        final result = ColumnUint8ListToAssignmentGenerator()(
-          statement,
-          columnDefinitionNullable,
-        );
+      final result = ColumnUint8ListToAssignmentGenerator()(
+        statement,
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

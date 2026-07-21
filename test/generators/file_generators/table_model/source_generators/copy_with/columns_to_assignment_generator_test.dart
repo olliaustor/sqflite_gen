@@ -13,9 +13,7 @@ void main() {
     typeName: 'INT',
   );
 
-  final statementEmpty = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statementEmpty = CreateTableStatement(tableName: 'my_table_name');
 
   final statementWithOneColumn = CreateTableStatement(
     tableName: 'my_table_name',
@@ -27,32 +25,25 @@ void main() {
     columns: [columnDefinitionBool, columnDefinitionInt],
   );
 
-  group(
-    'ColumnsToAssignmentGenerator',
-    () => {
-      test('empty list of columns returns empty string', () {
-        const expected = '';
+  group('ColumnsToAssignmentGenerator', () {
+    test('empty list of columns returns empty string', () {
+      const expected = '';
 
-        final result = ColumnsToAssignmentGenerator()(
-          statementEmpty,
-        );
+      final result = ColumnsToAssignmentGenerator()(statementEmpty);
 
-        expect(result, equals(expected));
-      }),
-      test('single column returns simple string', () {
-        final result = ColumnsToAssignmentGenerator()(
-          statementWithOneColumn,
-        );
+      expect(result, equals(expected));
+    });
+    test('single column returns simple string', () {
+      final result = ColumnsToAssignmentGenerator()(statementWithOneColumn);
 
-        expect(result, isNot(contains('\n')));
-      }),
-      test('multiple columns returns multiline string', () {
-        final result = ColumnsToAssignmentGenerator()(
-          statementWithMultipleColumns,
-        );
+      expect(result, isNot(contains('\n')));
+    });
+    test('multiple columns returns multiline string', () {
+      final result = ColumnsToAssignmentGenerator()(
+        statementWithMultipleColumns,
+      );
 
-        expect(result, contains('\n'));
-      }),
-    },
-  );
+      expect(result, contains('\n'));
+    });
+  });
 }

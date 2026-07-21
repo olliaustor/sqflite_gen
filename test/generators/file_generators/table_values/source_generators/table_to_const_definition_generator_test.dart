@@ -3,19 +3,14 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group(
-    'TableToConstDefinitionGenerator',
-    () => {
-      test('generates valid const definition from given [statement]', () {
-        const expected = "const String frameworkTable = 'framework';";
-        final statement = CreateTableStatement(
-          tableName: 'framework',
-        );
+  group('TableToConstDefinitionGenerator', () {
+    test('generates valid const definition from given [statement]', () {
+      const expected = "const String frameworkTable = 'framework';";
+      final statement = CreateTableStatement(tableName: 'framework');
 
-        final result = TableToConstDefinitionGenerator()(statement);
+      final result = TableToConstDefinitionGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

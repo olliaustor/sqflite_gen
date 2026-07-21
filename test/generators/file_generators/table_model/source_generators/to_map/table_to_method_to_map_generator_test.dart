@@ -39,11 +39,9 @@ void main() {
     columns: [autoIncrementColumnDefinition, secondColumnDefinition],
   );
 
-  group(
-    'TableToMethodToMapGenerator',
-    () => {
-      test('without columns generate empty map', () {
-        const expected = '''
+  group('TableToMethodToMapGenerator', () {
+    test('without columns generate empty map', () {
+      const expected = '''
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
 
@@ -53,14 +51,12 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodToMapGenerator()(
-          statementWithoutColumns,
-        );
+      final result = TableToMethodToMapGenerator()(statementWithoutColumns);
 
-        expect(result, equals(expected));
-      }),
-      test('with primary key generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with primary key generates valid method', () {
+      const expected = '''
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
       myTableNameColumnId: id,
@@ -71,14 +67,12 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodToMapGenerator()(
-          statement,
-        );
+      final result = TableToMethodToMapGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-      test('with auto increment generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with auto increment generates valid method', () {
+      const expected = '''
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
       myTableNameColumnText: text,
@@ -92,14 +86,12 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodToMapGenerator()(
-          statementWithAutoIncrement,
-        );
+      final result = TableToMethodToMapGenerator()(statementWithAutoIncrement);
 
-        expect(result, equals(expected));
-      }),
-      test('without primary key generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('without primary key generates valid method', () {
+      const expected = '''
   Map<String, Object?> toMap() {
     var map = <String, Object?> {
       myTableNameColumnText: text,
@@ -109,12 +101,9 @@ void main() {
   }  
 ''';
 
-        final result = TableToMethodToMapGenerator()(
-          statementWithoutPrimaryKey,
-        );
+      final result = TableToMethodToMapGenerator()(statementWithoutPrimaryKey);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

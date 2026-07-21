@@ -3,40 +3,30 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final columnDefinitionRequired = ColumnDefinition(
     columnName: 'id',
     typeName: 'INT',
-    constraints: [
-      NotNull('id'),
-    ],
+    constraints: [NotNull('id')],
   );
 
-  group(
-    'ColumnToFieldDefinitionGenerator',
-    () => {
-      test('generates valid parameter for not required value', () {
-        const expected = 'final int? id;';
+  group('ColumnToFieldDefinitionGenerator', () {
+    test('generates valid parameter for not required value', () {
+      const expected = 'final int? id;';
 
-        final result = ColumnToFieldDefinitionGenerator()(
-          columnDefinition,
-        );
+      final result = ColumnToFieldDefinitionGenerator()(columnDefinition);
 
-        expect(result, equals(expected));
-      }),
-      test('generates valid parameter for required value', () {
-        const expected = 'final int id;';
+      expect(result, equals(expected));
+    });
+    test('generates valid parameter for required value', () {
+      const expected = 'final int id;';
 
-        final result = ColumnToFieldDefinitionGenerator()(
-          columnDefinitionRequired,
-        );
+      final result = ColumnToFieldDefinitionGenerator()(
+        columnDefinitionRequired,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

@@ -13,9 +13,7 @@ void main() {
     typeName: 'INT',
   );
 
-  final statementEmpty = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statementEmpty = CreateTableStatement(tableName: 'my_table_name');
 
   final statementWithOneColumn = CreateTableStatement(
     tableName: 'my_table_name',
@@ -27,32 +25,27 @@ void main() {
     columns: [columnDefinitionBool, columnDefinitionInt],
   );
 
-  group(
-    'ColumnsToFromMapAssignmentGenerator',
-    () => {
-      test('empty list of columns returns empty string', () {
-        const expected = '';
+  group('ColumnsToFromMapAssignmentGenerator', () {
+    test('empty list of columns returns empty string', () {
+      const expected = '';
 
-        final result = ColumnsToFromMapAssignmentGenerator()(
-          statementEmpty,
-        );
+      final result = ColumnsToFromMapAssignmentGenerator()(statementEmpty);
 
-        expect(result, equals(expected));
-      }),
-      test('single column returns simple string', () {
-        final result = ColumnsToFromMapAssignmentGenerator()(
-          statementWithOneColumn,
-        );
+      expect(result, equals(expected));
+    });
+    test('single column returns simple string', () {
+      final result = ColumnsToFromMapAssignmentGenerator()(
+        statementWithOneColumn,
+      );
 
-        expect(result, isNot(contains('\n')));
-      }),
-      test('multiple columns returns multiline string', () {
-        final result = ColumnsToFromMapAssignmentGenerator()(
-          statementWithMultipleColumns,
-        );
+      expect(result, isNot(contains('\n')));
+    });
+    test('multiple columns returns multiline string', () {
+      final result = ColumnsToFromMapAssignmentGenerator()(
+        statementWithMultipleColumns,
+      );
 
-        expect(result, contains('\n'));
-      }),
-    },
-  );
+      expect(result, contains('\n'));
+    });
+  });
 }

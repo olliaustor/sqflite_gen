@@ -3,26 +3,18 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group(
-    'ColumnToConstNameGenerator',
-    () => {
-      test('generates valid const name from given parameters', () {
-        const expected = 'frameworkColumnId';
-        final statement = CreateTableStatement(
-          tableName: 'framework',
-        );
-        final columnDefinition = ColumnDefinition(
-          columnName: 'id',
-          typeName: 'INT',
-        );
+  group('ColumnToConstNameGenerator', () {
+    test('generates valid const name from given parameters', () {
+      const expected = 'frameworkColumnId';
+      final statement = CreateTableStatement(tableName: 'framework');
+      final columnDefinition = ColumnDefinition(
+        columnName: 'id',
+        typeName: 'INT',
+      );
 
-        final result = ColumnToConstNameGenerator()(
-          statement,
-          columnDefinition,
-        );
+      final result = ColumnToConstNameGenerator()(statement, columnDefinition);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

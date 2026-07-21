@@ -14,28 +14,25 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  group(
-    'ColumnDateTimeToAssignmentGenerator',
-    () => {
-      test('DateTime generates valid assignment', () {
-        const expected = 'val.toUtc().millisecondsSinceEpoch';
+  group('ColumnDateTimeToAssignmentGenerator', () {
+    test('DateTime generates valid assignment', () {
+      const expected = 'val.toUtc().millisecondsSinceEpoch';
 
-        final result = ColumnDateTimeToAssignmentGenerator()(
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnDateTimeToAssignmentGenerator()(
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('DateTime? generates valid assignment', () {
-        const expected =
-            'isNull(val) ? null : val!.toUtc().millisecondsSinceEpoch';
+      expect(result, equals(expected));
+    });
+    test('DateTime? generates valid assignment', () {
+      const expected =
+          'isNull(val) ? null : val!.toUtc().millisecondsSinceEpoch';
 
-        final result = ColumnDateTimeToAssignmentGenerator()(
-          columnDefinitionNullable,
-        );
+      final result = ColumnDateTimeToAssignmentGenerator()(
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

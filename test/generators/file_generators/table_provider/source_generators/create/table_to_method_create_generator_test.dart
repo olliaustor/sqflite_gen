@@ -3,32 +3,24 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final statement = CreateTableStatement(
     tableName: 'my_table_name',
     columns: [columnDefinition],
   );
 
-  group(
-    'TableToConstructorGenerator',
-    () => {
-      test('generates valid constructor from given parameters', () {
-        const expected = '''
+  group('TableToConstructorGenerator', () {
+    test('generates valid constructor from given parameters', () {
+      const expected = '''
   List<String> create(int version) {
     return [myTableNameTableCreate];
   }
 ''';
 
-        final result = TableToMethodCreateGenerator()(
-          statement,
-        );
+      final result = TableToMethodCreateGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

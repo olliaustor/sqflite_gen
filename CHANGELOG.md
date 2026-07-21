@@ -1,3 +1,7 @@
+# 0.2.0
+- Bumps packages to latest versions
+- Fixed several dart analysis issues
+
 # 0.1.1
 - Bumps packages to latest versions
 - Fixes issues to increase pub.dev score

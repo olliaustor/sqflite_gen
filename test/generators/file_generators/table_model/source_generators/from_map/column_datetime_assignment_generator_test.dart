@@ -14,37 +14,33 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'ColumnDateTimeToAssignmentGenerator',
-    () => {
-      test('DateTime generates valid assignment', () {
-        const expected =
-            'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
-            'int, isUtc: true,)';
+  group('ColumnDateTimeToAssignmentGenerator', () {
+    test('DateTime generates valid assignment', () {
+      const expected =
+          'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
+          'int, isUtc: true,)';
 
-        final result = ColumnDateTimeToAssignmentGenerator()(
-          statement,
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnDateTimeToAssignmentGenerator()(
+        statement,
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('DateTime? generates valid assignment', () {
-        const expected = 'isNull(map[myTableNameColumnVal]) ? null : '
-            'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
-            'int, isUtc: true,)';
+      expect(result, equals(expected));
+    });
+    test('DateTime? generates valid assignment', () {
+      const expected =
+          'isNull(map[myTableNameColumnVal]) ? null : '
+          'DateTime.fromMillisecondsSinceEpoch(map[myTableNameColumnVal] as '
+          'int, isUtc: true,)';
 
-        final result = ColumnDateTimeToAssignmentGenerator()(
-          statement,
-          columnDefinitionNullable,
-        );
+      final result = ColumnDateTimeToAssignmentGenerator()(
+        statement,
+        columnDefinitionNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

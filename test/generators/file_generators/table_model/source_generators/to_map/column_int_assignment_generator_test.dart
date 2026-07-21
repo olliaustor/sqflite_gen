@@ -14,27 +14,22 @@ void main() {
     constraints: [NotNull('val')],
   );
 
-  group(
-    'ColumnIntToAssignmentGenerator',
-    () => {
-      test('String generates valid assignment', () {
-        const expected = 'val';
+  group('ColumnIntToAssignmentGenerator', () {
+    test('String generates valid assignment', () {
+      const expected = 'val';
 
-        final result = ColumnIntToAssignmentGenerator()(
-          columnDefinitionNotNullable,
-        );
+      final result = ColumnIntToAssignmentGenerator()(
+        columnDefinitionNotNullable,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('String? generates valid assignment', () {
-        const expected = 'val';
+      expect(result, equals(expected));
+    });
+    test('String? generates valid assignment', () {
+      const expected = 'val';
 
-        final result = ColumnIntToAssignmentGenerator()(
-          columnDefinitionNullable,
-        );
+      final result = ColumnIntToAssignmentGenerator()(columnDefinitionNullable);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

@@ -3,15 +3,11 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final statement = CreateTableStatement(
-    tableName: 'my_table_name',
-  );
+  final statement = CreateTableStatement(tableName: 'my_table_name');
 
-  group(
-    'TableToMethodGetAllGenerator',
-    () => {
-      test('generates valid method with primary int column', () {
-        const expected = '''
+  group('TableToMethodGetAllGenerator', () {
+    test('generates valid method with primary int column', () {
+      const expected = '''
   Future<List<MyTableName>> getAll() async {
     final maps = await db.query(myTableNameTable);
 
@@ -21,12 +17,9 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodGetAllGenerator()(
-          statement,
-        );
+      final result = TableToMethodGetAllGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

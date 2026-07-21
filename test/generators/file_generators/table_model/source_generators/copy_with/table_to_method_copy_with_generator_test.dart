@@ -3,10 +3,7 @@ import 'package:sqlparser/sqlparser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final columnDefinition = ColumnDefinition(
-    columnName: 'id',
-    typeName: 'INT',
-  );
+  final columnDefinition = ColumnDefinition(columnName: 'id', typeName: 'INT');
 
   final nullableColumnDefinition = ColumnDefinition(
     columnName: 'text',
@@ -28,11 +25,9 @@ void main() {
     columns: [columnDefinition],
   );
 
-  group(
-    'TableToMethodCopyWithGenerator',
-    () => {
-      test('without columns generate method without assignments', () {
-        const expected = '''
+  group('TableToMethodCopyWithGenerator', () {
+    test('without columns generate method without assignments', () {
+      const expected = '''
   MyTableName copyWith() {
     return MyTableName(
 
@@ -40,14 +35,12 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodCopyWithGenerator()(
-          statementWithoutColumns,
-        );
+      final result = TableToMethodCopyWithGenerator()(statementWithoutColumns);
 
-        expect(result, equals(expected));
-      }),
-      test('with single column generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with single column generates valid method', () {
+      const expected = '''
   MyTableName copyWith({
     Wrapped<int?>? id,
   }) {
@@ -57,14 +50,14 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodCopyWithGenerator()(
-          statementWithSingleColumn,
-        );
+      final result = TableToMethodCopyWithGenerator()(
+        statementWithSingleColumn,
+      );
 
-        expect(result, equals(expected));
-      }),
-      test('with two columns generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with two columns generates valid method', () {
+      const expected = '''
   MyTableName copyWith({
     Wrapped<int?>? id,
     String? text,
@@ -76,12 +69,9 @@ void main() {
   }
 ''';
 
-        final result = TableToMethodCopyWithGenerator()(
-          statement,
-        );
+      final result = TableToMethodCopyWithGenerator()(statement);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }

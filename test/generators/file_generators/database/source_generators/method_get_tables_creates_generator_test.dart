@@ -5,19 +5,13 @@ import 'package:test/test.dart';
 void main() {
   final emptyStatements = <CreateTableStatement>[];
   final validStatements = [
-    CreateTableStatement(
-      tableName: 'example_table',
-    ),
-    CreateTableStatement(
-      tableName: 'another_table',
-    ),
+    CreateTableStatement(tableName: 'example_table'),
+    CreateTableStatement(tableName: 'another_table'),
   ];
 
-  group(
-    'MethodGetTablesCreatesGenerator',
-    () => {
-      test('with empty list generates valid method', () {
-        const expected = '''
+  group('MethodGetTablesCreatesGenerator', () {
+    test('with empty list generates valid method', () {
+      const expected = '''
 List<GetTableProvider> _getTableCreates(Database db) {
   return [
 
@@ -25,13 +19,13 @@ List<GetTableProvider> _getTableCreates(Database db) {
 }
 ''';
 
-        final generator = MethodGetTablesCreatesGenerator();
-        final result = generator(emptyStatements);
+      final generator = MethodGetTablesCreatesGenerator();
+      final result = generator(emptyStatements);
 
-        expect(result, equals(expected));
-      }),
-      test('with table generates valid method', () {
-        const expected = '''
+      expect(result, equals(expected));
+    });
+    test('with table generates valid method', () {
+      const expected = '''
 List<GetTableProvider> _getTableCreates(Database db) {
   return [
     (int version) => [exampleTableTableCreate],
@@ -39,11 +33,10 @@ List<GetTableProvider> _getTableCreates(Database db) {
   ];
 }
 ''';
-        final generator = MethodGetTablesCreatesGenerator();
-        final result = generator(validStatements);
+      final generator = MethodGetTablesCreatesGenerator();
+      final result = generator(validStatements);
 
-        expect(result, equals(expected));
-      }),
-    },
-  );
+      expect(result, equals(expected));
+    });
+  });
 }
